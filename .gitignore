@@ -25,6 +25,7 @@ hs_err_pid*
 .DS_Store
 mall/src/main/resources/application-team.yml
 mall/.idea/
+mall/.idea
 ../.DS_Store
 .gitignore
 mall/target/

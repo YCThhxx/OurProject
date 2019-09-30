@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="593a1c65-48b4-4c4d-8278-4e7dbac6d1ab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cskaoyan/mall/controller/ConfigController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cskaoyan/mall/vo/ConfigVo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cskaoyan/mall/config/MyDatasourceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cskaoyan/mall/config/MyDatasourceConfig.java" afterDir="false" />
-    </list>
+    <list default="true" id="593a1c65-48b4-4c4d-8278-4e7dbac6d1ab" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -334,12 +329,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569816743620</updated>
-      <workItem from="1569816747833" duration="7775000" />
+      <workItem from="1569816747833" duration="8018000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7775000" />
+    <option name="totallyTimeSpent" value="8018000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="23" width="1316" height="814" extended-state="0" />
@@ -350,10 +345,10 @@
       <window_info id="UI Designer" />
       <window_info id="Favorites" side_tool="true" />
       <window_info id="Web" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27394035" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27394035" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Spring" />
-      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.565097" />
+      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.565097" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Messages" />

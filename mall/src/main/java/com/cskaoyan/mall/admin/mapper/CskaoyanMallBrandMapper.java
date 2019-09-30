@@ -2,6 +2,8 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallBrand;
 
+import java.util.List;
+
 public interface CskaoyanMallBrandMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -10,4 +12,6 @@ public interface CskaoyanMallBrandMapper {
     int updateByPrimaryKeySelective(CskaoyanMallBrand record);
 
     int updateByPrimaryKey(CskaoyanMallBrand record);
+
+    List<CskaoyanMallBrand> findAllBrandByPage();
 }

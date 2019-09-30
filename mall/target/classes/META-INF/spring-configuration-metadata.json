@@ -1,0 +1,32 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.cskaoyan.mall.config.MyDatasourceConfig",
+      "name": "my.ds",
+      "type": "com.cskaoyan.mall.config.MyDatasourceConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.cskaoyan.mall.config.MyDatasourceConfig",
+      "name": "my.ds.driver",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cskaoyan.mall.config.MyDatasourceConfig",
+      "name": "my.ds.password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cskaoyan.mall.config.MyDatasourceConfig",
+      "name": "my.ds.url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.cskaoyan.mall.config.MyDatasourceConfig",
+      "name": "my.ds.username",
+      "type": "java.lang.String"
+    }
+  ]
+}

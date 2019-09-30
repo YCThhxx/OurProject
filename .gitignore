@@ -25,3 +25,9 @@ hs_err_pid*
 .DS_Store
 
 .gitignore
+
+mall/target/
+
+mall/.idea/
+
+mall/mall.iml

@@ -23,8 +23,8 @@
 hs_err_pid*
 
 .DS_Store
-mallProject/src/main/resources/application-team.yml
-mallProject/.idea/
+mall/src/main/resources/application-team.yml
+mall/.idea/
 ../.DS_Store
 .gitignore
-mallProject/target/
+mall/target/

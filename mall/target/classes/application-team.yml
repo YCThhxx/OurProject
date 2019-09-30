@@ -1,22 +1,12 @@
 spring:
-  profiles:
-    active: common,team
-
----
-spring:
-  profiles: common
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mall
     username: root
-    password: 123456
+    password: root
 #    type: com.alibaba.druid.pool.DruidDataSource
-
 
 
 server:
   port: 80
-
-
-
 

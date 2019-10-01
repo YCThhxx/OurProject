@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-/**
- * author : Nianjie Jing
- * creat time : 2019/9/30
- * e-mail : clemeting@qq.com
- */
 @RestController
 @RequestMapping("/admin/auth")
 public class AuthController {

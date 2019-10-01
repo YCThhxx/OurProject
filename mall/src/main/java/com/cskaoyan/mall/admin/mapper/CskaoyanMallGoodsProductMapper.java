@@ -1,11 +1,28 @@
 package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoodsProduct;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallGoodsProductExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface CskaoyanMallGoodsProductMapper {
+    long countByExample(CskaoyanMallGoodsProductExample example);
+
+    int deleteByExample(CskaoyanMallGoodsProductExample example);
+
     int deleteByPrimaryKey(Integer id);
 
+    int insert(CskaoyanMallGoodsProduct record);
+
+    int insertSelective(CskaoyanMallGoodsProduct record);
+
+    List<CskaoyanMallGoodsProduct> selectByExample(CskaoyanMallGoodsProductExample example);
+
     CskaoyanMallGoodsProduct selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") CskaoyanMallGoodsProduct record, @Param("example") CskaoyanMallGoodsProductExample example);
+
+    int updateByExample(@Param("record") CskaoyanMallGoodsProduct record, @Param("example") CskaoyanMallGoodsProductExample example);
 
     int updateByPrimaryKeySelective(CskaoyanMallGoodsProduct record);
 

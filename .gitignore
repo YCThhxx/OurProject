@@ -29,3 +29,4 @@ mall/.idea
 ../.DS_Store
 .gitignore
 mall/target/
+mall/src/main/resources/generatorConfig.yml

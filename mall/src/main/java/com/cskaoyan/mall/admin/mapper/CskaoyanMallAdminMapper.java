@@ -2,8 +2,9 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAdminExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CskaoyanMallAdminMapper {
     long countByExample(CskaoyanMallAdminExample example);
@@ -27,4 +28,8 @@ public interface CskaoyanMallAdminMapper {
     int updateByPrimaryKeySelective(CskaoyanMallAdmin record);
 
     int updateByPrimaryKey(CskaoyanMallAdmin record);
+
+    List<CskaoyanMallAdmin> queryAllAdmin();
+
+    int countAllAdmin();
 }

@@ -2,6 +2,8 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallSystem;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallSystemExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,10 @@ public interface CskaoyanMallSystemMapper {
     int updateByPrimaryKeySelective(CskaoyanMallSystem record);
 
     int updateByPrimaryKey(CskaoyanMallSystem record);
+
+    public void updateConfigInfo(@Param("keyName") String keyName,
+                                 @Param("keyValue") String keyValue,
+                                 @Param("date") Date date);
+
+    public List<CskaoyanMallSystem> selectAll();
 }

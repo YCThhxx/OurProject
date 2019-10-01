@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, last_login_ip, last_login_time, avatar, add_time, update_time, 
+    id, username, password, last_login_ip, last_login_time, avatar, add_time, update_time,
     deleted, role_ids
   </sql>
   <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallAdminExample" resultMap="BaseResultMap">
@@ -91,7 +91,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_admin
     where id = #{id,jdbcType=INTEGER}
@@ -107,13 +107,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin">
-    insert into cskaoyan_mall_admin (id, username, password, 
-      last_login_ip, last_login_time, avatar, 
-      add_time, update_time, deleted, 
+    insert into cskaoyan_mall_admin (id, username, password,
+      last_login_ip, last_login_time, avatar,
+      add_time, update_time, deleted,
       role_ids)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{avatar,jdbcType=VARCHAR}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, 
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{avatar,jdbcType=VARCHAR},
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT},
       #{roleIds,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin">
@@ -289,4 +289,25 @@
       role_ids = #{roleIds,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+        <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
+    </resultMap>
+    <sql id="Base_Column_List1">
+      id, username, avatar, role_ids
+    </sql>
+
+    <select id="countAllAdmin" resultType="java.lang.Integer">
+      select
+      count(id)
+      from cskaoyan_mall_admin
+    </select>
+    <select id="queryAllAdmin" resultMap="BaseResultMap1">
+        select
+        <include refid="Base_Column_List1" />
+        from cskaoyan_mall_admin
+    </select>
 </mapper>

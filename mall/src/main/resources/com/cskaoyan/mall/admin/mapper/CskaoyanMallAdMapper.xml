@@ -90,10 +90,10 @@
     <where>
       <trim prefixOverrides="and">
         <if test="adName != null and adName != ''">
-          and `name` like  '%${adName}%'
+          and `name` like '%${adName}%'
         </if>
         <if test="adContent != null and adContent != ''">
-          and `content` like  '%${adContent}%'
+          and `content` like '%${adContent}%'
         </if>
       </trim>
     </where>

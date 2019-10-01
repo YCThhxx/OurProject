@@ -278,5 +278,9 @@
     <include refid="Base_Column_List" />
     from cskaoyan_mall_brand
   </select>
+  <select id="selectBrandListForGoods" resultType="com.cskaoyan.mall.admin.vo.BrandInfo">
+    select id as value, name as label
+    from cskaoyan_mall_brand
+  </select>
 
 </mapper>

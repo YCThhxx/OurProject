@@ -3,6 +3,8 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCategory;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCategoryExample;
 import java.util.List;
+
+import com.cskaoyan.mall.admin.vo.CategoryInfo;
 import org.apache.ibatis.annotations.Param;
 
 public interface CskaoyanMallCategoryMapper {
@@ -27,4 +29,7 @@ public interface CskaoyanMallCategoryMapper {
     int updateByPrimaryKeySelective(CskaoyanMallCategory record);
 
     int updateByPrimaryKey(CskaoyanMallCategory record);
+
+    List<CategoryInfo> selectCatListForGoods();
+
 }

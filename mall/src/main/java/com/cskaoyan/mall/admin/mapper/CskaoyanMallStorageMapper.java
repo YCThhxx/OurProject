@@ -27,4 +27,9 @@ public interface CskaoyanMallStorageMapper {
     int updateByPrimaryKeySelective(CskaoyanMallStorage record);
 
     int updateByPrimaryKey(CskaoyanMallStorage record);
+
+    List<CskaoyanMallStorage> queryStorage();
+
+    int countAll();
+
 }

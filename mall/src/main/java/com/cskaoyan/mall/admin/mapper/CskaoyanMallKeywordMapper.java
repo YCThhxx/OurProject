@@ -27,4 +27,8 @@ public interface CskaoyanMallKeywordMapper {
     int updateByPrimaryKeySelective(CskaoyanMallKeyword record);
 
     int updateByPrimaryKey(CskaoyanMallKeyword record);
+
+    List<CskaoyanMallKeyword> showKeyByPage();
+
+    int addKeyWord(CskaoyanMallKeyword record);
 }

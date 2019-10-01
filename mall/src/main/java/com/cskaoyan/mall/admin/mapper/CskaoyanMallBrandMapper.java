@@ -27,4 +27,7 @@ public interface CskaoyanMallBrandMapper {
     int updateByPrimaryKeySelective(CskaoyanMallBrand record);
 
     int updateByPrimaryKey(CskaoyanMallBrand record);
+
+    List<CskaoyanMallBrand> findAllBrandByPage();
+
 }

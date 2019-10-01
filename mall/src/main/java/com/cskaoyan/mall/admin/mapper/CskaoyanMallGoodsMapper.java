@@ -33,4 +33,7 @@ public interface CskaoyanMallGoodsMapper {
     int updateByPrimaryKeyWithBLOBs(CskaoyanMallGoods record);
 
     int updateByPrimaryKey(CskaoyanMallGoods record);
+
+    List<CskaoyanMallGoods> selectGoodsList(@Param("goodsSn") String goodsSn, @Param("name") String name);
+
 }

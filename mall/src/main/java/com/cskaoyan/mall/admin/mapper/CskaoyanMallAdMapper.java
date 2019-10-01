@@ -27,4 +27,7 @@ public interface CskaoyanMallAdMapper {
     int updateByPrimaryKeySelective(CskaoyanMallAd record);
 
     int updateByPrimaryKey(CskaoyanMallAd record);
+
+    List<CskaoyanMallAd> selectByPageAndPageSize(@Param("adName")String adName,@Param("adContent")String adContent);
+
 }

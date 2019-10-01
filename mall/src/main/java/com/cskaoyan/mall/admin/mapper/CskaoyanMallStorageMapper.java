@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.mapper;
 
+import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallStorageExample;
 import java.util.List;
@@ -28,8 +29,7 @@ public interface CskaoyanMallStorageMapper {
 
     int updateByPrimaryKey(CskaoyanMallStorage record);
 
-    List<CskaoyanMallStorage> queryStorage();
+    List<CskaoyanMallStorage> queryAllStorage();
 
-    int countAll();
-
+    int countAllStorage();
 }

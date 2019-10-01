@@ -27,4 +27,8 @@ public interface CskaoyanMallAdminMapper {
     int updateByPrimaryKeySelective(CskaoyanMallAdmin record);
 
     int updateByPrimaryKey(CskaoyanMallAdmin record);
+
+    List<CskaoyanMallAdmin> queryAllAdmin();
+
+    int countAllAdmin();
 }

@@ -3,6 +3,8 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRole;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRoleExample;
 import java.util.List;
+
+import com.cskaoyan.mall.admin.vo.OptionVo;
 import org.apache.ibatis.annotations.Param;
 
 public interface CskaoyanMallRoleMapper {
@@ -27,4 +29,6 @@ public interface CskaoyanMallRoleMapper {
     int updateByPrimaryKeySelective(CskaoyanMallRole record);
 
     int updateByPrimaryKey(CskaoyanMallRole record);
+
+    List<CskaoyanMallRole> queryAllRole();
 }

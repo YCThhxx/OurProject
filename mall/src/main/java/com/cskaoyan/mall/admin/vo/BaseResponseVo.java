@@ -41,4 +41,11 @@ public class BaseResponseVo<T> {
         baseResponseVo.setErrno(0);
         return baseResponseVo;
     }
+
+    public static BaseResponseVo ok(){
+        BaseResponseVo baseResponseVo = new BaseResponseVo();
+        baseResponseVo.setErrmsg("成功");
+        baseResponseVo.setErrno(0);
+        return baseResponseVo;
+    }
 }

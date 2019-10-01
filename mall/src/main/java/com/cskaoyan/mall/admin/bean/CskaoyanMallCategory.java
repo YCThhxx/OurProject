@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.admin.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class CskaoyanMallCategory {
     private Integer id;
@@ -26,6 +27,16 @@ public class CskaoyanMallCategory {
     private Date updateTime;
 
     private Boolean deleted;
+
+    List<Object> children;
+
+    public List<Object> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Object> children) {
+        this.children = children;
+    }
 
     public Integer getId() {
         return id;

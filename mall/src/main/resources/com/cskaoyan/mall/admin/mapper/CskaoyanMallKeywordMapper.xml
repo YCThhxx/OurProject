@@ -26,6 +26,15 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_keyword
+    <where>
+    deleted = 0
+      <if test="keyword != null">
+        and keyword like "%"#{keyword,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="url != null">
+        and url like "%"#{url,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
   </select>
 
   <insert id="addKeyWord" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallKeyword">
@@ -43,7 +52,7 @@
   </insert>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cskaoyan_mall_keyword
+    update cskaoyan_mall_keyword set deleted = 1
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallKeyword">

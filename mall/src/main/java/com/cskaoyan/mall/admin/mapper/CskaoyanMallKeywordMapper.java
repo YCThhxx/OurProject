@@ -14,7 +14,7 @@ public interface CskaoyanMallKeywordMapper {
 
     int updateByPrimaryKey(CskaoyanMallKeyword record);
 
-    List<CskaoyanMallKeyword> showKeyByPage();
+    List<CskaoyanMallKeyword> showKeyByPage(String keyword,String url);
 
     int addKeyWord(CskaoyanMallKeyword record);
 }

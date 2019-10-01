@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderGoods;
+
+import java.util.List;
 
 public interface CskaoyanMallGoodsMapper {
     int deleteByPrimaryKey(Integer id);
@@ -12,4 +15,5 @@ public interface CskaoyanMallGoodsMapper {
     int updateByPrimaryKeyWithBLOBs(CskaoyanMallGoods record);
 
     int updateByPrimaryKey(CskaoyanMallGoods record);
+
 }

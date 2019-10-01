@@ -17,12 +17,13 @@ public class KeyWordController {
     private KeyWordService keyWordService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public BaseResponseVo keyWord(@Param("page") int page, @Param("limit") int limit,
-                                    @Param("sort") String sort, @Param("order") String order){
+    public BaseResponseVo viewkeyWord(@Param("page") int page, @Param("limit") int limit,
+                                    @Param("sort") String sort, @Param("order") String order,
+                                      @Param("keyword") String  keyword, @Param("url") String url){
         BaseResponseVo<Object> result = new BaseResponseVo<>();
         result.setErrmsg("成功");
         result.setErrno(0);
-        PageBean branddata = keyWordService.showKeyByPage(page,limit,sort,order);
+        PageBean branddata = keyWordService.showKeyByPage(page,limit,sort,order,keyword,url);
         result.setData(branddata);
         return result;
     }
@@ -46,6 +47,21 @@ public class KeyWordController {
         result.setData(data);
         return result;
     }
+
+    /**
+     * 删除关键字
+     * @param cskaoyanMallKeyword
+     * @return
+     */
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    public BaseResponseVo deleteKeyWord(@RequestBody CskaoyanMallKeyword cskaoyanMallKeyword){
+        BaseResponseVo<Object> result = new BaseResponseVo<>();
+        result.setErrmsg("成功");
+        result.setErrno(0);
+         keyWordService.deleteKeyWord(cskaoyanMallKeyword);
+        return result;
+    }
+
 
 
 }

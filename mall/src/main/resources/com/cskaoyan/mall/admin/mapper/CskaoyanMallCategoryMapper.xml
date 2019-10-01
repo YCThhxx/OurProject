@@ -333,4 +333,33 @@
     select ca.id, ca.name,cl.id as clid,cl.name as clname from cskaoyan_mall_category ca
     left join cskaoyan_mall_category cl on cl.pid = ca.id where ca.pid = 0
   </select>
+
+  <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.admin.vo.CategoryData">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <collection property="children"  ofType="com.cskaoyan.mall.admin.vo.CategoryChildren">
+      <result column="desc1" jdbcType="VARCHAR" property="desc" />
+      <result column="icon_url1" jdbcType="VARCHAR" property="iconUrl" />
+      <result column="pic_url1" jdbcType="VARCHAR" property="picUrl" />
+      <result column="id1" jdbcType="INTEGER" property="id" />
+      <result column="keywords1" jdbcType="VARCHAR" property="keywords" />
+      <result column="level1" jdbcType="VARCHAR" property="level" />
+      <result column="name1" jdbcType="VARCHAR" property="name" />
+    </collection>
+  </resultMap>
+  <select id="selectCategory" resultMap="BaseResultMap1">
+    select ca.id,ca.desc,ca.icon_url,ca.keywords,ca.level,ca.name,ca.pic_url,ca.pid,cb.id as id1,cb.desc as desc1,cb.icon_url as icon_url1,
+    cb.keywords as keyword1,cb.level as level1,cb.name as name1,cb.pic_url as pic_url1,cb.pid as pid1
+    from cskaoyan_mall_category as ca left join cskaoyan_mall_category cb on ca.id = cb.pid where ca.level = 'L1'
+  </select>
+  <select id="selectByLevel" resultType="com.cskaoyan.mall.admin.vo.L1Data">
+    select id as `value`,`name` as label
+    from cskaoyan_mall_category
+    where level = 'L1'
+  </select>
 </mapper>

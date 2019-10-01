@@ -73,29 +73,60 @@
   <sql id="Base_Column_List">
     id, keyword, url, is_hot, is_default, sort_order, add_time, update_time, deleted
   </sql>
-  <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallKeywordExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from cskaoyan_mall_keyword
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_keyword
     where id = #{id,jdbcType=INTEGER}
   </select>
+    <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallKeywordExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_keyword
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+
+    <select id="showKeyByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_keyword
+    <where>
+    deleted = 0
+      <if test="keyword != null">
+        and keyword like "%"#{keyword,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="url != null">
+        and url like "%"#{url,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
+  </select>
+
+  <insert id="addKeyWord" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallKeyword">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cskaoyan_mall_keyword
+    (keyword,url,is_default,is_hot,add_time,update_time) values(
+    #{keyword},
+    #{url},
+    #{isDefault},
+    #{isHot},
+    #{addTime},
+    #{updateTime})
+  </insert>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cskaoyan_mall_keyword
+    update cskaoyan_mall_keyword set deleted = 1
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallKeywordExample">
@@ -267,7 +298,6 @@
       url = #{url,jdbcType=VARCHAR},
       is_hot = #{isHot,jdbcType=BIT},
       is_default = #{isDefault,jdbcType=BIT},
-      sort_order = #{sortOrder,jdbcType=INTEGER},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT}

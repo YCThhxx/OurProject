@@ -5,6 +5,8 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderGoodsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface CskaoyanMallOrderGoodsMapper {
     long countByExample(CskaoyanMallOrderGoodsExample example);
 
@@ -27,4 +29,6 @@ public interface CskaoyanMallOrderGoodsMapper {
     int updateByPrimaryKeySelective(CskaoyanMallOrderGoods record);
 
     int updateByPrimaryKey(CskaoyanMallOrderGoods record);
+
+    List<CskaoyanMallOrderGoods> selectByOrderId(int id);
 }

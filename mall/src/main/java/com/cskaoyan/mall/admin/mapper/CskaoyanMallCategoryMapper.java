@@ -6,6 +6,10 @@ import java.util.List;
 
 import com.cskaoyan.mall.admin.vo.CategoryInfo;
 import org.apache.ibatis.annotations.Param;
+import com.cskaoyan.mall.admin.vo.CategoryData;
+import com.cskaoyan.mall.admin.vo.L1Data;
+
+import java.util.List;
 
 public interface CskaoyanMallCategoryMapper {
     long countByExample(CskaoyanMallCategoryExample example);
@@ -32,4 +36,7 @@ public interface CskaoyanMallCategoryMapper {
 
     List<CategoryInfo> selectCatListForGoods();
 
+    List<CategoryData> selectCategory();
+
+    List<L1Data> selectByLevel();
 }

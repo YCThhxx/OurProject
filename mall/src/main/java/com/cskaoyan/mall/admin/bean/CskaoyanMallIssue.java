@@ -62,4 +62,6 @@ public class CskaoyanMallIssue {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
+
 }

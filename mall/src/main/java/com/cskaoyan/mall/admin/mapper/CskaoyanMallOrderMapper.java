@@ -5,6 +5,9 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+
 public interface CskaoyanMallOrderMapper {
     long countByExample(CskaoyanMallOrderExample example);
 
@@ -27,4 +30,6 @@ public interface CskaoyanMallOrderMapper {
     int updateByPrimaryKeySelective(CskaoyanMallOrder record);
 
     int updateByPrimaryKey(CskaoyanMallOrder record);
+
+    List showOrderByPage(String orderSn, Integer orderStatusArray, Integer userId);
 }

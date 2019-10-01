@@ -19,10 +19,10 @@ public class KeyWordServiceImpl implements KeyWordService {
     CskaoyanMallKeywordMapper cskaoyanMallKeywordMapper;
 
     @Override
-    public PageBean showKeyByPage(int page, int limit, String sort, String order) {
+    public PageBean showKeyByPage(int page, int limit, String sort, String order,String url,String keyword) {
         String orderBy = sort +" "+order;
         PageHelper.startPage(page,limit,orderBy);
-        List keyList =  cskaoyanMallKeywordMapper.showKeyByPage();
+        List keyList =  cskaoyanMallKeywordMapper.showKeyByPage(url,keyword);
         PageBean<List> pageBean = new PageBean<>();
         pageBean.setItems(keyList);
         PageInfo<CskaoyanMallKeyword> pageInfo = new PageInfo<>(keyList);
@@ -53,5 +53,18 @@ public class KeyWordServiceImpl implements KeyWordService {
         cskaoyanMallKeyword.setUpdateTime(updateTime);
         int id = cskaoyanMallKeywordMapper.updateByPrimaryKey(cskaoyanMallKeyword);
         return cskaoyanMallKeyword;
+    }
+
+    /**
+     * 删除keyword(将数据库中的删除状态改为1)
+     */
+    @Override
+    public boolean deleteKeyWord(CskaoyanMallKeyword cskaoyanMallKeyword) {
+        Integer id = cskaoyanMallKeyword.getId();
+        int i = cskaoyanMallKeywordMapper.deleteByPrimaryKey(id);
+        if (i != 0){
+            return true;
+        }
+        return false;
     }
 }

@@ -1,6 +1,5 @@
 package com.cskaoyan.mall.admin.controller;
 
-import com.cskaoyan.mall.admin.bean.CskaoyanMallAd;
 import com.cskaoyan.mall.admin.bean.PageBean;
 import com.cskaoyan.mall.admin.service.AdService;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;

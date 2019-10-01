@@ -1,6 +1,5 @@
 package com.cskaoyan.mall.admin.bean;
 
-
 public class PageBean<T> {
     T items;
     Long total;

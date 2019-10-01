@@ -4,31 +4,31 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
 
 import java.util.List;
 
-public class StorageVo {
-    int total;
-    List<CskaoyanMallStorage> items;
+public class ItemsVo {
+    long total;
+    List<?> items;
 
     @Override
     public String toString() {
-        return "StorageVo{" +
+        return "ItemsVo{" +
                 "total=" + total +
                 ", items=" + items +
                 '}';
     }
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(long total) {
         this.total = total;
     }
 
-    public List<CskaoyanMallStorage> getItems() {
+    public List<?> getItems() {
         return items;
     }
 
-    public void setItems(List<CskaoyanMallStorage> items) {
+    public void setItems(List<?> items) {
         this.items = items;
     }
 }

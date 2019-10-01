@@ -10,9 +10,9 @@
         </commentGenerator>
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/cskaoyanmall"
+                        connectionURL="jdbc:mysql://localhost:3306/mall"
                         userId="root"
-                        password="123456">
+                        password="root">
             <!--是否去除同名表-->
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
@@ -85,14 +85,14 @@
         <!-- 指定所有数据库表 -->
 
         <table tableName="%"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               enableInsert="false"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               enableInsert="true"
                enableDeleteByPrimaryKey="true"
                enableSelectByPrimaryKey="true"
-               selectByExampleQueryId="false" ></table>
+               selectByExampleQueryId="true" ></table>
 
         <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
        <!-- <table tableName="user"

@@ -4,9 +4,9 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
 
 import java.util.List;
 
-public class ItemsVo {
+public class ItemsVo<T> {
     long total;
-    List<?> items;
+    List<T> items;
 
     @Override
     public String toString() {
@@ -24,11 +24,11 @@ public class ItemsVo {
         this.total = total;
     }
 
-    public List<?> getItems() {
+    public List<T> getItems() {
         return items;
     }
 
-    public void setItems(List<?> items) {
+    public void setItems(List<T> items) {
         this.items = items;
     }
 }

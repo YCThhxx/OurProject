@@ -309,16 +309,14 @@
       count(id)
       from cskaoyan_mall_log where deleted = 0
     </select>
-    <select id="queryAllLog" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from cskaoyan_mall_log where deleted = 0
-        order by ${sort} ${order}
-    </select>
+
     <select id="queryAllLogLikeUsername" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from cskaoyan_mall_log where username like #{username} and deleted = 0
+        from cskaoyan_mall_log where deleted = 0
+        <if test="name != null">
+            and name like #{name}
+        </if>
         order by ${sort} ${order}
     </select>
 </mapper>

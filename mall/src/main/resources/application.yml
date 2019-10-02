@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: team
+  servlet:
+    multipart:
+      max-file-size: 5242880
+      max-request-size: 52428800
 
 pagehelper:
   helper-dialect: mysql
@@ -9,3 +13,6 @@ server:
   port: 80
 mybatis:
   type-handlers-package: com.cskaoyan.mall.admin.mybatis
+
+upload:
+  path: D:/iamge/

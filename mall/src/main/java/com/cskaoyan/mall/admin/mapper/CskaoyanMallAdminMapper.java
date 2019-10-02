@@ -29,12 +29,13 @@ public interface CskaoyanMallAdminMapper {
 
     int updateByPrimaryKey(CskaoyanMallAdmin record);
 
-    List<CskaoyanMallAdmin> queryAllAdmin(@Param("sort") String sort,
-                                          @Param("order") String order);
-
     long countAllAdmin();
 
     List<CskaoyanMallAdmin> queryAllAdminLikeUsername(@Param("sort") String sort,
                                                       @Param("order") String order,
                                                       @Param("username") String username);
+
+    void delete(Integer id);
+
+    CskaoyanMallAdmin queryAdminById(Integer id);
 }

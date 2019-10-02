@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,9 +34,10 @@ public class SystemManageServiceImpl implements SystemManageService {
     CskaoyanMallLogMapper logMapper;
 
     @Override
-    public List<CskaoyanMallStorage> storageList(int page, int limit, String sort, String order) {
+    public List<CskaoyanMallStorage> storageList(int page, int limit, String key, String name, String sort, String order) {
         PageHelper.startPage(page, limit);
-        List<CskaoyanMallStorage> storages = storageMapper.queryAllStorage(sort, order);
+        if (name != null) name = "%"+name+"%";
+        List<CskaoyanMallStorage> storages = storageMapper.queryAllStorageEqualKeyLikeName(key, name, sort, order);
         return storages;
     }
 
@@ -46,16 +48,9 @@ public class SystemManageServiceImpl implements SystemManageService {
     }
 
     @Override
-    public List<CskaoyanMallAdmin> adminList(int page, int limit, String sort, String order) {
-        PageHelper.startPage(page, limit);
-        List<CskaoyanMallAdmin> admins = adminMapper.queryAllAdmin(sort, order);
-        return admins;
-    }
-
-    @Override
     public List<CskaoyanMallAdmin> adminList(int page, int limit, String username, String sort, String order) {
         PageHelper.startPage(page, limit);
-        username = "%" + username + "%";
+        if (username != null) username = "%" + username + "%";
         List<CskaoyanMallAdmin> admins = adminMapper.queryAllAdminLikeUsername(sort, order, username);
         return admins;
     }
@@ -68,7 +63,7 @@ public class SystemManageServiceImpl implements SystemManageService {
 
     @Override
     public List<OptionVo> options() {
-        List<CskaoyanMallRole> roles =roleMapper.queryAllRole(null, null);
+        List<CskaoyanMallRole> roles =roleMapper.queryAllRoleLikeUsername(null, null, null);
         List<OptionVo> options = new ArrayList<>();
         for (CskaoyanMallRole role : roles) {
             OptionVo option = new OptionVo();
@@ -86,29 +81,16 @@ public class SystemManageServiceImpl implements SystemManageService {
     }
 
     @Override
-    public List<CskaoyanMallLog> logList(int page, int limit, String sort, String order) {
+    public List<CskaoyanMallLog> logList(int page, int limit, String name, String sort, String order) {
         PageHelper.startPage(page, limit);
-        List<CskaoyanMallLog> logs = logMapper.queryAllLog(sort, order);
+        if (name != null) name = "%" + name + "%";
+        List<CskaoyanMallLog> logs = logMapper.queryAllLogLikeUsername(sort, order, name);
         return logs;
-    }
-
-    @Override
-    public List<CskaoyanMallLog> logList(int page, int limit, String username, String sort, String order) {
-        PageHelper.startPage(page, limit);
-        List<CskaoyanMallLog> logs = logMapper.queryAllLogLikeUsername(sort, order, username);
-        return logs;
-    }
-
-    @Override
-    public List<CskaoyanMallRole> roleList(int page, int limit, String sort, String order) {
-        PageHelper.startPage(page, limit);
-        List<CskaoyanMallRole> roles = roleMapper.queryAllRole(sort, order);
-        return roles;
     }
 
     @Override
     public List<CskaoyanMallRole> roleList(int page, int limit, String name, String sort, String order) {
-        name ="%" + name + "%";
+        if (name != null) name ="%" + name + "%";
         PageHelper.startPage(page, limit);
         List<CskaoyanMallRole> roles = roleMapper.queryAllRoleLikeUsername(sort, order, name);
         return roles;
@@ -118,5 +100,108 @@ public class SystemManageServiceImpl implements SystemManageService {
     public long countAllRole() {
         long total = roleMapper.countAllRole();
         return total;
+    }
+
+    @Override
+    public CskaoyanMallStorage create(String newname, String filename, String type, int size, String url) {
+        Date addTime = new Date();
+        Date updateTime = new Date();
+        CskaoyanMallStorage storage = new CskaoyanMallStorage();
+        storage.setKey(newname);
+        storage.setName(filename);
+        storage.setType(type);
+        storage.setSize(size);
+        storage.setUrl(url);
+        storage.setAddTime(addTime);
+        storage.setUpdateTime(updateTime);
+        storageMapper.insertSelective(storage);
+        //id暂时设置为 未加入数据库前的总量+1
+        storage.setId((int)countAllStorage()+1);
+        return storage;
+    }
+
+    @Override
+    public boolean deleteStorage(Integer id) {
+        try {
+            storageMapper.delete(id);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public CskaoyanMallAdmin createAdmin(CskaoyanMallAdmin admin) {
+        Date addTime = new Date();
+        Date updateTime = new Date();
+        admin.setAddTime(addTime);
+        admin.setUpdateTime(updateTime);
+        adminMapper.insertSelective(admin);
+        admin.setId((int)countAllAdmin());
+        return admin;
+    }
+
+    @Override
+    public boolean deleteAdmin(Integer id) {
+        try {
+            adminMapper.delete(id);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public void updateAdmin(CskaoyanMallAdmin admin) {
+        adminMapper.updateByPrimaryKeySelective(admin);
+    }
+
+    @Override
+    public CskaoyanMallAdmin queryAdminById(Integer id) {
+        return adminMapper.queryAdminById(id);
+    }
+
+    @Override
+    public CskaoyanMallRole createRole(CskaoyanMallRole role) {
+        Date addTime = new Date();
+        Date updateTime = new Date();
+        role.setAddTime(addTime);
+        role.setUpdateTime(updateTime);
+        roleMapper.insertSelective(role);
+        role.setId((int)countAllRole());
+        return role;
+    }
+
+    @Override
+    public void updateRole(CskaoyanMallRole role) {
+        roleMapper.updateByPrimaryKeySelective(role);
+    }
+
+    @Override
+    public CskaoyanMallRole queryRoleById(Integer id) {
+        return roleMapper.queryRoleById(id);
+    }
+
+    @Override
+    public boolean deleteRole(Integer id) {
+        try {
+            roleMapper.delete(id);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public void updateStorage(CskaoyanMallStorage storage) {
+        storageMapper.updateByPrimaryKeySelective(storage);
+    }
+
+    @Override
+    public CskaoyanMallStorage queryStorageById(Integer id) {
+        return storageMapper.queryStorageById(id);
     }
 }

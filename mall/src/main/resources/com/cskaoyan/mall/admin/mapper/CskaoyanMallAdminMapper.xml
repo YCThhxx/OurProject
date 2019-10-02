@@ -306,18 +306,28 @@
       from cskaoyan_mall_admin
       where deleted = 0
     </select>
-    <select id="queryAllAdmin" resultMap="BaseResultMap1">
-        select
-        <include refid="Base_Column_List1" />
-        from cskaoyan_mall_admin
-        where deleted = 0
-        order by ${sort} ${order}
-    </select>
+
     <select id="queryAllAdminLikeUsername" resultMap="BaseResultMap1">
         select
         <include refid="Base_Column_List1" />
         from cskaoyan_mall_admin
-        where username like #{username} and deleted = 0
+        where deleted = 0
+        <if test="username != null">
+            and username like #{username}
+        </if>
         order by ${sort} ${order}
+    </select>
+
+    <update id="delete">
+        update cskaoyan_mall_admin
+        set deleted = 1
+        where id = #{id}
+    </update>
+
+    <select id="queryAdminById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_admin
+        where deleted = 0 and id = #{id}
     </select>
 </mapper>

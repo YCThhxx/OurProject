@@ -303,23 +303,4 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="showKeyByPage" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from cskaoyan_mall_keyword
-  </select>
-
-  <insert id="addKeyWord" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallKeyword">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into cskaoyan_mall_keyword
-    (keyword,url,is_default,is_hot,add_time,update_time) values(
-    #{keyword},
-    #{url},
-    #{isDefault},
-    #{isHot},
-    #{addTime},
-    #{updateTime})
-  </insert>
 </mapper>

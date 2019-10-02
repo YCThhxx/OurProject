@@ -28,3 +28,4 @@ mall/.idea
 ../.DS_Store
 mall/target/
 mall/src/main/resources/generatorConfig.yml
+mall/src/main/resources/application-team.yml

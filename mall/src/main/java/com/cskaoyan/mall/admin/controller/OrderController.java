@@ -1,11 +1,15 @@
 package com.cskaoyan.mall.admin.controller;
 
+import com.cskaoyan.mall.admin.bean.CskaoyanMallComment;
 import com.cskaoyan.mall.admin.bean.PageBean;
+import com.cskaoyan.mall.admin.service.CommentService;
 import com.cskaoyan.mall.admin.service.OrderService;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.admin.vo.OrderDetail;
+import com.cskaoyan.mall.admin.vo.statvo.CommentInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +20,10 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    CommentService commentService;
+
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public BaseResponseVo viewOrder(@Param("page") int page, @Param("limit") int limit,
@@ -38,5 +46,21 @@ public class OrderController {
         OrderDetail data = orderService.getOrderDetail(id);
         result.setData(data);
         return result;
+    }
+
+    @RequestMapping("reply")
+    public BaseResponseVo replyComment(@RequestBody CommentInfo commentInfo){
+        Integer commentId = commentInfo.getCommentId();
+        String content = commentInfo.getContent();
+        boolean flag = commentService.replyComment(commentId,content);
+        BaseResponseVo baseResponseVo = new BaseResponseVo();
+        if (flag){
+            baseResponseVo.setErrno(0);
+            baseResponseVo.setErrmsg("成功");
+        }else {
+            baseResponseVo.setErrmsg("订单商品已回复！");
+            baseResponseVo.setErrno(5000);
+        }
+        return baseResponseVo;
     }
 }

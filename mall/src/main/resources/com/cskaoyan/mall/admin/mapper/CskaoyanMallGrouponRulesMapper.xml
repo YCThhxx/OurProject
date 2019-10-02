@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, goods_id, goods_name, pic_url, discount, discount_member, add_time, update_time, 
+    id, goods_id, goods_name, pic_url, discount, discount_member, add_time, update_time,
     expire_time, deleted
   </sql>
   <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRulesExample" resultMap="BaseResultMap">
@@ -91,7 +91,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon_rules
     where id = #{id,jdbcType=INTEGER}
@@ -107,13 +107,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRules">
-    insert into cskaoyan_mall_groupon_rules (id, goods_id, goods_name, 
-      pic_url, discount, discount_member, 
-      add_time, update_time, expire_time, 
+    insert into cskaoyan_mall_groupon_rules (id, goods_id, goods_name,
+      pic_url, discount, discount_member,
+      add_time, update_time, expire_time,
       deleted)
-    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
-      #{picUrl,jdbcType=VARCHAR}, #{discount,jdbcType=DECIMAL}, #{discountMember,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR},
+      #{picUrl,jdbcType=VARCHAR}, #{discount,jdbcType=DECIMAL}, #{discountMember,jdbcType=INTEGER},
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP},
       #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRules">
@@ -289,4 +289,44 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectAllGrouponRulesByAddtime" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_groupon_rules
+    where deleted = 0
+    <if test="goodsid!=''">
+      and goods_id = #{goodsid}
+    </if>
+    order by
+    ${by} ${order}
+  </select>
+
+  <select id="countAllRules" resultType="java.lang.Long">
+    select count(id) from cskaoyan_mall_groupon_rules where deleted = 0
+  </select>
+
+  <update id="updateRule">
+    update cskaoyan_mall_groupon_rules set
+    goods_id = #{rule.goodsId} ,
+    goods_name = #{rule.goodsName} ,
+    pic_url = #{rule.picUrl} ,
+    discount = #{rule.discount} ,
+    discount_member = #{rule.discountMember} ,
+    expire_time = #{rule.expireTime} ,
+    update_time = #{rule.updateTime}
+    where id = #{rule.id}
+  </update>
+
+  <update id="deleteById">
+    update cskaoyan_mall_groupon_rules set deleted = 1 where id = #{id}
+  </update>
+
+  <insert id="createRule">
+    insert into cskaoyan_mall_groupon_rules
+    (goods_id,goods_name,pic_url,discount,discount_member,expire_time,update_time,add_time,deleted)
+    value
+    (#{rule.goodsId},#{rule.goodsName},#{rule.picUrl},#{rule.discount},#{rule.discountMember},
+    #{rule.expireTime},#{rule.updateTime},#{rule.addTime},0)
+  </insert>
+
 </mapper>

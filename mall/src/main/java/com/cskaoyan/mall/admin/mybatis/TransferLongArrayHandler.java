@@ -13,15 +13,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@MappedTypes(String[].class)
-public class TransferStringArrayHandler implements TypeHandler<String[]> {
+@MappedTypes(long[].class)
+public class TransferLongArrayHandler implements TypeHandler<long[]> {
     ObjectMapper objectMapper = new ObjectMapper();
 
     /*插入数据 由javabean转换为数据库接收的类型*/
     @Override
-    public void setParameter(PreparedStatement preparedStatement, int index, String[] strings, JdbcType jdbcType) throws SQLException {
+    public void setParameter(PreparedStatement preparedStatement, int index, long[] longs, JdbcType jdbcType) throws SQLException {
         try {
-            String jsonArray = objectMapper.writeValueAsString(strings);
+            String jsonArray = objectMapper.writeValueAsString(longs);
             preparedStatement.setString(index,jsonArray);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -29,36 +29,34 @@ public class TransferStringArrayHandler implements TypeHandler<String[]> {
     }
     //由数据中查询出的结果转换成javabean中的类型
     @Override
-    public String[] getResult(ResultSet resultSet, String parameterName) throws SQLException {
+    public long[] getResult(ResultSet resultSet, String parameterName) throws SQLException {
         String value = resultSet.getString(parameterName);
-        return parseString2StringArray(value);
+        return parseString2LongArray(value);
     }
 
-    private String[] parseString2StringArray(String value) {
+    private long[] parseString2LongArray(String value) {
 
-        String[] strings = new String[0];
+        long[] longs = new long[0];
         if (value == null){
-            return strings;
+            return longs;
         }
         try {
-            strings = objectMapper.readValue(value, String[].class);
+            longs = objectMapper.readValue(value, long[].class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return strings;
+        return longs;
     }
 
     @Override
-    public String[] getResult(ResultSet resultSet, int index) throws SQLException {
+    public long[] getResult(ResultSet resultSet, int index) throws SQLException {
         String value = resultSet.getString(index);
-        return parseString2StringArray(value);
+        return parseString2LongArray(value);
     }
 
     @Override
-    public String[] getResult(CallableStatement callableStatement, int index) throws SQLException {
+    public long[] getResult(CallableStatement callableStatement, int index) throws SQLException {
         String value = callableStatement.getString(index);
-        return parseString2StringArray(value);
+        return parseString2LongArray(value);
     }
-
-
 }

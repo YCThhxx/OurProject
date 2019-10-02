@@ -275,11 +275,12 @@
   <select id="queryAllStorage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from cskaoyan_mall_storage
+    from cskaoyan_mall_storage where deleted = 0
+    order by ${sort} ${order}
   </select>
   <select id="countAllStorage" resultType="java.lang.Long">
       select
       count(id)
-      from cskaoyan_mall_storage
+      from cskaoyan_mall_storage where deleted = 0
   </select>
 </mapper>

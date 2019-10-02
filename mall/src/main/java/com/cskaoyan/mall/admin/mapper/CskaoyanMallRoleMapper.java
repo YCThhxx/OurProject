@@ -30,7 +30,12 @@ public interface CskaoyanMallRoleMapper {
 
     int updateByPrimaryKey(CskaoyanMallRole record);
 
-    List<CskaoyanMallRole> queryAllRole();
+    List<CskaoyanMallRole> queryAllRole(@Param("sort") String sort,
+                                        @Param("order") String order);
 
     long countAllRole();
+
+    List<CskaoyanMallRole> queryAllRoleLikeUsername(@Param("sort") String sort,
+                                                    @Param("order") String order,
+                                                    @Param("name") String name);
 }

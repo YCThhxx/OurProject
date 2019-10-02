@@ -48,7 +48,15 @@ public class SystemManageServiceImpl implements SystemManageService {
     @Override
     public List<CskaoyanMallAdmin> adminList(int page, int limit, String sort, String order) {
         PageHelper.startPage(page, limit);
-        List<CskaoyanMallAdmin> admins = adminMapper.queryAllAdmin();
+        List<CskaoyanMallAdmin> admins = adminMapper.queryAllAdmin(sort, order);
+        return admins;
+    }
+
+    @Override
+    public List<CskaoyanMallAdmin> adminList(int page, int limit, String username, String sort, String order) {
+        PageHelper.startPage(page, limit);
+        username = "%" + username + "%";
+        List<CskaoyanMallAdmin> admins = adminMapper.queryAllAdminLikeUsername(sort, order, username);
         return admins;
     }
 
@@ -60,7 +68,7 @@ public class SystemManageServiceImpl implements SystemManageService {
 
     @Override
     public List<OptionVo> options() {
-        List<CskaoyanMallRole> roles =roleMapper.queryAllRole();
+        List<CskaoyanMallRole> roles =roleMapper.queryAllRole(null, null);
         List<OptionVo> options = new ArrayList<>();
         for (CskaoyanMallRole role : roles) {
             OptionVo option = new OptionVo();
@@ -80,14 +88,29 @@ public class SystemManageServiceImpl implements SystemManageService {
     @Override
     public List<CskaoyanMallLog> logList(int page, int limit, String sort, String order) {
         PageHelper.startPage(page, limit);
-        List<CskaoyanMallLog> logs = logMapper.queryAllLog();
+        List<CskaoyanMallLog> logs = logMapper.queryAllLog(sort, order);
+        return logs;
+    }
+
+    @Override
+    public List<CskaoyanMallLog> logList(int page, int limit, String username, String sort, String order) {
+        PageHelper.startPage(page, limit);
+        List<CskaoyanMallLog> logs = logMapper.queryAllLogLikeUsername(sort, order, username);
         return logs;
     }
 
     @Override
     public List<CskaoyanMallRole> roleList(int page, int limit, String sort, String order) {
         PageHelper.startPage(page, limit);
-        List<CskaoyanMallRole> roles = roleMapper.queryAllRole();
+        List<CskaoyanMallRole> roles = roleMapper.queryAllRole(sort, order);
+        return roles;
+    }
+
+    @Override
+    public List<CskaoyanMallRole> roleList(int page, int limit, String name, String sort, String order) {
+        name ="%" + name + "%";
+        PageHelper.startPage(page, limit);
+        List<CskaoyanMallRole> roles = roleMapper.queryAllRoleLikeUsername(sort, order, name);
         return roles;
     }
 

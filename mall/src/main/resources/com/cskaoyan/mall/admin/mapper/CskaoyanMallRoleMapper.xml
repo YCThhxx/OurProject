@@ -245,11 +245,22 @@
     <select id="queryAllRole" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from cskaoyan_mall_role
+        from cskaoyan_mall_role where deleted = 0
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
     </select>
     <select id="countAllRole" resultType="java.lang.Long">
       select
       count(id)
       from cskaoyan_mall_role
-  </select>
+      where deleted = 0
+    </select>
+    <select id="queryAllRoleLikeUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_role
+        where name like #{name} and deleted = 0
+        order by ${sort} ${order}
+    </select>
 </mapper>

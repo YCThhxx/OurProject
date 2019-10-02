@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.vo;
 
+
 public class BaseResponseVo<T> {
     T data;
     String errmsg;

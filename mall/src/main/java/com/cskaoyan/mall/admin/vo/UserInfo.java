@@ -2,11 +2,6 @@ package com.cskaoyan.mall.admin.vo;
 
 import java.util.List;
 
-/**
- * author : Nianjie Jing
- * creat time : 2019/9/30
- * e-mail : clemeting@qq.com
- */
 public class UserInfo {
     String avatar;
     String name;

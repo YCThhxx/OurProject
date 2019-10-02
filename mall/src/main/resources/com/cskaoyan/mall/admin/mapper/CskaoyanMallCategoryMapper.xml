@@ -93,7 +93,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_category
     where id = #{id,jdbcType=INTEGER}
@@ -109,14 +109,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCategory">
-    insert into cskaoyan_mall_category (id, name, keywords, 
-      desc, pid, icon_url, 
-      pic_url, level, sort_order, 
+    insert into cskaoyan_mall_category (id, name, keywords,
+      desc, pid, icon_url,
+      pic_url, level, sort_order,
       add_time, update_time, deleted
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR}, 
-      #{desc,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{iconUrl,jdbcType=VARCHAR}, 
-      #{picUrl,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{sortOrder,jdbcType=TINYINT}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR},
+      #{desc,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, #{iconUrl,jdbcType=VARCHAR},
+      #{picUrl,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{sortOrder,jdbcType=TINYINT},
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
@@ -321,6 +321,18 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <resultMap id="catListMap" type="com.cskaoyan.mall.admin.vo.CategoryInfo">
+    <result column="id" property="value"/>
+    <result column="name" property="label"/>
+    <collection property="children" ofType="com.cskaoyan.mall.admin.vo.CatChildren">
+      <result column="clid" property="value"/>
+      <result column="clname" property="label"/>
+    </collection>
+  </resultMap>
+  <select id="selectCatListForGoods" resultMap="catListMap">
+    select ca.id, ca.name,cl.id as clid,cl.name as clname from cskaoyan_mall_category ca
+    left join cskaoyan_mall_category cl on cl.pid = ca.id where ca.pid = 0
+  </select>
 
   <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.admin.vo.CategoryData">
     <result column="id" jdbcType="INTEGER" property="id" />

@@ -209,4 +209,7 @@
       code = #{code,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectAddressByCode"  resultType="String">
+    select name from cskaoyan_mall_region where code = #{code}
+  </select>
 </mapper>

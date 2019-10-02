@@ -35,7 +35,7 @@ public class SystemManageServiceImpl implements SystemManageService {
     @Override
     public List<CskaoyanMallStorage> storageList(int page, int limit, String sort, String order) {
         PageHelper.startPage(page, limit);
-        List<CskaoyanMallStorage> storages = storageMapper.queryAllStorage();
+        List<CskaoyanMallStorage> storages = storageMapper.queryAllStorage(sort, order);
         return storages;
     }
 

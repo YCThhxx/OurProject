@@ -29,7 +29,8 @@ public interface CskaoyanMallStorageMapper {
 
     int updateByPrimaryKey(CskaoyanMallStorage record);
 
-    List<CskaoyanMallStorage> queryAllStorage();
+    List<CskaoyanMallStorage> queryAllStorage(@Param("sort") String sort,
+                                              @Param("order") String order);
 
     long countAllStorage();
 }

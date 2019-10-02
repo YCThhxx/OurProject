@@ -113,6 +113,11 @@ public class SystemManageController {
         return null;
     }
 
+    @RequestMapping(value = "admin/storage/create")
+    public BaseResponseVo create(){
+        return null;
+    }
+
     private BaseResponseVo ok(List<?> data, long total){
         ItemsVo itemsVo = new ItemsVo();
         itemsVo.setTotal(total);

@@ -88,4 +88,6 @@ public class GoodsController {
     public void createGoods(@RequestBody GoodsDetailInfo goodsDetailInfo){
         goodsService.createGoods(goodsDetailInfo);
     }
+
+
 }

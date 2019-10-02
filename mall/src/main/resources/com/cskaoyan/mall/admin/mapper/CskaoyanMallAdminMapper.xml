@@ -294,20 +294,30 @@
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="username" jdbcType="VARCHAR" property="username" />
         <result column="avatar" jdbcType="VARCHAR" property="avatar" />
-        <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
+        <result column="role_ids" property="roleIds" typeHandler="com.cskaoyan.mall.admin.mybatis.TransferLongArrayHandler"/>
     </resultMap>
     <sql id="Base_Column_List1">
       id, username, avatar, role_ids
     </sql>
 
-    <select id="countAllAdmin" resultType="java.lang.Integer">
+    <select id="countAllAdmin" resultType="java.lang.Long">
       select
       count(id)
       from cskaoyan_mall_admin
+      where deleted = 0
     </select>
     <select id="queryAllAdmin" resultMap="BaseResultMap1">
         select
         <include refid="Base_Column_List1" />
         from cskaoyan_mall_admin
+        where deleted = 0
+        order by ${sort} ${order}
+    </select>
+    <select id="queryAllAdminLikeUsername" resultMap="BaseResultMap1">
+        select
+        <include refid="Base_Column_List1" />
+        from cskaoyan_mall_admin
+        where username like #{username} and deleted = 0
+        order by ${sort} ${order}
     </select>
 </mapper>

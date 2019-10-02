@@ -209,4 +209,39 @@
       code = #{code,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--只需要这一个接口-->
+  <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.admin.vo.RegionData">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <collection property="children"  ofType="com.cskaoyan.mall.admin.vo.RegionData">
+      <result column="bid" jdbcType="INTEGER" property="id" />
+      <result column="bname" jdbcType="VARCHAR" property="name" />
+      <result column="btype" jdbcType="INTEGER" property="type" />
+      <result column="bcode" jdbcType="INTEGER" property="code" />
+      <collection property="children"  ofType="com.cskaoyan.mall.admin.bean.CskaoyanMallRegion">
+        <result column="cid" jdbcType="INTEGER" property="id" />
+        <result column="cname" jdbcType="VARCHAR" property="name" />
+        <result column="ctype" jdbcType="INTEGER" property="type" />
+        <result column="ccode" jdbcType="INTEGER" property="code" />
+      </collection>
+    </collection>
+  </resultMap>
+  <select id="getRegions" resultMap="BaseResultMap1">
+    		SELECT b.id,b.name,b.type,b.code,b.pid,
+    		bid,bname,btype,bcode,bpid,
+    		rc.id cid,rc.name cname,rc.type ctype,
+    		rc.code ccode,rc.pid cpid
+    		from ((SELECT ra.id,ra.name,ra.type,ra.code,ra.pid,
+    		rb.id bid,rb.name bname,rb.type btype,rb.code bcode,rb.pid bpid
+    		 from cskaoyan_mall_region ra LEFT JOIN
+    		 cskaoyan_mall_region rb  on ra.id = rb.pid
+    		 where ra.type = 1)as b)
+    		 LEFT JOIN cskaoyan_mall_region rc
+    		 ON b.bid = rc.pid
+  </select>
+  <select id="selectAddressByCode"  resultType="String">
+    select name from cskaoyan_mall_region where code = #{code}
+  </select>
 </mapper>

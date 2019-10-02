@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.admin.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class CskaoyanMallAd {
@@ -21,6 +23,7 @@ public class CskaoyanMallAd {
 
     private Boolean enabled;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date addTime;
 
     private Date updateTime;

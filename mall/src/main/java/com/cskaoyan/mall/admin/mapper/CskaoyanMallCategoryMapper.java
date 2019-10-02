@@ -39,4 +39,9 @@ public interface CskaoyanMallCategoryMapper {
     List<CategoryData> selectCategory();
 
     List<L1Data> selectByLevel();
+
+    int updateCategory(CskaoyanMallCategory categoryData);
+
+    int deleteCategory(CskaoyanMallCategory categoryData);
+
 }

@@ -307,11 +307,18 @@
     <select id="countAllLog" resultType="java.lang.Long">
       select
       count(id)
-      from cskaoyan_mall_log
+      from cskaoyan_mall_log where deleted = 0
     </select>
     <select id="queryAllLog" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from cskaoyan_mall_log
+        from cskaoyan_mall_log where deleted = 0
+        order by ${sort} ${order}
+    </select>
+    <select id="queryAllLogLikeUsername" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_log where username like #{username} and deleted = 0
+        order by ${sort} ${order}
     </select>
 </mapper>

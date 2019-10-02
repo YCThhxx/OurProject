@@ -10,9 +10,9 @@
         </commentGenerator>
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/mall"
+                        connectionURL="jdbc:mysql://localhost:3306/cskaoyanmall"
                         userId="root"
-                        password="root">
+                        password="123456">
             <!--是否去除同名表-->
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>

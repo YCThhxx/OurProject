@@ -242,11 +242,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-    <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.admin.bean.CskaoyanMallRole">
-        <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
-    </resultMap>
-    <select id="queryAllRole" resultMap="BaseResultMap1">
-        select id, name from cskaoyan_mall_role
+    <select id="queryAllRole" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_role
     </select>
+    <select id="countAllRole" resultType="java.lang.Long">
+      select
+      count(id)
+      from cskaoyan_mall_role
+  </select>
 </mapper>

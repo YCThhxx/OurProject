@@ -294,13 +294,13 @@
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="username" jdbcType="VARCHAR" property="username" />
         <result column="avatar" jdbcType="VARCHAR" property="avatar" />
-        <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
+        <result column="role_ids" property="roleIds" typeHandler="com.cskaoyan.mall.admin.mybatis.TransferStringArrayHandler"/>
     </resultMap>
     <sql id="Base_Column_List1">
       id, username, avatar, role_ids
     </sql>
 
-    <select id="countAllAdmin" resultType="java.lang.Integer">
+    <select id="countAllAdmin" resultType="java.lang.Long">
       select
       count(id)
       from cskaoyan_mall_admin

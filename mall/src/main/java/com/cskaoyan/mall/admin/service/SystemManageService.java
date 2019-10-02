@@ -2,6 +2,7 @@ package com.cskaoyan.mall.admin.service;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallLog;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallRole;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
 import com.cskaoyan.mall.admin.vo.OptionVo;
 
@@ -21,4 +22,8 @@ public interface SystemManageService {
     long countAllLog();
 
     List<CskaoyanMallLog> logList(int page, int limit, String sort, String order);
+
+    List<CskaoyanMallRole> roleList(int page, int limit, String sort, String order);
+
+    long countAllRole();
 }

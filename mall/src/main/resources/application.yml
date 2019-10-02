@@ -7,3 +7,5 @@ pagehelper:
 
 server:
   port: 80
+mybatis:
+  type-handlers-package: com.cskaoyan.mall.admin.mybatis

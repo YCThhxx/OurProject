@@ -31,5 +31,5 @@ public interface CskaoyanMallStorageMapper {
 
     List<CskaoyanMallStorage> queryAllStorage();
 
-    int countAllStorage();
+    long countAllStorage();
 }

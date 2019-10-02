@@ -31,5 +31,5 @@ public interface CskaoyanMallAdminMapper {
 
     List<CskaoyanMallAdmin> queryAllAdmin();
 
-    int countAllAdmin();
+    long countAllAdmin();
 }

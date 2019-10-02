@@ -31,4 +31,6 @@ public interface CskaoyanMallRoleMapper {
     int updateByPrimaryKey(CskaoyanMallRole record);
 
     List<CskaoyanMallRole> queryAllRole();
+
+    long countAllRole();
 }

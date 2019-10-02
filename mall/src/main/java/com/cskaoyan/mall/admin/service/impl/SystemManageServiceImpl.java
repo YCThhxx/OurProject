@@ -62,14 +62,12 @@ public class SystemManageServiceImpl implements SystemManageService {
     public List<OptionVo> options() {
         List<CskaoyanMallRole> roles =roleMapper.queryAllRole();
         List<OptionVo> options = new ArrayList<>();
-
         for (CskaoyanMallRole role : roles) {
             OptionVo option = new OptionVo();
             option.setValue(role.getId());
             option.setLabel(role.getName());
             options.add(option);
         }
-        System.out.println(options);
         return options;
     }
 
@@ -84,5 +82,18 @@ public class SystemManageServiceImpl implements SystemManageService {
         PageHelper.startPage(page, limit);
         List<CskaoyanMallLog> logs = logMapper.queryAllLog();
         return logs;
+    }
+
+    @Override
+    public List<CskaoyanMallRole> roleList(int page, int limit, String sort, String order) {
+        PageHelper.startPage(page, limit);
+        List<CskaoyanMallRole> roles = roleMapper.queryAllRole();
+        return roles;
+    }
+
+    @Override
+    public long countAllRole() {
+        long total = roleMapper.countAllRole();
+        return total;
     }
 }

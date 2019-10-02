@@ -315,7 +315,7 @@
         <include refid="Base_Column_List" />
         from cskaoyan_mall_log where deleted = 0
         <if test="name != null">
-            and name like #{name}
+            and admin like #{name}
         </if>
         order by ${sort} ${order}
     </select>

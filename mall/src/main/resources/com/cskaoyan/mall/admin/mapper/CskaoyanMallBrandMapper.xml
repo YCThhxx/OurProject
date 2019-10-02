@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, desc, pic_url, sort_order, floor_price, add_time, update_time, deleted
+    id, name, `desc`, pic_url, sort_order, floor_price, add_time, update_time, deleted
   </sql>
   <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallBrandExample" resultMap="BaseResultMap">
     select
@@ -105,7 +105,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallBrand">
-    insert into cskaoyan_mall_brand (id, name, desc,
+    insert into cskaoyan_mall_brand (id, name, `desc`,
       pic_url, sort_order, floor_price,
       add_time, update_time, deleted
       )
@@ -264,7 +264,7 @@
   <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallBrand">
     update cskaoyan_mall_brand
     set name = #{name,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=VARCHAR},
       pic_url = #{picUrl,jdbcType=VARCHAR},
       sort_order = #{sortOrder,jdbcType=TINYINT},
       floor_price = #{floorPrice,jdbcType=DECIMAL},
@@ -277,10 +277,23 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_brand
+    <where>
+      deleted = 0
+      <if test="name != null">
+        and name like "%"#{name,jdbcType=VARCHAR}"%"
+      </if>
+      <if test="id != null">
+        or id like "%"#{id,jdbcType=INTEGER}"%"
+      </if>
+    </where>
   </select>
   <select id="selectBrandListForGoods" resultType="com.cskaoyan.mall.admin.vo.BrandInfo">
     select id as value, name as label
     from cskaoyan_mall_brand
   </select>
-
+  <delete id="deleteBrand" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallBrand">
+    update  cskaoyan_mall_brand
+    set deleted = 1
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
 </mapper>

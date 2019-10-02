@@ -137,7 +137,6 @@ public class SystemManageController {
 
     @RequestMapping(value = "admin/role/list")
     public BaseResponseVo roleList(int page, int limit, String name, String sort, String order){
-
         List<CskaoyanMallRole> roles = systemManageService.roleList(page, limit, name, sort, order);
         long total = systemManageService.countAllRole();
         if (roles != null){

@@ -2,7 +2,6 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrder;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -32,4 +31,7 @@ public interface CskaoyanMallOrderMapper {
     int updateByPrimaryKey(CskaoyanMallOrder record);
 
     List showOrderByPage(String orderSn, Integer orderStatusArray, Integer userId);
+
+    int selectOrdersTotal();
+
 }

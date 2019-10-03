@@ -2,8 +2,9 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallUserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CskaoyanMallUserMapper {
     long countByExample(CskaoyanMallUserExample example);
@@ -27,4 +28,7 @@ public interface CskaoyanMallUserMapper {
     int updateByPrimaryKeySelective(CskaoyanMallUser record);
 
     int updateByPrimaryKey(CskaoyanMallUser record);
+
+    int selectUserTotal();
+
 }

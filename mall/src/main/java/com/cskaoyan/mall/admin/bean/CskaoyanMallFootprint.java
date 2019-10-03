@@ -10,8 +10,10 @@ public class CskaoyanMallFootprint {
     private Integer userId;
 
     private Integer goodsId;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 

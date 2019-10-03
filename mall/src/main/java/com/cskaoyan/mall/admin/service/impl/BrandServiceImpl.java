@@ -1,7 +1,6 @@
 package com.cskaoyan.mall.admin.service.impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallBrand;
-import com.cskaoyan.mall.admin.bean.CskaoyanMallCategory;
 import com.cskaoyan.mall.admin.bean.PageBean;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallBrandMapper;
 import com.cskaoyan.mall.admin.service.BrandService;
@@ -39,8 +38,6 @@ public class BrandServiceImpl implements BrandService {
         cskaoyanData.setAddTime(addTime);
         cskaoyanData.setUpdateTime(addTime);
         cskaoyanData.setDeleted(false);
-//需要调整的接口
-        cskaoyanData.setPicUrl("123");
         int id = cskaoyanMallBrandMapper.insert(cskaoyanData);
         cskaoyanData.setId(id);
         return cskaoyanData;

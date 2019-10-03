@@ -37,4 +37,10 @@ public interface CskaoyanMallAdminMapper {
     List<CskaoyanMallAdmin> queryAllAdminLikeUsername(@Param("sort") String sort,
                                                       @Param("order") String order,
                                                       @Param("username") String username);
+
+    int updatePassword(String newPassword);
+
+    void delete(Integer id);
+
+    CskaoyanMallAdmin queryAdminById(Integer id);
 }

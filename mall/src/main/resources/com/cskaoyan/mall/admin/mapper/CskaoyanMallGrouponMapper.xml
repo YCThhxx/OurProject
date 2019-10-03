@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, order_id, groupon_id, rules_id, user_id, creator_user_id, add_time, update_time, 
+    id, order_id, groupon_id, rules_id, user_id, creator_user_id, add_time, update_time,
     share_url, payed, deleted
   </sql>
   <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponExample" resultMap="BaseResultMap">
@@ -92,7 +92,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon
     where id = #{id,jdbcType=INTEGER}
@@ -108,13 +108,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallGroupon">
-    insert into cskaoyan_mall_groupon (id, order_id, groupon_id, 
-      rules_id, user_id, creator_user_id, 
-      add_time, update_time, share_url, 
+    insert into cskaoyan_mall_groupon (id, order_id, groupon_id,
+      rules_id, user_id, creator_user_id,
+      add_time, update_time, share_url,
       payed, deleted)
-    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{grouponId,jdbcType=INTEGER}, 
-      #{rulesId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{creatorUserId,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{shareUrl,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{grouponId,jdbcType=INTEGER},
+      #{rulesId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{creatorUserId,jdbcType=INTEGER},
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{shareUrl,jdbcType=VARCHAR},
       #{payed,jdbcType=BIT}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallGroupon">
@@ -304,4 +304,24 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectAllGrouponsByAddtime" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_groupon
+    where deleted = 0
+    order by ${by}
+    ${order}
+  </select>
+
+  <select id="countAllGroupons" resultType="java.lang.Long">
+    select count(id) from cskaoyan_mall_groupon where deleted = 0
+  </select>
+
+  <select id="selectAllGrouponsByRulesId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_groupon
+    where rules_id = #{rulesId}
+  </select>
+
 </mapper>

@@ -30,8 +30,9 @@ public interface CskaoyanMallBrandMapper {
 
     int updateByPrimaryKey(CskaoyanMallBrand record);
 
-    List<CskaoyanMallBrand> findAllBrandByPage();
+    List<CskaoyanMallBrand> findAllBrandByPage(Integer id,String name);
 
     List<BrandInfo> selectBrandListForGoods();
 
+    int deleteBrand(CskaoyanMallBrand categoryData);
 }

@@ -30,10 +30,7 @@ public interface CskaoyanMallLogMapper {
 
     long countAllLog();
 
-    List<CskaoyanMallLog> queryAllLog(@Param("sort") String sort,
-                                      @Param("order") String order);
-
     List<CskaoyanMallLog> queryAllLogLikeUsername(@Param("sort") String sort,
                                                   @Param("order") String order,
-                                                  @Param("username") String username);
+                                                  @Param("name") String name);
 }

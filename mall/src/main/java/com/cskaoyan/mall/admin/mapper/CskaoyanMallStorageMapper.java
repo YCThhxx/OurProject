@@ -3,6 +3,8 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallStorageExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,7 +31,14 @@ public interface CskaoyanMallStorageMapper {
 
     int updateByPrimaryKey(CskaoyanMallStorage record);
 
-    List<CskaoyanMallStorage> queryAllStorage();
-
     long countAllStorage();
+
+    void delete(Integer id);
+
+    List<CskaoyanMallStorage> queryAllStorageEqualKeyLikeName(@Param("key") String key,
+                                                              @Param("name") String name,
+                                                              @Param("sort") String sort,
+                                                              @Param("order") String order);
+
+    CskaoyanMallStorage queryStorageById(Integer id);
 }

@@ -77,7 +77,7 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_keyword
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
     <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallKeywordExample" resultMap="BaseResultMap">
         select

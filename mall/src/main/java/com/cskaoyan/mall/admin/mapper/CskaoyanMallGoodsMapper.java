@@ -2,9 +2,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoodsExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderGoods;
 
 import java.util.List;
 
@@ -39,5 +37,7 @@ public interface CskaoyanMallGoodsMapper {
 
     List<CskaoyanMallGoods> selectGoodsList(@Param("goodsSn") String goodsSn, @Param("name") String name);
 
+
+    int selectGoodsTotal();
 
 }

@@ -96,10 +96,15 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_category
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteCategory" parameterType="java.lang.Integer">
+    update cskaoyan_mall_category
+    set deleted = 1
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCategoryExample">
@@ -110,7 +115,7 @@
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCategory">
     insert into cskaoyan_mall_category (id, name, keywords,
-      desc, pid, icon_url,
+      `desc`, pid, icon_url,
       pic_url, level, sort_order,
       add_time, update_time, deleted
       )
@@ -331,8 +336,35 @@
   </resultMap>
   <select id="selectCatListForGoods" resultMap="catListMap">
     select ca.id, ca.name,cl.id as clid,cl.name as clname from cskaoyan_mall_category ca
-    left join cskaoyan_mall_category cl on cl.pid = ca.id where ca.pid = 0
+    left join cskaoyan_mall_category cl on cl.pid = ca.id where ca.pid = 0 and deleted = 0
   </select>
+  <update id="updateCategory" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCategory">
+    update cskaoyan_mall_category
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null">
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        `desc` = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        icon_url = #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
   <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.admin.vo.CategoryData">
     <result column="id" jdbcType="INTEGER" property="id" />
@@ -355,11 +387,11 @@
   <select id="selectCategory" resultMap="BaseResultMap1">
     select ca.id,ca.desc,ca.icon_url,ca.keywords,ca.level,ca.name,ca.pic_url,ca.pid,cb.id as id1,cb.desc as desc1,cb.icon_url as icon_url1,
     cb.keywords as keyword1,cb.level as level1,cb.name as name1,cb.pic_url as pic_url1,cb.pid as pid1
-    from cskaoyan_mall_category as ca left join cskaoyan_mall_category cb on ca.id = cb.pid where ca.level = 'L1'
+    from cskaoyan_mall_category as ca left join cskaoyan_mall_category cb on ca.id = cb.pid and cb.deleted = 0 where ca.level = 'L1' and ca.deleted = 0
   </select>
   <select id="selectByLevel" resultType="com.cskaoyan.mall.admin.vo.L1Data">
     select id as `value`,`name` as label
     from cskaoyan_mall_category
-    where level = 'L1'
+    where level = 'L1' and deleted = 0
   </select>
 </mapper>

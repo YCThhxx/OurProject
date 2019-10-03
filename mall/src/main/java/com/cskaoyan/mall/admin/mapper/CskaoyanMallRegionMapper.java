@@ -2,6 +2,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRegion;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRegionExample;
+import com.cskaoyan.mall.admin.vo.RegionData;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,4 +31,7 @@ public interface CskaoyanMallRegionMapper {
     int updateByPrimaryKey(CskaoyanMallRegion record);
 
     String selectAddressByCode(@Param("code") Integer code);
+
+    List<RegionData> getRegions();
+
 }

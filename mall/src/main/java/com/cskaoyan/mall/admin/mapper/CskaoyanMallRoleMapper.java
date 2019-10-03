@@ -2,6 +2,8 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRole;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRoleExample;
+
+import java.util.Date;
 import java.util.List;
 
 import com.cskaoyan.mall.admin.vo.OptionVo;
@@ -30,12 +32,13 @@ public interface CskaoyanMallRoleMapper {
 
     int updateByPrimaryKey(CskaoyanMallRole record);
 
-    List<CskaoyanMallRole> queryAllRole(@Param("sort") String sort,
-                                        @Param("order") String order);
-
     long countAllRole();
 
     List<CskaoyanMallRole> queryAllRoleLikeUsername(@Param("sort") String sort,
                                                     @Param("order") String order,
                                                     @Param("name") String name);
+
+    CskaoyanMallRole queryRoleById(Integer id);
+
+    void delete(Integer id);
 }

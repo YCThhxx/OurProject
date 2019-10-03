@@ -119,7 +119,7 @@
         id,
       </if>
       <if test="key != null">
-        key,
+        `key`,
       </if>
       <if test="name != null">
         name,
@@ -233,7 +233,7 @@
     update cskaoyan_mall_storage
     <set>
       <if test="key != null">
-        key = #{key,jdbcType=VARCHAR},
+        `key` = #{key,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -261,7 +261,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallStorage">
     update cskaoyan_mall_storage
-    set key = #{key,jdbcType=VARCHAR},
+    set `key` = #{key,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       size = #{size,jdbcType=INTEGER},
@@ -272,15 +272,36 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="queryAllStorage" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from cskaoyan_mall_storage where deleted = 0
-    order by ${sort} ${order}
-  </select>
   <select id="countAllStorage" resultType="java.lang.Long">
       select
       count(id)
       from cskaoyan_mall_storage where deleted = 0
   </select>
+
+    <update id="delete" parameterType="Integer">
+        update cskaoyan_mall_storage
+        set deleted = 1
+        where id = #{id}
+    </update>
+
+    <select id="queryAllStorageEqualKeyLikeName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_storage
+        where deleted = 0
+        <if test="key != null">
+            and `key` = #{key}
+        </if>
+        <if test="name != null">
+            and name like #{name}
+        </if>
+        order by ${sort} ${order}
+    </select>
+
+    <select id="queryStorageById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cskaoyan_mall_storage
+        where deleted = 0 and id = #{id};
+    </select>
 </mapper>

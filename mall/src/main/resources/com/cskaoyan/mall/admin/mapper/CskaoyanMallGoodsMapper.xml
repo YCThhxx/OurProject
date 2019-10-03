@@ -550,4 +550,7 @@
       </trim>
     </where>
   </select>
+  <select id="selectGoodsTotal" resultType="int">
+    select count(id) from cskaoyan_mall_goods
+  </select>
 </mapper>

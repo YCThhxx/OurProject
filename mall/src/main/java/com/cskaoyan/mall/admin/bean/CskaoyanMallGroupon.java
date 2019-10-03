@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.admin.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class CskaoyanMallGroupon {
@@ -14,9 +16,9 @@ public class CskaoyanMallGroupon {
     private Integer userId;
 
     private Integer creatorUserId;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private String shareUrl;

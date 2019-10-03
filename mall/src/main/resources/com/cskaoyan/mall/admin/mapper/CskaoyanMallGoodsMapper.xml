@@ -7,7 +7,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="brand_id" jdbcType="INTEGER" property="brandId" />
-    <result column="gallery" jdbcType="VARCHAR" property="gallery" />
+    <result column="gallery" property="gallery" typeHandler="com.cskaoyan.mall.admin.mybatis.TransferStringArrayHandler"/>
     <result column="keywords" jdbcType="VARCHAR" property="keywords" />
     <result column="brief" jdbcType="VARCHAR" property="brief" />
     <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
@@ -546,6 +546,7 @@
         <if test="name != null and name != ''">
           and `name` like '%#{name}%'
         </if>
+        and deleted = 0
       </trim>
     </where>
   </select>

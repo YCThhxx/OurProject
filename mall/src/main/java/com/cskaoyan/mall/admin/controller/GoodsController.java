@@ -85,8 +85,12 @@ public class GoodsController {
     }
 
     @RequestMapping("create")
-    public void createGoods(@RequestBody GoodsDetailInfo goodsDetailInfo){
+    public BaseResponseVo createGoods(@RequestBody GoodsDetailInfo goodsDetailInfo){
         goodsService.createGoods(goodsDetailInfo);
+        BaseResponseVo baseResponseVo = new BaseResponseVo();
+        baseResponseVo.setErrno(0);
+        baseResponseVo.setErrmsg("成功");
+        return baseResponseVo;
     }
 
 

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.cskaoyan.mall.admin.bean.CskaoyanMallGoodsProduct">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
-    <result column="specifications" jdbcType="VARCHAR" property="specifications" />
+    <result column="specifications" property="specifications" typeHandler="com.cskaoyan.mall.admin.mybatis.TransferStringArrayHandler"/>
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="number" jdbcType="INTEGER" property="number" />
     <result column="url" jdbcType="VARCHAR" property="url" />
@@ -89,7 +89,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_goods_product
     where id = #{id,jdbcType=INTEGER}
@@ -105,12 +105,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallGoodsProduct">
-    insert into cskaoyan_mall_goods_product (id, goods_id, specifications, 
-      price, number, url, 
+    insert into cskaoyan_mall_goods_product (id, goods_id, specifications,
+      price, number, url,
       add_time, update_time, deleted
       )
-    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{specifications,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{specifications,jdbcType=VARCHAR},
+      #{price,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>

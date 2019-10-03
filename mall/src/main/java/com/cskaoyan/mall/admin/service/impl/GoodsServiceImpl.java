@@ -42,7 +42,18 @@ public class GoodsServiceImpl implements GoodsService {
     public PageBean getListOfGoods(int page, int limit, String sort, String order, String goodsSn, String name) {
         String orderBy = sort+" "+order;
         PageHelper.startPage(page,limit,orderBy);
-        List<CskaoyanMallGoods> cskaoyanMallGoods = cskaoyanMallGoodsMapper.selectGoodsList(goodsSn, name);
+
+        CskaoyanMallGoodsExample goodsExample = new CskaoyanMallGoodsExample();
+        CskaoyanMallGoodsExample.Criteria criteria = goodsExample.createCriteria();
+        if (goodsSn!=null&&goodsSn!=""){
+            criteria.andGoodsSnEqualTo(goodsSn);
+        }
+        if (name!=null&&name!=""){
+            criteria.andNameLike("%"+name+"%");
+        }
+        List<CskaoyanMallGoods> cskaoyanMallGoods = cskaoyanMallGoodsMapper.selectByExample(goodsExample);
+//        List<CskaoyanMallGoods> cskaoyanMallGoods = cskaoyanMallGoodsMapper.selectGoodsList(goodsSn, name);
+
         PageInfo<CskaoyanMallGoods> goodsPageInfo = new PageInfo<>(cskaoyanMallGoods);
         long total = goodsPageInfo.getTotal();
         PageBean<List> pageBean = new PageBean<>();
@@ -137,7 +148,9 @@ public class GoodsServiceImpl implements GoodsService {
          */
         ArrayList<Integer> attributeIntegers = new ArrayList();
         for (CskaoyanMallGoodsAttribute attribute : attributes) {
-            attributeIntegers.add(attribute.getId());
+            if(attribute.getId()!=null) {
+                attributeIntegers.add(attribute.getId());
+            }
         }
         CskaoyanMallGoodsAttributeExample goodsAttributeExample1 = new CskaoyanMallGoodsAttributeExample();
         goodsAttributeExample1.createCriteria().andGoodsIdEqualTo(goods.getId()).andIdNotIn(attributeIntegers);
@@ -164,7 +177,9 @@ public class GoodsServiceImpl implements GoodsService {
          */
         ArrayList<Integer> integers = new ArrayList<>();
         for (CskaoyanMallGoodsSpecification specification : specifications) {
-            integers.add(specification.getId());
+            if (specification.getId()!=null) {
+                integers.add(specification.getId());
+            }
         }
         CskaoyanMallGoodsSpecificationExample goodsSpecificationExample1 = new CskaoyanMallGoodsSpecificationExample();
         goodsSpecificationExample1.createCriteria().andGoodsIdEqualTo(goods.getId()).andIdNotIn(integers);

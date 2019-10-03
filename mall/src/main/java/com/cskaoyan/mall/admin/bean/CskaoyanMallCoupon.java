@@ -43,17 +43,17 @@ public class CskaoyanMallCoupon {
     }
 
     private Short days;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private Boolean deleted;
@@ -146,7 +146,7 @@ public class CskaoyanMallCoupon {
         this.goodsType = goodsType;
     }
 
-
+    
 
     public String getCode() {
         return code;
@@ -211,6 +211,4 @@ public class CskaoyanMallCoupon {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
-
-   
 }

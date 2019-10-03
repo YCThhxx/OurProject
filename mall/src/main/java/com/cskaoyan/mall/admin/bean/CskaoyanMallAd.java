@@ -28,7 +28,7 @@ public class CskaoyanMallAd {
     
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
-    
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
@@ -129,4 +129,6 @@ public class CskaoyanMallAd {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+    
+    
 }

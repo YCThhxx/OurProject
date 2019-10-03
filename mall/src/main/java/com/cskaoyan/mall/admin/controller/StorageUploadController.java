@@ -32,7 +32,7 @@ public class StorageUploadController {
 
     @RequestMapping(value = "create")
     public BaseResponseVo create(@RequestParam("file")MultipartFile file){
-        String path="F:\\wangdao_learning\\Spring\\group_project\\OurProject\\mall\\target\\classes\\static\\image";
+//        String path="F:\\wangdao_learning\\Spring\\group_project\\OurProject\\mall\\target\\classes\\static\\image";
         String filename = file.getOriginalFilename();
         String newname = FileNameUtils.getFileName(filename);
         boolean upload = FileUtils.upload(file, path, newname);

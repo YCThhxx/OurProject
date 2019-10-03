@@ -330,4 +330,8 @@
         from cskaoyan_mall_admin
         where deleted = 0 and id = #{id}
     </select>
+    <!--<select id="updatePassword" resultType="int">-->
+       <!--update cskaoyan_mall_admin -->
+       <!--set  password = #{password,jdbcType=VARCHAR} where password = -->
+    <!--</select>-->
 </mapper>

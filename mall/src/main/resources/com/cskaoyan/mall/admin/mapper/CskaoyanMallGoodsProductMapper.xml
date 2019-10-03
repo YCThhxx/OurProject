@@ -273,4 +273,7 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectProductTotal" resultType="int">
+    select count(id) from cskaoyan_mall_goods_product
+  </select>
 </mapper>

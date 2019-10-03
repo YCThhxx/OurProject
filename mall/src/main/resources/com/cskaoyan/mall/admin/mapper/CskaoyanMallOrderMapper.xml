@@ -558,4 +558,7 @@
       </if>
     </where>
   </select>
+  <select id="selectOrdersTotal" resultType="int">
+    select count(id) from cskaoyan_mall_order
+  </select>
 </mapper>

@@ -46,7 +46,7 @@ public class BrandController {
         BaseResponseVo<Object> result = new BaseResponseVo<>();
         result.setErrmsg("成功");
         result.setErrno(0);
-         brandService.updateBrand(categoryData);
+        brandService.updateBrand(categoryData);
         return result;
     }
 

@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.admin.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class CskaoyanMallUser {
@@ -11,7 +13,9 @@ public class CskaoyanMallUser {
 
     private Byte gender;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
+
 
     private Date lastLoginTime;
 
@@ -29,7 +33,9 @@ public class CskaoyanMallUser {
 
     private Byte status;
 
+
     private Date addTime;
+
 
     private Date updateTime;
 

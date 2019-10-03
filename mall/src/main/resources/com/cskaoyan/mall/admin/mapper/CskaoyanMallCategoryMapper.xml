@@ -336,7 +336,7 @@
   </resultMap>
   <select id="selectCatListForGoods" resultMap="catListMap">
     select ca.id, ca.name,cl.id as clid,cl.name as clname from cskaoyan_mall_category ca
-    left join cskaoyan_mall_category cl on cl.pid = ca.id where ca.pid = 0 and deleted = 0
+    left join cskaoyan_mall_category cl on cl.pid = ca.id where ca.pid = 0
   </select>
   <update id="updateCategory" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCategory">
     update cskaoyan_mall_category

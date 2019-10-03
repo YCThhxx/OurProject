@@ -120,7 +120,7 @@
         name,
       </if>
       <if test="desc != null">
-        desc,
+        `desc`,
       </if>
       <if test="enabled != null">
         enabled,
@@ -214,7 +214,7 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+        `desc` = #{desc,jdbcType=VARCHAR},
       </if>
       <if test="enabled != null">
         enabled = #{enabled,jdbcType=BIT},
@@ -234,7 +234,7 @@
   <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallRole">
     update cskaoyan_mall_role
     set name = #{name,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=VARCHAR},
       enabled = #{enabled,jdbcType=BIT},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -242,14 +242,6 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-    <select id="queryAllRole" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from cskaoyan_mall_role where deleted = 0
-        <if test="sort != null">
-            order by ${sort} ${order}
-        </if>
-    </select>
     <select id="countAllRole" resultType="java.lang.Long">
       select
       count(id)
@@ -260,7 +252,24 @@
         select
         <include refid="Base_Column_List" />
         from cskaoyan_mall_role
-        where name like #{name} and deleted = 0
-        order by ${sort} ${order}
+        where deleted = 0
+        <if test="name != null">
+            and name like #{name}
+        </if>
+        <if test="sort != null">
+            order by ${sort} ${order}
+        </if>
     </select>
+
+    <select id="queryRoleById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cskaoyan_mall_role
+        where deleted = 0 and id = #{id};
+    </select>
+    <update id="delete">
+        update cskaoyan_mall_role
+        set deleted = 1
+        where id = #{id}
+    </update>
 </mapper>

@@ -2,6 +2,8 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGroupon;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,11 @@ public interface CskaoyanMallGrouponMapper {
     int updateByPrimaryKeySelective(CskaoyanMallGroupon record);
 
     int updateByPrimaryKey(CskaoyanMallGroupon record);
+
+    List<CskaoyanMallGroupon> selectAllGrouponsByAddtime(@Param("by") String addtime,
+                                                        @Param("order") String order);
+
+    List<CskaoyanMallGroupon> selectAllGrouponsByRulesId(@Param("rulesId") int ruledId);
+
+    long countAllGroupons();
 }

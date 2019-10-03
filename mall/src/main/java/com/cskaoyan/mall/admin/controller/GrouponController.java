@@ -61,8 +61,14 @@ public class GrouponController {
     public BaseResponseVo update(@RequestBody CskaoyanMallGrouponRules cskaoyanMallGrouponRules){
         CskaoyanMallGoods goods = mallGoodsMapper.selectByPrimaryKey(cskaoyanMallGrouponRules.getGoodsId());
         //如果没有该商品或者团购开始时间比结束时间晚就更新返回失败
-        if(goods==null||cskaoyanMallGrouponRules.getAddTime().after(cskaoyanMallGrouponRules.getExpireTime())){
-            return BaseResponseVo.fail("参数值不正确",402);
+        if(goods==null) {
+            return BaseResponseVo.fail("没有该商品",400);
+        }else if(cskaoyanMallGrouponRules.getAddTime().after(cskaoyanMallGrouponRules.getExpireTime())){
+            return BaseResponseVo.fail("结束时间不能在开始时间之前",401);
+        }else if(cskaoyanMallGrouponRules.getDiscountMember()<2){
+            return BaseResponseVo.fail("团购人数应该在2人以上",402);
+        }else if(cskaoyanMallGrouponRules.getDiscount().compareTo(goods.getRetailPrice())>0){
+            return BaseResponseVo.fail("折扣金额比商品的零售价高",403);
         }else{
             gpService.updateRule(goods,cskaoyanMallGrouponRules);
             return BaseResponseVo.ok();
@@ -81,8 +87,14 @@ public class GrouponController {
     public BaseResponseVo create(@RequestBody CskaoyanMallGrouponRules cskaoyanMallGrouponRules){
         CskaoyanMallGoods goods = mallGoodsMapper.selectByPrimaryKey(cskaoyanMallGrouponRules.getGoodsId());
         //如果没有该商品或者团购开始时间比结束时间晚就更新返回失败
-        if(goods==null||new Date().after(cskaoyanMallGrouponRules.getExpireTime())){
-            return BaseResponseVo.fail("参数值不正确",402);
+        if(goods==null) {
+            return BaseResponseVo.fail("没有该商品",400);
+        }else if(new Date().after(cskaoyanMallGrouponRules.getExpireTime())){
+            return BaseResponseVo.fail("结束时间不能在开始时间之前",401);
+        }else if(cskaoyanMallGrouponRules.getDiscountMember()<2){
+            return BaseResponseVo.fail("团购人数应该在2人以上",402);
+        }else if(cskaoyanMallGrouponRules.getDiscount().compareTo(goods.getRetailPrice())>0){
+            return BaseResponseVo.fail("折扣金额比商品的零售价高",403);
         }else{
             gpService.createRule(goods,cskaoyanMallGrouponRules);
             return BaseResponseVo.ok();

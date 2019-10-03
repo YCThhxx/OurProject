@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 
 @RestController
 @RequestMapping("admin/storage")
@@ -42,7 +44,9 @@ public class StorageUploadController {
         file.transferTo(file1);
         String type = "image/" + FileNameUtils.getSuffix(originalFilename1).replace(".","");
         int size = (int)file.getSize();
-        String url =  "http://localhost/image/" + originalFilename;
+        InetAddress localHost = Inet4Address.getLocalHost();
+        String hostAddress = localHost.getHostAddress();
+        String url =  "http://"+hostAddress+"/image/" + originalFilename;
         CskaoyanMallStorage storage = systemManageService.create(originalFilename, originalFilename, type, size, url);
         BaseResponseVo ok = BaseResponseVo.ok(storage);
         return ok;

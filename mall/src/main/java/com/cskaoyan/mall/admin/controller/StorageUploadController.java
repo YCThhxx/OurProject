@@ -40,7 +40,7 @@ public class StorageUploadController {
     public BaseResponseVo upload(@RequestParam("file") MultipartFile file) throws IOException {
         File file1 = null;
         String originalFilename = file.getOriginalFilename();
-       String originalFilename1 = "src/main/resources/static/image/" + originalFilename;
+        String originalFilename1 = "target/classes/static/image/" + originalFilename;
         file1 = new File(ResourceUtils.getURL(originalFilename1).getPath());
         file.transferTo(file1);
         String type = "image/" + FileNameUtils.getSuffix(originalFilename1).replace(".","");

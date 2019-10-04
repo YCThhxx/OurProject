@@ -2,6 +2,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAdminExample;
+import com.cskaoyan.mall.admin.vo.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -43,4 +44,12 @@ public interface CskaoyanMallAdminMapper {
     void delete(Integer id);
 
     CskaoyanMallAdmin queryAdminById(Integer id);
+
+    String queryPasswordByUsername(String username);
+
+    List<String> queryPermissionsByusername(String primaryPrincipal);
+
+    UserInfo queryAdminInfo(String username);
+
+    CskaoyanMallAdmin queryAdminByUsername(String username);
 }

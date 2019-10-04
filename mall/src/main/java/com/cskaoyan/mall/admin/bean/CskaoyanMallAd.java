@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class CskaoyanMallAd {
+   
     private Integer id;
 
     private String name;
@@ -16,18 +17,19 @@ public class CskaoyanMallAd {
     private Byte position;
 
     private String content;
-
+    
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
-
+    
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
-
+    
     private Boolean enabled;
-
+    
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-
     private Date updateTime;
 
     private Boolean deleted;
@@ -127,4 +129,6 @@ public class CskaoyanMallAd {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+    
+    
 }

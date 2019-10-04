@@ -541,7 +541,7 @@
     <where>
       <trim prefixOverrides="and">
         <if test="goodsSn != null and goodsSn != ''">
-          `goods_sn` = '%#{goodsSn}%'
+          `goods_sn` = '#{goodsSn}'
         </if>
         <if test="name != null and name != ''">
           and `name` like '%#{name}%'

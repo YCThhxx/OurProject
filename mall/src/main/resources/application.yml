@@ -22,3 +22,9 @@ logging:
         mall:
           admin:
             mapper: debug
+mall:
+    oss:
+      bucket: cskaoyan
+      end-point: oss-cn-beijing.aliyuncs.com
+      access-key-id: LTAI4Fr5gfYhcVjLMqeRGbuT
+      access-secret: IrkcHu6dZyrjPZRushgO76P5392HJ1

@@ -27,4 +27,6 @@ public interface CskaoyanMallCartMapper {
     int updateByPrimaryKeySelective(CskaoyanMallCart record);
 
     int updateByPrimaryKey(CskaoyanMallCart record);
+
+    int queryUserIdByUsername(String principal);
 }

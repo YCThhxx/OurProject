@@ -1,6 +1,5 @@
 package com.cskaoyan.mall.admin.service.impl;
 
-import com.cskaoyan.mall.admin.bean.CskaoyanMallAd;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCoupon;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCouponUser;
 import com.cskaoyan.mall.admin.bean.PageBean;

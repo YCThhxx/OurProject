@@ -119,8 +119,8 @@
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
       #{goodsSn,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
       #{price,jdbcType=DECIMAL}, #{number,jdbcType=SMALLINT}, #{specifications,jdbcType=VARCHAR}, 
-      #{checked,jdbcType=BIT}, #{picUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+      1, #{picUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, 0)
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCart">
     insert into cskaoyan_mall_cart
@@ -351,4 +351,8 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="queryUserIdByUsername" resultType="int">
+    select id from cskaoyan_mall_user where username = #{usernamee}
+  </select>
 </mapper>

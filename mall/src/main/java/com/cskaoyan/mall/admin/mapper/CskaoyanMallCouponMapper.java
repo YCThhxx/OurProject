@@ -23,4 +23,7 @@ public interface CskaoyanMallCouponMapper {
 
     List<CskaoyanMallCoupon> queryCoupons();
 
+    List<CskaoyanMallCoupon> queryMyCoupons(Integer userId, int status);
+
+    CskaoyanMallCoupon selectCouponByCode(String code);
 }

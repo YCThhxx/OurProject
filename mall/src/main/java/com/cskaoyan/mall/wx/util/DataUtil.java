@@ -1,16 +1,16 @@
 package com.cskaoyan.mall.wx.util;
 
 public class DataUtil<T> {
-    int conut;
+    int count;
 
     T data;
 
-    public int getConut() {
-        return conut;
+    public int getCount() {
+        return count;
     }
 
-    public void setConut(int conut) {
-        this.conut = conut;
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public T getData() {
@@ -21,7 +21,5 @@ public class DataUtil<T> {
         this.data = data;
     }
 
-    public DataUtil() {
-    }
 
 }

@@ -1,7 +1,11 @@
 package com.cskaoyan.mall.admin.service.impl;
 
-import com.cskaoyan.mall.admin.bean.*;
-import com.cskaoyan.mall.admin.mapper.*;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallOrder;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
+import com.cskaoyan.mall.admin.bean.PageBean;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallOrderGoodsMapper;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallOrderMapper;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
 import com.cskaoyan.mall.admin.service.OrderService;
 import com.cskaoyan.mall.admin.vo.OrderDetail;
 import com.github.pagehelper.PageHelper;
@@ -41,8 +45,8 @@ public class OrderServiceImpl implements OrderService {
         CskaoyanMallOrder order = cskaoyanMallOrderMapper.selectByPrimaryKey(id);
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrder(order);
-        List<CskaoyanMallOrderGoods> orderGoods = cskaoyanMallOrderGoodsMapper.selectByOrderId(id);
-        orderDetail.setOrderGoods(orderGoods);
+//        List<CskaoyanMallOrderGoods> orderGoods = cskaoyanMallOrderGoodsMapper.selectByOrderId(id);
+//        orderDetail.setOrderGoods(orderGoods);
         Integer userId = order.getUserId();
         CskaoyanMallUser user = cskaoyanMallUserMapper.selectByPrimaryKey(userId);
         orderDetail.setUser(user);

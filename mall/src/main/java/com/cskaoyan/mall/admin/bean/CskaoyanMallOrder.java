@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.bean;
 
+import com.cskaoyan.mall.wx.util.HandleOption;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
@@ -37,6 +38,26 @@ public class CskaoyanMallOrder {
     private BigDecimal actualPrice;
 
     private String payId;
+
+    private String orderStatusText;
+
+    public String getOrderStatusText() {
+        return orderStatusText;
+    }
+
+    public void setOrderStatusText(String orderStatusText) {
+        this.orderStatusText = orderStatusText;
+    }
+
+    public HandleOption getHandleOption() {
+        return handleOption;
+    }
+
+    public void setHandleOption(HandleOption handleOption) {
+        this.handleOption = handleOption;
+    }
+
+    HandleOption handleOption;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date payTime;

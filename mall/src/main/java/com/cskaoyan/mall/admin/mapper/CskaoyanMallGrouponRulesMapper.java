@@ -42,4 +42,6 @@ public interface CskaoyanMallGrouponRulesMapper {
     void createRule(@Param("rule") CskaoyanMallGrouponRules cskaoyanMallGrouponRules);
 
     CskaoyanMallGrouponRules getGrouponRulesInfo(@Param("goodsId") Integer goodsId);
+
+    List<CskaoyanMallGrouponRules> selectAllGrouponRules();
 }

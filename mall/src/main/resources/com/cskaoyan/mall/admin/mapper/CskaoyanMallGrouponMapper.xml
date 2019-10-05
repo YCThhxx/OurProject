@@ -323,15 +323,29 @@
     from cskaoyan_mall_groupon
     where rules_id = #{rulesId}
   </select>
-  <select id="getGrouponList" resultType="com.cskaoyan.mall.wx.util.GrouponData2">
-    select brief,counterPrice,id,name,picUrl,retailPrice from cskaoyan_mall_groupon where deleted = 0
-  </select>
-  <select id="getMyGroupon" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByGrouponId" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from cskaoyan_mall_groupon
-    where creator_user_id = #{id,jdbcType=INTEGER}
+    where groupon_id = #{grouponId}
   </select>
+  <select id="queryJoiners" resultMap="com.cskaoyan.mall.wx.vo.AvatorData">
+   SELECT avatar,nickname
+   rom cskaoyan_mall_groupon g
+   LEFT JOIN cskaoyan_mall_user u
+   on g.user_id = u.id
+    WHERE groupon_id = #{grouponId}
+  </select>
+
+  <!--<select id="getGrouponList" resultType="com.cskaoyan.mall.wx.util.GrouponData2">-->
+    <!--select brief,counterPrice,id,name,picUrl,retailPrice from cskaoyan_mall_groupon where deleted = 0-->
+  <!--</select>-->
+  <!--<select id="getMyGroupon" parameterType="java.lang.Integer" resultMap="BaseResultMap">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from cskaoyan_mall_groupon-->
+    <!--where creator_user_id = #{id,jdbcType=INTEGER}-->
+  <!--</select>-->
   <select id="getGrouponsByme" resultType="BaseResultMap">
     select  <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon

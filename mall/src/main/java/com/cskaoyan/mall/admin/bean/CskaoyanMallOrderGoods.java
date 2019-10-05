@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class CskaoyanMallOrderGoods {
     private Integer id;
@@ -24,6 +25,12 @@ public class CskaoyanMallOrderGoods {
 
     private String specifications;
 
+    public void setGoodsSpecificationValues(List<Object> goodsSpecificationValues) {
+        this.goodsSpecificationValues = goodsSpecificationValues;
+    }
+
+    private List<Object> goodsSpecificationValues;
+
     private String picUrl;
 
     private Integer comment;
@@ -35,6 +42,20 @@ public class CskaoyanMallOrderGoods {
     private Date updateTime;
 
     private Boolean deleted;
+
+    private BigDecimal retailPrice;
+
+    public List<Object> getGoodsSpecificationValues() {
+        return goodsSpecificationValues;
+    }
+
+    public BigDecimal getRetailPrice() {
+        return retailPrice;
+    }
+
+    public void setRetailPrice(BigDecimal retailPrice) {
+        this.retailPrice = retailPrice;
+    }
 
     public Integer getId() {
         return id;
@@ -147,4 +168,5 @@ public class CskaoyanMallOrderGoods {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
 }

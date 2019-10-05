@@ -32,4 +32,6 @@ public interface CskaoyanMallOrderGoodsMapper {
     CskaoyanMallOrderGoods selectByOrderId(int id);
 
     List<CskaoyanMallOrderGoods> queryGrouponGoods(Integer goodsId);
+
+    List<CskaoyanMallOrderGoods> queryOrderGoodsByOrderId(Integer orderId);
 }

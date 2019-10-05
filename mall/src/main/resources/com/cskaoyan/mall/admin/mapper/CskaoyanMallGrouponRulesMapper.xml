@@ -332,5 +332,9 @@
   <select id="getGrouponRulesInfo" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRules">
     select discount,discount_member from cskaoyan_mall_groupon_rules where goods_id = #{goodsId}
   </select>
+  <select id="selectAllGrouponRules" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_groupon_rules
+  </select>
 
 </mapper>

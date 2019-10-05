@@ -2,12 +2,9 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRole;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRoleExample;
-
-import java.util.Date;
-import java.util.List;
-
-import com.cskaoyan.mall.admin.vo.OptionVo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CskaoyanMallRoleMapper {
     long countByExample(CskaoyanMallRoleExample example);
@@ -41,4 +38,6 @@ public interface CskaoyanMallRoleMapper {
     CskaoyanMallRole queryRoleById(Integer id);
 
     void delete(Integer id);
+
+    List<String> queryAdminRole(int id);
 }

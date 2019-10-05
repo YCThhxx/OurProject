@@ -4,13 +4,20 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallAd;
 import com.cskaoyan.mall.admin.bean.PageBean;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallAdMapper;
 import com.cskaoyan.mall.admin.service.AdService;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
+/**
+ * author : Nianjie Jing
+ * creat time : 2019/9/30
+ * e-mail : clemeting@qq.com
+ */
 @Service
 public class AdServiceImpl implements AdService {
     @Autowired
@@ -34,5 +41,23 @@ public class AdServiceImpl implements AdService {
         pageListBean.setItems(mallAds);
         pageListBean.setTotal(total);
         return pageListBean;
+    }
+
+    @Override
+    public void delete(Integer id) {
+        cskaoyanMallAdMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void update(CskaoyanMallAd ad) {
+        ad.setUpdateTime(new Date());
+        cskaoyanMallAdMapper.updateByPrimaryKeySelective(ad);
+    }
+
+    @Override
+    public void create(CskaoyanMallAd ad) {
+        ad.setAddTime(new Date());
+        ad.setUpdateTime(new Date());
+        cskaoyanMallAdMapper.insertAd(ad);
     }
 }

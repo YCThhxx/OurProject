@@ -28,11 +28,19 @@ public class CskaoyanMallCoupon {
 
     private Short goodsType;
 
-    private String goodsValue;
+    private String[] goodsValue;
 
     private String code;
 
     private Short timeType;
+
+    public String[] getGoodsValue() {
+        return goodsValue;
+    }
+
+    public void setGoodsValue(String[] goodsValue) {
+        this.goodsValue = goodsValue;
+    }
 
     private Short days;
 
@@ -138,13 +146,7 @@ public class CskaoyanMallCoupon {
         this.goodsType = goodsType;
     }
 
-    public String getGoodsValue() {
-        return goodsValue;
-    }
-
-    public void setGoodsValue(String goodsValue) {
-        this.goodsValue = goodsValue == null ? null : goodsValue.trim();
-    }
+    
 
     public String getCode() {
         return code;

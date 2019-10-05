@@ -11,7 +11,7 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
-    <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
+    <result column="role_ids" property="roleIds"  typeHandler="com.cskaoyan.mall.admin.mybatis.TransferLongArrayHandler"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -330,6 +330,19 @@
         from cskaoyan_mall_admin
         where deleted = 0 and id = #{id}
     </select>
+  <select id="queryPasswordByUsername" resultType="string">
+    select
+    password
+    from cskaoyan_mall_admin
+    where username = #{username}
+  </select>
+  <select id="queryAdminByUsername" resultMap = "BaseResultMap">
+        select username,avatar,role_ids from cskaoyan_mall_admin where username = #{username}
+    </select>
+    <select id="queryAdminInfo" resultType="string">
+--         select distinct where username = #{username}
+    </select>
+
     <!--<select id="updatePassword" resultType="int">-->
        <!--update cskaoyan_mall_admin -->
        <!--set  password = #{password,jdbcType=VARCHAR} where password = -->

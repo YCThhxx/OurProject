@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 
+
 @RestController
 @RequestMapping("admin/storage")
 public class StorageUploadController {
@@ -34,7 +35,7 @@ public class StorageUploadController {
 
     @Value("${upload.path}")
     private String path;
-
+    
     @RequestMapping("create")
     public BaseResponseVo upload(@RequestParam("file") MultipartFile file) throws IOException {
         File file1 = null;

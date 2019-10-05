@@ -226,4 +226,7 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryPermissions" resultType="string">
+    select distinct permission from cskaoyan_mall_permission where role_id = #{id}
+  </select>
 </mapper>

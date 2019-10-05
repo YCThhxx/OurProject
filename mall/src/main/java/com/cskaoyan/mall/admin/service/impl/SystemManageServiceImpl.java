@@ -4,12 +4,10 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallLog;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRole;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
-import com.cskaoyan.mall.admin.mapper.CskaoyanMallAdminMapper;
-import com.cskaoyan.mall.admin.mapper.CskaoyanMallLogMapper;
-import com.cskaoyan.mall.admin.mapper.CskaoyanMallRoleMapper;
-import com.cskaoyan.mall.admin.mapper.CskaoyanMallStorageMapper;
+import com.cskaoyan.mall.admin.mapper.*;
 import com.cskaoyan.mall.admin.service.SystemManageService;
 import com.cskaoyan.mall.admin.vo.OptionVo;
+import com.cskaoyan.mall.admin.vo.permissionvo.SystemPermissionVo;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +30,9 @@ public class SystemManageServiceImpl implements SystemManageService {
 
     @Autowired
     CskaoyanMallLogMapper logMapper;
+
+    @Autowired
+    CskaoyanMallPermissionMapper permissionMapper;
 
     @Override
     public List<CskaoyanMallStorage> storageList(int page, int limit, String key, String name, String sort, String order) {
@@ -203,5 +204,38 @@ public class SystemManageServiceImpl implements SystemManageService {
     @Override
     public CskaoyanMallStorage queryStorageById(Integer id) {
         return storageMapper.queryStorageById(id);
+    }
+
+    @Override
+    public List<SystemPermissionVo> systempermissionsList() {
+        List<SystemPermissionVo> systemPermissionVoList = permissionMapper.querySystempermissionsList();
+
+        for (SystemPermissionVo systemPermissionVo : systemPermissionVoList) {
+            List<SystemPermissionVo> children = permissionMapper.querySystempermissionsChildrenList(systemPermissionVo.getPid());
+            systemPermissionVo.setChildren(children);
+        }
+        return systemPermissionVoList;
+    }
+
+    @Override
+    public List<String> queryPermissionsByRoleId(int roleId) {
+        List<String> strings = permissionMapper.queryPermissions(roleId);
+        List<String> temp;
+        for (String string : strings) {
+            if (string.equals("*")){
+                temp = permissionMapper.queryAllPermissions();
+                return temp;
+            }
+        }
+        return strings;
+    }
+
+    @Override
+    public void updatePermissions(int id, String[] permissions) {
+        permissionMapper.deleteByRoleId(id);
+        for (String permission : permissions) {
+            Date time = new Date();
+            permissionMapper.updatePermission(id, permission, time, time);
+        }
     }
 }

@@ -1,13 +1,13 @@
 package com.cskaoyan.mall.admin.controller;
 
-import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
-import com.cskaoyan.mall.admin.bean.CskaoyanMallLog;
-import com.cskaoyan.mall.admin.bean.CskaoyanMallRole;
-import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
+import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.service.SystemManageService;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.admin.vo.ItemsVo;
 import com.cskaoyan.mall.admin.vo.OptionVo;
+import com.cskaoyan.mall.admin.vo.permissionvo.Permission;
+import com.cskaoyan.mall.admin.vo.permissionvo.PermissionVo;
+import com.cskaoyan.mall.admin.vo.permissionvo.SystemPermissionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -144,6 +144,24 @@ public class SystemManageController {
             return ok;
         }
         return null;
+    }
+
+    @GetMapping(value = "admin/role/permissions")
+    public BaseResponseVo permissions(int roleId){
+        List<SystemPermissionVo> systemPermissions = systemManageService.systempermissionsList();
+        List<String> assignedPermissions = systemManageService.queryPermissionsByRoleId(roleId);
+        PermissionVo permissionVo = new PermissionVo(assignedPermissions, systemPermissions);
+        if (permissionVo != null) {
+            BaseResponseVo ok = BaseResponseVo.ok(permissionVo);
+            return ok;
+        }
+        return null;
+    }
+
+    @PostMapping(value = "admin/role/permissions")
+    public BaseResponseVo permissions(@RequestBody Permission permission){
+        systemManageService.updatePermissions(permission.getRoleId(), permission.getPermissions());
+        return BaseResponseVo.ok();
     }
 
     private BaseResponseVo ok(List<?> data, long total){

@@ -174,4 +174,9 @@
       #{c.startTime,jdbcType=TIMESTAMP}, #{c.endTime,jdbcType=TIMESTAMP}, #{c.addTime,jdbcType=TIMESTAMP}, 
       #{c.updateTime,jdbcType=TIMESTAMP}, #{c.deleted,jdbcType=BIT})
   </insert>
+  <select id="queryCoupons" resultMap="BaseResultMap">
+    select days,`desc`,discount,id,min,name,tag
+    from cskaoyan_mall_coupon
+  </select>
+
 </mapper>

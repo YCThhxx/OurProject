@@ -86,7 +86,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_permission
     where id = #{id,jdbcType=INTEGER}
@@ -102,10 +102,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallPermission">
-    insert into cskaoyan_mall_permission (id, role_id, permission, 
+    insert into cskaoyan_mall_permission (id, role_id, permission,
       add_time, update_time, deleted
       )
-    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{permission,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{permission,jdbcType=VARCHAR},
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
@@ -226,7 +226,55 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <update id="deleteByRoleId">
+    update cskaoyan_mall_permission
+    set deleted = 1
+    where role_id = #{id} and deleted = 0
+    </update>
+
+    <insert id="updatePermission">
+    insert into cskaoyan_mall_permission(role_id, permission, add_time, update_time, deleted)
+    values (#{id}, #{permission}, #{add_time}, #{update_time}, 0)
+    </insert>
+
   <select id="queryPermissions" resultType="string">
-    select distinct permission from cskaoyan_mall_permission where role_id = #{id}
+    select distinct permission from cskaoyan_mall_permission where role_id = #{id} and deleted = 0
   </select>
+
+    <select id="queryAllPermissions" resultType="string">
+    select distinct id from cskaoyan_mall_permission_details where pid > 110
+    </select>
+
+    <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.admin.vo.permissionvo.SystemPermissionVo">
+        <id column="pid" jdbcType="INTEGER" property="pid" />
+        <result column="label" jdbcType="VARCHAR" property="label" />
+        <result column="parent_id" jdbcType="INTEGER" property="parent_id" />
+        <result column="id" jdbcType="VARCHAR" property="id" />
+    </resultMap>
+    <select id="querySystempermissionsList" resultMap="BaseResultMap1">
+        select pid,label,parent_id,id
+        from cskaoyan_mall_permission_details
+        where pid &lt; 9
+    </select>
+
+    <resultMap id="BaseResultMap2" type="com.cskaoyan.mall.admin.vo.permissionvo.SystemPermissionVo">
+        <result column="pid" jdbcType="INTEGER" property="pid" />
+        <result column="label" jdbcType="VARCHAR" property="label" />
+        <result column="parent_id" jdbcType="INTEGER" property="parent_id" />
+        <result column="id" jdbcType="VARCHAR" property="id" />
+        <collection property="children" ofType="com.cskaoyan.mall.admin.vo.permissionvo.SystemPermissionVo">
+            <result column="c_id" jdbcType="VARCHAR" property="id"/>
+            <result column="c_label" jdbcType="VARCHAR" property="label"/>
+            <result column="c_api" jdbcType="VARCHAR" property="api"/>
+        </collection>
+    </resultMap>
+    <select id="querySystempermissionsChildrenList" resultMap="BaseResultMap2">
+        select pda.pid, pda.label, pda.parent_id, pda.id,
+        pdc.id c_id, pdc.label c_label, pdc.api c_api
+        from cskaoyan_mall_permission_details pda
+        left join cskaoyan_mall_permission_details pdc
+        on pdc.parent_id = pda.pid
+        where pda.parent_id = #{id}
+    </select>
 </mapper>

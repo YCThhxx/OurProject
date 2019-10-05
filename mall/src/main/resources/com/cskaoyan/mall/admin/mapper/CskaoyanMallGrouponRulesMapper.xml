@@ -329,4 +329,23 @@
     #{rule.expireTime},#{rule.updateTime},#{rule.addTime},0)
   </insert>
 
+  <resultMap id="grouponRulesInfo" type="com.cskaoyan.mall.wx.vo.homeIndex.GrouponRulesInfo">
+    <result column="discount" property="groupon_price"/>
+    <result column="discount_member" property="groupon_member"/>
+    <association property="goods" javaType="com.cskaoyan.mall.wx.vo.homeIndex.GoodsInfo">
+      <result column="id" property="id"/>
+      <result column="name" property="name"/>
+      <result column="brief" property="brief"/>
+      <result column="pic_url" property="picUrl"/>
+      <result column="is_new" property="isNew"/>
+      <result column="is_hot" property="isHot"/>
+      <result column="counter_price" property="counterPrice"/>
+      <result column="retail_price" property="retailPrice"/>
+    </association>
+  </resultMap>
+  <select id="selectGrouponRulesInfo" resultMap="grouponRulesInfo">
+    select gp.discount, gp.discount_member, gs.id, gs.name, gs.brief, gs.pic_url,gs.is_new,gs.is_hot,
+     gs.counter_price,  gs.retail_price from cskaoyan_mall_groupon_rules gp
+     left join cskaoyan_mall_goods gs on gp.goods_id=gs.id
+  </select>
 </mapper>

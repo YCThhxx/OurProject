@@ -1,11 +1,14 @@
 package com.cskaoyan.mall.admin.service.impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCategory;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallCategoryExample;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallIssue;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallCategoryMapper;
 import com.cskaoyan.mall.admin.service.CategoryService;
 import com.cskaoyan.mall.admin.vo.CategoryData;
 import com.cskaoyan.mall.admin.vo.L1Data;
+import com.cskaoyan.mall.wx.vo.CatalogCurrentVo;
+import com.cskaoyan.mall.wx.vo.CatalogIndexVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,6 +63,35 @@ public class CategoryServiceImpl implements CategoryService {
         int id = cskaoyanMallCategoryMapper.insert(cskaoyanData);
         cskaoyanData.setId(id);
         return cskaoyanData;
+    }
+
+    @Override
+    public CatalogIndexVo getCatalogIndex() {
+        CatalogIndexVo catalogIndexVo = new CatalogIndexVo();
+        CskaoyanMallCategoryExample categoryExample = new CskaoyanMallCategoryExample();
+        categoryExample.createCriteria().andPidEqualTo(0);
+        List<CskaoyanMallCategory> mallCategories = cskaoyanMallCategoryMapper.selectByExample(categoryExample);
+        CskaoyanMallCategory currentCategory = mallCategories.get(0);
+        Integer id = currentCategory.getId();
+        CskaoyanMallCategoryExample categoryExample1 = new CskaoyanMallCategoryExample();
+        categoryExample1.createCriteria().andPidEqualTo(id);
+        List<CskaoyanMallCategory> currentSubCategory = cskaoyanMallCategoryMapper.selectByExample(categoryExample1);
+        catalogIndexVo.setCategoryList(mallCategories);
+        catalogIndexVo.setCurrentCategory(currentCategory);
+        catalogIndexVo.setCurrentSubCategory(currentSubCategory);
+        return catalogIndexVo;
+    }
+
+    @Override
+    public CatalogCurrentVo getCatalogCurrent(Integer id) {
+        CatalogCurrentVo catalogCurrentVo = new CatalogCurrentVo();
+        CskaoyanMallCategory currentCategory = cskaoyanMallCategoryMapper.selectByPrimaryKey(id);
+        CskaoyanMallCategoryExample categoryExample = new CskaoyanMallCategoryExample();
+        categoryExample.createCriteria().andPidEqualTo(id);
+        List<CskaoyanMallCategory> mallCategories = cskaoyanMallCategoryMapper.selectByExample(categoryExample);
+        catalogCurrentVo.setCurrentCategory(currentCategory);
+        catalogCurrentVo.setCurrentSubCategory(mallCategories);
+        return catalogCurrentVo;
     }
 
 }

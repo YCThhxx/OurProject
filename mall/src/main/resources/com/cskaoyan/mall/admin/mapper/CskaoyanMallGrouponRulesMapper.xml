@@ -329,4 +329,8 @@
     #{rule.expireTime},#{rule.updateTime},#{rule.addTime},0)
   </insert>
 
+  <select id="getGrouponRulesInfo" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRules">
+    select discount,discount_member from cskaoyan_mall_groupon_rules where goods_id = #{goodsId}
+  </select>
+
 </mapper>

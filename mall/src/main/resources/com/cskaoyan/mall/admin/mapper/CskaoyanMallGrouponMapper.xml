@@ -323,5 +323,25 @@
     from cskaoyan_mall_groupon
     where rules_id = #{rulesId}
   </select>
+  <select id="getGrouponList" resultType="com.cskaoyan.mall.wx.util.GrouponData2">
+    select brief,counterPrice,id,name,picUrl,retailPrice from cskaoyan_mall_groupon where deleted = 0
+  </select>
+  <select id="getMyGroupon" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_groupon
+    where creator_user_id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getGrouponsByme" resultType="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from cskaoyan_mall_groupon
+    where creator_user_id = #{userId}
+  </select>
+  <select id="getGrouponsHaveMe" resultType="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from cskaoyan_mall_groupon
+    where creator_user_id != #{userId} and user_id = #{userId}
+  </select>
+
 
 </mapper>

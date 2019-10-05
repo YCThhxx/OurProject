@@ -40,4 +40,6 @@ public interface CskaoyanMallGoodsMapper {
 
     int selectGoodsTotal();
 
+    List<CskaoyanMallGoods> getGoodInfo();
+
 }

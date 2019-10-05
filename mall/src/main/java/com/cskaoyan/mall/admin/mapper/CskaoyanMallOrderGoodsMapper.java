@@ -2,7 +2,6 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderGoods;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderGoodsExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,5 +29,7 @@ public interface CskaoyanMallOrderGoodsMapper {
 
     int updateByPrimaryKey(CskaoyanMallOrderGoods record);
 
-    List<CskaoyanMallOrderGoods> selectByOrderId(int id);
+    CskaoyanMallOrderGoods selectByOrderId(int id);
+
+    List<CskaoyanMallOrderGoods> queryGrouponGoods(Integer goodsId);
 }

@@ -2,10 +2,10 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGroupon;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponExample;
-
-import java.util.Date;
-import java.util.List;
+import com.cskaoyan.mall.wx.util.GrouponData2;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CskaoyanMallGrouponMapper {
     long countByExample(CskaoyanMallGrouponExample example);
@@ -36,4 +36,12 @@ public interface CskaoyanMallGrouponMapper {
     List<CskaoyanMallGroupon> selectAllGrouponsByRulesId(@Param("rulesId") int ruledId);
 
     long countAllGroupons();
+
+    List<GrouponData2> getGrouponList();
+
+    CskaoyanMallGroupon getMyGroupon(@Param("id") int userId);
+
+    List<CskaoyanMallGroupon> getGrouponsByme(int userId);
+
+    List<CskaoyanMallGroupon> getGrouponsHaveMe(int userId);
 }

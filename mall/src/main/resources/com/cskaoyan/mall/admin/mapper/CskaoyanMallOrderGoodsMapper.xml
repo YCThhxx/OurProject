@@ -357,4 +357,8 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryGrouponGoods" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallOrderGoods">
+    select goods_name,goods_id,number,pic_url from cskaoyan_mall_order_goods where goods_id = #{goodsId}
+  </select>
+
 </mapper>

@@ -1,8 +1,8 @@
 package com.cskaoyan.mall.admin.service;
 
-import com.cskaoyan.mall.admin.bean.CskaoyanMallAd;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCoupon;
 import com.cskaoyan.mall.admin.bean.PageBean;
+import com.cskaoyan.mall.wx.util.DataUtil;
 
 public interface CouponService {
     PageBean listOfCoupon(int pages, int pageSize, String name, String type, String status, String sort, String order);
@@ -17,4 +17,6 @@ public interface CouponService {
 
 
     void create(CskaoyanMallCoupon cskaoyanMallCoupon);
+
+    DataUtil getCouponList(int page, int size);
 }

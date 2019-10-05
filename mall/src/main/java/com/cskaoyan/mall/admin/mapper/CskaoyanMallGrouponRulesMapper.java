@@ -2,6 +2,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRules;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRulesExample;
+import com.cskaoyan.mall.wx.vo.homeIndex.GrouponRulesInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -44,4 +45,5 @@ public interface CskaoyanMallGrouponRulesMapper {
     CskaoyanMallGrouponRules getGrouponRulesInfo(@Param("goodsId") Integer goodsId);
 
     List<CskaoyanMallGrouponRules> selectAllGrouponRules();
+    List<GrouponRulesInfo> selectGrouponRulesInfo();
 }

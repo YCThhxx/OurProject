@@ -1,9 +1,10 @@
 package com.cskaoyan.mall.admin.service;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCategory;
-import com.cskaoyan.mall.admin.bean.CskaoyanMallIssue;
 import com.cskaoyan.mall.admin.vo.CategoryData;
 import com.cskaoyan.mall.admin.vo.L1Data;
+import com.cskaoyan.mall.wx.vo.CatalogCurrentVo;
+import com.cskaoyan.mall.wx.vo.CatalogIndexVo;
 
 import java.util.List;
 
@@ -17,4 +18,8 @@ public interface CategoryService {
     boolean deleteCategory(CskaoyanMallCategory categoryData);
 
     CskaoyanMallCategory addCategory(CskaoyanMallCategory cskaoyanData);
+
+    CatalogIndexVo getCatalogIndex();
+
+    CatalogCurrentVo getCatalogCurrent(Integer id);
 }

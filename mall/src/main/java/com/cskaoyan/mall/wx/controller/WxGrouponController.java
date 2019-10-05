@@ -37,7 +37,7 @@ public class WxGrouponController {
         if (userId == null) {
             return BaseRespVo.fail();
         }*/
-        Integer userId = 5;
+        Integer userId = 1;
         DataUtil dataUtil =  grouponService.getGrouponMy(showType,userId);
         BaseRespVo baseRespVo = new BaseRespVo();
         baseRespVo.setData(dataUtil);

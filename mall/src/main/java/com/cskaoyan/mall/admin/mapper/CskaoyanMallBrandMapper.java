@@ -2,10 +2,11 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallBrand;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallBrandExample;
-import java.util.List;
-
 import com.cskaoyan.mall.admin.vo.BrandInfo;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface CskaoyanMallBrandMapper {
     long countByExample(CskaoyanMallBrandExample example);
@@ -35,4 +36,7 @@ public interface CskaoyanMallBrandMapper {
     List<BrandInfo> selectBrandListForGoods();
 
     int deleteBrand(CskaoyanMallBrand categoryData);
+
+    @Select("select id,name,`desc`,pic_url as picUrl,floor_price as floorPrice from cskaoyan_mall_brand limit 4")
+    List<CskaoyanMallBrand> selectBrandListLimit4();
 }

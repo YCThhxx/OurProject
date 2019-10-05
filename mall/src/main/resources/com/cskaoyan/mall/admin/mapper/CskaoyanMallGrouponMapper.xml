@@ -329,9 +329,9 @@
     from cskaoyan_mall_groupon
     where groupon_id = #{grouponId}
   </select>
-  <select id="queryJoiners" resultMap="com.cskaoyan.mall.wx.vo.AvatorData">
+  <select id="queryJoiners" resultType="com.cskaoyan.mall.wx.vo.AvatorData">
    SELECT avatar,nickname
-   rom cskaoyan_mall_groupon g
+   from cskaoyan_mall_groupon g
    LEFT JOIN cskaoyan_mall_user u
    on g.user_id = u.id
     WHERE groupon_id = #{grouponId}
@@ -346,12 +346,12 @@
     <!--from cskaoyan_mall_groupon-->
     <!--where creator_user_id = #{id,jdbcType=INTEGER}-->
   <!--</select>-->
-  <select id="getGrouponsByme" resultType="BaseResultMap">
+  <select id="getGrouponsByme" resultMap="BaseResultMap">
     select  <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon
     where creator_user_id = #{userId}
   </select>
-  <select id="getGrouponsHaveMe" resultType="BaseResultMap">
+  <select id="getGrouponsHaveMe" resultMap="BaseResultMap">
     select  <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon
     where creator_user_id != #{userId} and user_id = #{userId}

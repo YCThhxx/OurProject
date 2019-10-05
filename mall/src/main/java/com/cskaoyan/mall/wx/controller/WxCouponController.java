@@ -47,16 +47,16 @@ public class WxCouponController {
         return baseRespVo;
     }
 
-    @GetMapping("/receive")
+    @PostMapping("/receive")
     public BaseRespVo receiveCoupon(HttpServletRequest request,
-                                    @RequestParam("couponId") int couponId){
-//        String tokenKey = request.getHeader("X-Litemall-Token");
-//        Integer userId = UserTokenManager.getUserId(tokenKey);
-//        if (userId == null) {
-//            return BaseRespVo.fail();
-//        }
-        int userId = 5;
-        couponId = 2;
+                                    @RequestBody Map map){
+       /* String tokenKey = request.getHeader("X-cskaoyanmall-Admin-Token");
+        Integer userId = UserTokenManager.getUserId(tokenKey);
+        if (userId == null) {
+            return BaseRespVo.fail();
+        }*/
+       int userId = 5;
+        int couponId = (int) map.get("couponId");
         boolean flag =  couponService.receiveCoupon(couponId,userId);
         BaseRespVo baseRespVo = new BaseRespVo();
         baseRespVo.setErrmsg("成功");

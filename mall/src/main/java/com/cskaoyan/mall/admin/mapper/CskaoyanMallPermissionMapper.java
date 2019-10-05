@@ -2,8 +2,9 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallPermission;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallPermissionExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CskaoyanMallPermissionMapper {
     long countByExample(CskaoyanMallPermissionExample example);
@@ -27,4 +28,6 @@ public interface CskaoyanMallPermissionMapper {
     int updateByPrimaryKeySelective(CskaoyanMallPermission record);
 
     int updateByPrimaryKey(CskaoyanMallPermission record);
+
+    List<String> queryPermissions(int id);
 }

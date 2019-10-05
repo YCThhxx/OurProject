@@ -272,4 +272,7 @@
         set deleted = 1
         where id = #{id}
     </update>
+  <select id="queryAdminRole" resultType="string">
+        select name from cskaoyan_mall_role where id = #{id}
+  </select>
 </mapper>

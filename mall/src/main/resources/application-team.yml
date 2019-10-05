@@ -12,5 +12,5 @@ server:
 
 
 upload:
-  path: /Users/user/Desktop/project/OurProject/mall/target/classes/static
-
+  path: target/classes/static/image/
+  hostAddress: null

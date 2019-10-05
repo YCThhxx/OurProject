@@ -1,12 +1,21 @@
 package com.cskaoyan.mall.wx.controller;
 
+import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallUserExample;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
+import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.config.UserTokenManager;
+import com.cskaoyan.mall.wx.service.CskaoyanMallUserService;
 import com.cskaoyan.mall.wx.util.UserInfo;
 import com.cskaoyan.mall.wx.util.UserToken;
 import com.cskaoyan.mall.wx.vo.BaseRespVo;
 import com.cskaoyan.mall.wx.vo.LoginVo;
+import com.cskaoyan.mall.wx.vo.homeIndex.UserOrderVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,14 +24,23 @@ import java.util.Map;
 @RequestMapping("/wx")
 public class WxAuthController {
 
+	@Autowired
+	CskaoyanMallUserMapper userMapper;
+
+	@Autowired
+	CskaoyanMallUserService userService;
+
 	@RequestMapping("/auth/login")
 	public Object login(@RequestBody LoginVo loginVo, HttpServletRequest request) {
-//		String username = JacksonUtil.parseString(body, "username");
-//		String password = JacksonUtil.parseString(body, "password");
 		String username = loginVo.getUsername();
 		String password = loginVo.getPassword();
 		//*******************************
 		//根据username和password查询user信息
+		Integer userId = userMapper.selectIdByUsernameAndPassword(username,password);
+		if (userId==null){
+			BaseRespVo fail = BaseRespVo.fail(500, "账号或密码错误！");
+			return fail;
+		}
 		//*******************************
 
 		// userInfo
@@ -30,11 +48,6 @@ public class WxAuthController {
 		userInfo.setNickName(username);
 		//userInfo.setAvatarUrl(user.getAvatar());
 
-
-		//********************************
-		//根据获得userid
-		int userId = 1;
-		//********************************
 		// token
 		UserToken userToken = UserTokenManager.generateToken(userId);
 
@@ -61,9 +74,21 @@ public class WxAuthController {
 		Map<Object, Object> data = new HashMap<Object, Object>();
 		//***********************************
 		//根据userId查询订单信息
-		data.put("order", null);
+		UserOrderVo orderVo = userService.selectOrderMsg(userId);
+		data.put("order", orderVo);
 		//***********************************
 
 		return BaseRespVo.ok(data);
+	}
+
+	@RequestMapping("auth/logout")
+	public BaseRespVo logout(HttpServletRequest request){
+		String tokenKey = request.getHeader("X-cskaoyanmall-Admin-Token");
+		Integer userId = UserTokenManager.getUserId(tokenKey);
+		UserTokenManager.removeToken(userId);
+		BaseRespVo baseRespVo = new BaseRespVo();
+		baseRespVo.setErrmsg("成功");
+		baseRespVo.setErrno(0);
+		return baseRespVo;
 	}
 }

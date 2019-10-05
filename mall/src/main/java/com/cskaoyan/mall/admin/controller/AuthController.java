@@ -17,7 +17,7 @@ import java.io.Serializable;
 
 @RestController
 @RequestMapping("/admin/auth")
-public class AuthController {
+public class  AuthController {
 
     @Autowired
     AdminService adminService;

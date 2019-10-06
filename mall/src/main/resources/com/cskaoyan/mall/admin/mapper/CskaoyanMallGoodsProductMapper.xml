@@ -276,5 +276,11 @@
   <select id="selectProductTotal" resultType="int">
     select count(id) from cskaoyan_mall_goods_product
   </select>
+  <select id="selectByGoodsId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_goods_product
+    where goods_id = #{id} and deleted = 0
+  </select>
 </mapper>
 

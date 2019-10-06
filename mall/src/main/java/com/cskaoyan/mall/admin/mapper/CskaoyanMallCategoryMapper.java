@@ -44,4 +44,5 @@ public interface CskaoyanMallCategoryMapper {
 
     int deleteCategory(CskaoyanMallCategory categoryData);
 
+    List<CskaoyanMallCategory> selectByPidOrderId(int id);
 }

@@ -30,4 +30,6 @@ public interface CskaoyanMallGoodsProductMapper {
     int updateByPrimaryKey(CskaoyanMallGoodsProduct record);
 
     int selectProductTotal();
+
+    List<CskaoyanMallGoodsProduct> selectByGoodsId(int id);
 }

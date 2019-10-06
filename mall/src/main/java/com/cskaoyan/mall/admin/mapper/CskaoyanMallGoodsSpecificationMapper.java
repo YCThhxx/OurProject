@@ -27,4 +27,6 @@ public interface CskaoyanMallGoodsSpecificationMapper {
     int updateByPrimaryKeySelective(CskaoyanMallGoodsSpecification record);
 
     int updateByPrimaryKey(CskaoyanMallGoodsSpecification record);
+
+    List<CskaoyanMallGoodsSpecification> selectByGoodsId(int id);
 }

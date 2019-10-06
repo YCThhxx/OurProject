@@ -71,7 +71,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     }
 
     @Override
-    public GoodsDetailVo goodsDetail(int userid,int id) {
+    public GoodsDetailVo goodsDetail(Integer userid,int id) {
         CskaoyanMallGoods info = mallGoodsMapper.selectByPrimaryKey(id);
         if(info==null) return null;
         GoodsDetailVo goodsDetailVo = new GoodsDetailVo();
@@ -89,7 +89,10 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         specificationVoList.add(specificationVo);
         String shareImage = info.getShareUrl();
         List<GoodsSpecificationVo> specificationList;
-        long userHasCollect = mallCollectMapper.selectHasCollect(userid,id);
+        if(userid!=null){
+            long userHasCollect = mallCollectMapper.selectHasCollect(userid.intValue(),id);
+            goodsDetailVo.setUserHasCollect(userHasCollect);
+        }
         goodsDetailVo.setAttribute(attribute);
         goodsDetailVo.setBrand(brand);
         goodsDetailVo.setComment(comment);
@@ -99,7 +102,6 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         goodsDetailVo.setProductList(productList);
         goodsDetailVo.setShareImage(shareImage);
         goodsDetailVo.setSpecificationList(specificationVoList);
-        goodsDetailVo.setUserHasCollect(userHasCollect);
         return goodsDetailVo;
     }
 }

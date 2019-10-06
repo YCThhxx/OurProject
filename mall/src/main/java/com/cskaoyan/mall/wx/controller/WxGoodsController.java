@@ -44,8 +44,8 @@ public class WxGoodsController {
 
     @RequestMapping("detail")
     public BaseResponseVo goodsDetail(HttpServletRequest request, int id){
-        String token = request.getHeader("X-Litemall-Token");
-        int userId = UserTokenManager.getUserId(token);
+        String token = request.getHeader("X-cskaoyanmall-Admin-Token");
+        Integer userId = UserTokenManager.getUserId(token);
         GoodsDetailVo goodsDetailVo = goodsService.goodsDetail(userId,id);
         if(goodsDetailVo==null){
             return BaseResponseVo.fail("没有该类别",400);

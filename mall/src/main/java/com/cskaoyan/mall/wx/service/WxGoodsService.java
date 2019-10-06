@@ -9,5 +9,5 @@ public interface WxGoodsService {
 
     CategoryVo goodsCategory(int id);
 
-    GoodsDetailVo goodsDetail(int userid ,int id);
+    GoodsDetailVo goodsDetail(Integer userid ,int id);
 }

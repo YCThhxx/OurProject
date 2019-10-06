@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.LinkedHashMap;
 
 @Configuration
-public class CustomShiroConfig {
+public class  CustomShiroConfig {
     /**
      * shiroFilter
      */

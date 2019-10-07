@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.admin.service.Impl;
+package com.cskaoyan.mall.admin.service.impl;
 
 import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.mapper.*;
@@ -179,6 +179,12 @@ public class UserManageServiceImpl implements UserManageService {
         List<CskaoyanMallFeedback> cskaoyanMallFeedbacks = cskaoyanMallFeedbackMapper.selectByExample(mallFeedbackExample);
         PageBean pageBean = getBean(cskaoyanMallFeedbacks);
         return pageBean;
+    }
+
+    @Override
+    public int selectByUsername(String username) {
+       int id =  userMapper.selectByUsername(username);
+       return id;
     }
 
     //获得pagebean

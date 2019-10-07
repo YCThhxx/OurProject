@@ -4,6 +4,7 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallUserExample;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -40,4 +41,16 @@ public interface CskaoyanMallUserMapper {
 
     @Select("select id from cskaoyan_mall_user where username=#{username}")
     Integer selectIdByUsername(@Param("username") String principal);
+
+    CskaoyanMallUser selectByUsernameAndPassword(@Param("username") String username,
+                                                 @Param("password") String password);
+
+    int registerUser(@Param("username") String username,
+                     @Param("password") String password,
+                     @Param("mobile") String mobile);
+
+    int selectByUsername(@Param("username") String username);
+
+    @Update("update cskaoyan_mall_user set password=#{password} where mobile=#{mobile}")
+    int updatePwByMobile(@Param("mobile") String mobile,@Param("password") String password);
 }

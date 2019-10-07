@@ -1,26 +1,24 @@
 package com.cskaoyan.mall.admin.controller;
 
-import com.cskaoyan.mall.admin.bean.PageBean;
-import com.cskaoyan.mall.admin.service.BrandService;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallRegion;
 import com.cskaoyan.mall.admin.service.RegionService;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.admin.vo.RegionData;
-import org.apache.ibatis.annotations.Param;
+import com.cskaoyan.mall.wx.service.AddressService;
+import com.cskaoyan.mall.wx.util.BaseRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("admin/region")
 public class RegionController {
 
     @Autowired
-    private RegionService regionService;
+    RegionService regionService;
 
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @GetMapping(value = "/admin/region/list")
     public BaseResponseVo viewRegion(){
         BaseResponseVo<Object> result = new BaseResponseVo<>();
         result.setErrmsg("成功");
@@ -29,4 +27,5 @@ public class RegionController {
         result.setData(data);
         return result;
     }
+
 }

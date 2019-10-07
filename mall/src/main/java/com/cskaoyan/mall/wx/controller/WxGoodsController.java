@@ -3,8 +3,10 @@ package com.cskaoyan.mall.wx.controller;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.config.UserTokenManager;
 import com.cskaoyan.mall.wx.service.WxGoodsService;
+import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.vo.goodsvo.CategoryVo;
 import com.cskaoyan.mall.wx.vo.goodsvo.GoodsDetailVo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,9 @@ public class WxGoodsController {
 
     @Autowired
     WxGoodsService goodsService;
+
+    @Autowired
+    WxUserService wxUserService;
 
     @RequestMapping("count")
     public BaseResponseVo goodsCount(){
@@ -44,8 +49,8 @@ public class WxGoodsController {
 
     @RequestMapping("detail")
     public BaseResponseVo goodsDetail(HttpServletRequest request, int id){
-        String token = request.getHeader("X-cskaoyanmall-Admin-Token");
-        Integer userId = UserTokenManager.getUserId(token);
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);
         GoodsDetailVo goodsDetailVo = goodsService.goodsDetail(userId,id);
         if(goodsDetailVo==null){
             return BaseResponseVo.fail("没有该类别",400);

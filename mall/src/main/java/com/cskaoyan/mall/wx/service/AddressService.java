@@ -13,7 +13,7 @@ public interface AddressService {
 
     List<CskaoyanMallRegion> selectRegionList(int pid);
 
-    int saveAddress(CskaoyanMallAddress address);
+    int saveAddress(CskaoyanMallAddress address,int userId);
 
     boolean deleteAddress(int id);
 }

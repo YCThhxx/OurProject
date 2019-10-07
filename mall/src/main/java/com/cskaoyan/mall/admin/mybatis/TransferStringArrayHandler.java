@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.admin.mybatis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -39,7 +40,7 @@ public class TransferStringArrayHandler implements TypeHandler<String[]> {
         String[] strings = new String[0];
         if (value == null){
             return strings;
-        }
+    }
         try {
             strings = objectMapper.readValue(value, String[].class);
         } catch (IOException e) {

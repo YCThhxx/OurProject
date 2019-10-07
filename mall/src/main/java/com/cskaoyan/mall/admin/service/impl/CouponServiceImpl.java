@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.admin.service.Impl;
+package com.cskaoyan.mall.admin.service.impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCoupon;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCouponUser;

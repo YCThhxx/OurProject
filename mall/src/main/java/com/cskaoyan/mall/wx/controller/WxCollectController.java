@@ -7,7 +7,6 @@ import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.config.UserTokenManager;
 import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.util.util.GetJson;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;

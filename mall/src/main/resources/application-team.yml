@@ -4,8 +4,11 @@ spring:
     url: jdbc:mysql://localhost:3306/cskaoyanmall?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
+<<<<<<< HEAD
 #    type: com.alibaba.druid.pool.DruidDataSource
 
+=======
+>>>>>>> 7dad7e7a109a7029229df39d660bc95ed41ff987
 
 
 server:

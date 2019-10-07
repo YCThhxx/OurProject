@@ -2,6 +2,7 @@ package com.cskaoyan.mall.wx.service.impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrder;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderExample;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallOrderMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
 import com.cskaoyan.mall.wx.service.WxUserService;
@@ -19,6 +20,8 @@ public class WxUserServiceImpl implements WxUserService {
 
     @Autowired
     CskaoyanMallOrderMapper orderMapper;
+
+
     @Override
     public UserOrderVo selectOrderMsg(Integer userId) {
         UserOrderVo orderVo = new UserOrderVo();
@@ -48,7 +51,20 @@ public class WxUserServiceImpl implements WxUserService {
         return orderVo;
     }
 
+    public boolean registerUser(String mobile, String username, String password) {
+       int i = userMapper.registerUser(username,password,mobile);
+       if(i != 0){
+           return true;
+       }
+       return false;
+    }
+
     @Override
+    public CskaoyanMallUser selectByUsernameAndPassword(String username, String password) {
+        CskaoyanMallUser cskaoyanMallUser = userMapper.selectByUsernameAndPassword(username, password);
+        return cskaoyanMallUser;
+    }
+
     public Integer queryUserIdByUserName(String principal) {
         Integer id = userMapper.selectIdByUsername(principal);
         return id;

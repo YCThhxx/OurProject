@@ -14,5 +14,5 @@ import java.util.List;
 public interface WxCommentService {
     PageBean3 getCommentList(int valueId, int type, int size, int page, int showType);
     CommentCount getCommentCount(int valueId,int type);
-    void postComment(CskaoyanMallComment cskaoyanMallComment);
+    CskaoyanMallComment postComment(CskaoyanMallComment cskaoyanMallComment);
 }

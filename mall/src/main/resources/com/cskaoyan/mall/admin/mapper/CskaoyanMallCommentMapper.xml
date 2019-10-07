@@ -108,11 +108,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallComment">
-    insert into cskaoyan_mall_comment (id, value_id, type,
+    <selectKey resultType="int" keyProperty="id" keyColumn="idz" order="AFTER">
+      select last_insert_id() as idz
+    </selectKey>
+    insert into cskaoyan_mall_comment (id,value_id, `type`,
       content, user_id, has_picture,
       pic_urls, star, add_time,
       update_time, deleted)
-    values (#{id,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
+    values (#{id,jdbcType=INTEGER},#{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
       #{content,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{hasPicture,jdbcType=BIT},
       #{picUrls,jdbcType=VARCHAR}, #{star,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})

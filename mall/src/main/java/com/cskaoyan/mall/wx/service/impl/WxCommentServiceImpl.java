@@ -5,8 +5,10 @@ import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallCommentMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
 import com.cskaoyan.mall.wx.service.WxCommentService;
+import com.cskaoyan.mall.wx.service.WxUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ public class WxCommentServiceImpl implements WxCommentService {
     CskaoyanMallUserMapper cskaoyanMallUserMapper;
     @Autowired
     CskaoyanMallCommentMapper cskaoyanMallCommentMapper;
+    @Autowired
+    WxUserService wxUserService;
 
 
     //获取商品评论列表
@@ -70,8 +74,19 @@ public class WxCommentServiceImpl implements WxCommentService {
 
     //发表评论
     @Override
-    public void postComment(CskaoyanMallComment cskaoyanMallComment) {
-        cskaoyanMallCommentMapper.insert(cskaoyanMallComment);
-
+    public CskaoyanMallComment postComment(CskaoyanMallComment cskaoyanMallComment) {
+       /* String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);*/
+        Date date = new Date();
+        cskaoyanMallComment.setAddTime(date);
+        cskaoyanMallComment.setUpdateTime(date);
+        /*cskaoyanMallComment.setUserId(userId);*/
+        String[] picUrls = cskaoyanMallComment.getPicUrls();
+        if(picUrls!=null){
+            cskaoyanMallComment.setHasPicture(true);
+        }
+        int i = cskaoyanMallCommentMapper.insert(cskaoyanMallComment);
+        /*cskaoyanMallComment.setId(id);*/
+        return cskaoyanMallComment;
     }
 }

@@ -386,4 +386,15 @@
   <select id="selectUserTotal" resultType="int">
     select count(id) from cskaoyan_mall_user
   </select>
+  <insert id="registerUser" >
+    insert into cskaoyan_mall_user(username,password,mobile,nickname)
+    values (#{username},#{password},#{mobile},#{username})
+  </insert>
+  <select id="selectByUsername" resultType="int">
+    select id from cskaoyan_mall_user where username = #{username}
+  </select>
+  <select id="selectByUsernameAndPassword" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallUser">
+    select avatar,nickname from cskaoyan_mall_user
+    where username = #{username} and password = #{password};
+  </select>
 </mapper>

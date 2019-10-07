@@ -32,6 +32,12 @@ public interface CskaoyanMallUserMapper {
 
     int selectUserTotal();
 
-    @Select("select id from cskaoyan_mall_user where username=#{username} and password=#{password}")
-    Integer selectIdByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
+    CskaoyanMallUser selectByUsernameAndPassword(@Param("username") String username,
+                                                 @Param("password") String password);
+
+    int registerUser(@Param("username") String username,
+                     @Param("password") String password,
+                     @Param("mobile") String mobile);
+
+    int selectByUsername(@Param("username") String username);
 }

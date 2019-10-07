@@ -181,6 +181,12 @@ public class UserManageServiceImpl implements UserManageService {
         return pageBean;
     }
 
+    @Override
+    public int selectByUsername(String username) {
+       int id =  userMapper.selectByUsername(username);
+       return id;
+    }
+
     //获得pagebean
     private PageBean getBean(List lists) {
         long total = new PageInfo<>(lists).getTotal();

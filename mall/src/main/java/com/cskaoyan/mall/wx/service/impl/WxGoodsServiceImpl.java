@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.wx.service.impl;
+package com.cskaoyan.mall.wx.service.Impl;
 
 import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.mapper.*;

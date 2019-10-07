@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.service;
 
+import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.bean.PageBean;
 
 /**
@@ -17,4 +18,6 @@ public interface UserManageService {
     PageBean getPageBean5(String page, String limit, String sort, String order, String userId, String keyWord);
 
     PageBean getPageBean6(String page, String limit, String sort, String order, String id, String username);
+
+    int selectByUsername(String username);
 }

@@ -14,7 +14,7 @@ public class MallSessionManager extends DefaultWebSessionManager {
         HttpServletRequest servletRequest = (HttpServletRequest)request;
         String header ;
         header = servletRequest.getHeader("X-cskaoyanmall-Admin-Token");
-        if (header ==null && "".equals(header)){
+        if (header == null || "".equals(header)){
             header = servletRequest.getHeader("X-Litemall-Token");
         }
         if(header != null && !"".equals(header)){

@@ -2,7 +2,9 @@ package com.cskaoyan.mall.wx.service.Impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrder;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderExample;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallOrderMapper;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
 import com.cskaoyan.mall.wx.service.CskaoyanMallUserService;
 import com.cskaoyan.mall.wx.vo.homeIndex.UserOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,10 @@ public class CskaoyanMallUserServiceImpl implements CskaoyanMallUserService {
 
     @Autowired
     CskaoyanMallOrderMapper orderMapper;
+
+    @Autowired
+    CskaoyanMallUserMapper userMapper;
+
     @Override
     public UserOrderVo selectOrderMsg(Integer userId) {
         UserOrderVo orderVo = new UserOrderVo();
@@ -42,5 +48,14 @@ public class CskaoyanMallUserServiceImpl implements CskaoyanMallUserService {
         orderVo.setUnrecv(unrecv);
         orderVo.setUncomment(uncomment);
         return orderVo;
+    }
+
+    @Override
+    public boolean registerUser(String mobile, String username, String password) {
+       int i = userMapper.registerUser(username,password,mobile);
+       if(i != 0){
+           return true;
+       }
+       return false;
     }
 }

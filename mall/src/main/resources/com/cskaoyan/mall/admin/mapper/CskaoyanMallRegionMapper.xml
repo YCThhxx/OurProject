@@ -244,4 +244,10 @@
   <select id="selectAddressByCode"  resultType="String">
     select name from cskaoyan_mall_region where code = #{code}
   </select>
+  <select id="selectByPid" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallRegion">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_region
+    where pid = #{pid}
+  </select>
 </mapper>

@@ -355,4 +355,8 @@
   <select id="queryUserIdByUsername" resultType="int">
     select id from cskaoyan_mall_user where username = #{usernamee}
   </select>
+  
+  <select id="quertCartByUserId" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallCart">
+    select  * from  cskaoyan_mall_cart where  user_id = #{id}
+  </select>
 </mapper>

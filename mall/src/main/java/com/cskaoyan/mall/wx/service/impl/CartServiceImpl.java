@@ -10,9 +10,13 @@ import com.cskaoyan.mall.admin.mapper.CskaoyanMallGoodsMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallGoodsProductMapper;
 import com.cskaoyan.mall.wx.service.CartService;
 import com.cskaoyan.mall.wx.vo.AddRequest;
+import com.cskaoyan.mall.wx.vo.CartResp;
+import com.cskaoyan.mall.wx.vo.CartTotal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
+import javax.validation.constraints.Null;
 import java.util.Date;
 
 @Service
@@ -44,5 +48,26 @@ public class CartServiceImpl implements CartService {
         cskaoyanMallCart.setAddTime(new Date());
         cskaoyanMallCart.setUpdateTime(new Date());
         cartMapper.insert(cskaoyanMallCart);
+    }
+
+    @Override
+    public CartResp queryCartByUsername(String username) {
+        int userId = cartMapper.queryUserIdByUsername(username);
+        List<CskaoyanMallCart> cartlist = cartMapper.quertCartByUserId(userId);
+        int  goodsCount = 0;
+        double goodsAmount = 0;
+        for (CskaoyanMallCart cskaoyanMallCart : cartlist) {
+            goodsCount  = cskaoyanMallCart.getNumber() + goodsCount;
+            goodsAmount = (cskaoyanMallCart.getNumber().intValue()) * (cskaoyanMallCart.getPrice().doubleValue()) + goodsAmount;
+        }
+        CartTotal cartTotal = new CartTotal();
+        cartTotal.setGoodsAmount(goodsAmount);
+        cartTotal.setGoodsCount(goodsCount);
+        cartTotal.setCheckedGoodsCount(goodsCount);
+        cartTotal.setCheckedGoodsAmount(goodsAmount);
+        CartResp cartResp = new CartResp();
+        cartResp.setCartList(cartlist);
+        cartResp.setCartTotal(cartTotal);
+        return  cartResp;
     }
 }

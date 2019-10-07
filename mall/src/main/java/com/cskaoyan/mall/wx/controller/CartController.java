@@ -3,6 +3,7 @@ package com.cskaoyan.mall.wx.controller;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.service.CartService;
 import com.cskaoyan.mall.wx.vo.AddRequest;
+import com.cskaoyan.mall.wx.vo.CartResp;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ public class CartController {
     public BaseResponseVo index(){
         Subject subject = SecurityUtils.getSubject();
         String username = (String)subject.getPrincipal();
-        BaseResponseVo ok = BaseResponseVo.ok(null);
+        CartResp cartResp =cartService.queryCartByUsername(username);
+        BaseResponseVo ok = BaseResponseVo.ok(cartResp);
         return ok;
     }
     @RequestMapping("add")

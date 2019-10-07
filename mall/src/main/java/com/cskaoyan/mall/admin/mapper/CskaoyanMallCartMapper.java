@@ -29,4 +29,6 @@ public interface CskaoyanMallCartMapper {
     int updateByPrimaryKey(CskaoyanMallCart record);
 
     int queryUserIdByUsername(String principal);
+
+    List<CskaoyanMallCart> quertCartByUserId(@Param("id") int userId);
 }

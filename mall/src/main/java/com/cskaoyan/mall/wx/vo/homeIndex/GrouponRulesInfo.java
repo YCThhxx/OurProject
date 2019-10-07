@@ -1,9 +1,6 @@
 package com.cskaoyan.mall.wx.vo.homeIndex;
 
-import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
-
 import java.math.BigDecimal;
-import java.util.List;
 
 public class GrouponRulesInfo {
 

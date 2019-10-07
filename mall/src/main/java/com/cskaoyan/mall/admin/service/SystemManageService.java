@@ -5,6 +5,7 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallLog;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRole;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
 import com.cskaoyan.mall.admin.vo.OptionVo;
+import com.cskaoyan.mall.admin.vo.permissionvo.SystemPermissionVo;
 
 import java.util.List;
 
@@ -48,4 +49,10 @@ public interface SystemManageService {
     void updateStorage(CskaoyanMallStorage storage);
 
     CskaoyanMallStorage queryStorageById(Integer id);
+
+    List<SystemPermissionVo> systempermissionsList();
+
+    List<String> queryPermissionsByRoleId(int roleId);
+
+    void updatePermissions(int roleId, String[] permissions);
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "mall.oss")
 public class MallOssConfig {
-    String bucket;
+    private String bucket;
     String endPoint;
     String accessKeyId;
     String accessSecret;

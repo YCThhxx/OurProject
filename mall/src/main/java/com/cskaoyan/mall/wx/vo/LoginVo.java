@@ -1,8 +1,17 @@
 package com.cskaoyan.mall.wx.vo;
 
+
 public class LoginVo {
+
     String username;
+
     String password;
+
+    String token;
+
+    String tokenExpire;
+
+    AvatorData userInfo;
 
     public String getUsername() {
         return username;
@@ -18,5 +27,29 @@ public class LoginVo {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getTokenExpire() {
+        return tokenExpire;
+    }
+
+    public void setTokenExpire(String tokenExpire) {
+        this.tokenExpire = tokenExpire;
+    }
+
+    public AvatorData getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(AvatorData userInfo) {
+        this.userInfo = userInfo;
     }
 }

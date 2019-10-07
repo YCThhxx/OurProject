@@ -553,4 +553,8 @@
   <select id="selectGoodsTotal" resultType="int">
     select count(id) from cskaoyan_mall_goods
   </select>
+
+  <select id="getGoodInfo" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallGoods">
+    select brief,counterPrice,id,name,picUrl,retailPrice from cskaoyan_mall_goods where deleted = 0;
+  </select>
 </mapper>

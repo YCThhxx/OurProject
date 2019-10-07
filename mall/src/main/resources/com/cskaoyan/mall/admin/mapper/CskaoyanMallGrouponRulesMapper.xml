@@ -328,6 +328,20 @@
     (#{rule.goodsId},#{rule.goodsName},#{rule.picUrl},#{rule.discount},#{rule.discountMember},
     #{rule.expireTime},#{rule.updateTime},#{rule.addTime},0)
   </insert>
+  <select id="selectAllGrouponRulesByGoodsId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_groupon_rules
+    where goods_id = #{id} and expire_time > #{date} and deleted = 0
+  </select>
+
+  <select id="getGrouponRulesInfo" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRules">
+    select discount,discount_member from cskaoyan_mall_groupon_rules where goods_id = #{goodsId}
+  </select>
+  <select id="selectAllGrouponRules" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_groupon_rules
+  </select>
 
   <resultMap id="grouponRulesInfo" type="com.cskaoyan.mall.wx.vo.homeIndex.GrouponRulesInfo">
     <result column="discount" property="groupon_price"/>

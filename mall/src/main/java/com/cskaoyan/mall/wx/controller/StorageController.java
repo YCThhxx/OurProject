@@ -27,7 +27,7 @@ public class StorageController {
     MallOssConfig mallOssConfig;
     @Autowired
     SystemManageService systemManageService;
-
+        //注意把数据表的 key 的容量增大 不然会报错
     @RequestMapping("upload")
     public BaseResponseVo upload(@RequestParam("file") MultipartFile file) throws IOException {
         //下面是文件上传

@@ -84,7 +84,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         List<CskaoyanMallGoodsSpecification> valueList = mallGoodsSpecificationMapper.selectByGoodsId(id);
         List<GoodsSpecificationVo> specificationVoList = new ArrayList<>();
         GoodsSpecificationVo specificationVo = new GoodsSpecificationVo();
-        specificationVo.setName(" 规格 ");
+        specificationVo.setName("规格");
         specificationVo.setValueList(valueList);
         specificationVoList.add(specificationVo);
         String shareImage = info.getShareUrl();

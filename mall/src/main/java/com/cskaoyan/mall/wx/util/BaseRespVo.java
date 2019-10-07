@@ -1,7 +1,6 @@
 package com.cskaoyan.mall.wx.util;
 
 
-
 /**
  * Created by little Stone
  * Date 2019/4/19 Time 10:16

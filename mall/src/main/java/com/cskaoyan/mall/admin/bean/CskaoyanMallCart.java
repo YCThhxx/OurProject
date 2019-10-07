@@ -22,7 +22,7 @@ public class CskaoyanMallCart {
 
     private Short number;
 
-    private String specifications;
+    private String[] specifications;
 
     private Boolean checked;
 
@@ -100,12 +100,12 @@ public class CskaoyanMallCart {
         this.number = number;
     }
 
-    public String getSpecifications() {
+    public String[] getSpecifications() {
         return specifications;
     }
 
-    public void setSpecifications(String specifications) {
-        this.specifications = specifications == null ? null : specifications.trim();
+    public void setSpecifications(String[] specifications) {
+        this.specifications = specifications;
     }
 
     public Boolean getChecked() {
@@ -145,6 +145,25 @@ public class CskaoyanMallCart {
     }
 
     public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+    public  CskaoyanMallCart(){
+        
+    }
+
+    public CskaoyanMallCart(Integer userId, Integer goodsId, String goodsSn, String goodsName, Integer productId, BigDecimal price, Short number, String[] specifications, Boolean checked, String picUrl, Date addTime, Date updateTime, Boolean deleted) {
+        this.userId = userId;
+        this.goodsId = goodsId;
+        this.goodsSn = goodsSn;
+        this.goodsName = goodsName;
+        this.productId = productId;
+        this.price = price;
+        this.number = number;
+        this.specifications = specifications;
+        this.checked = checked;
+        this.picUrl = picUrl;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
         this.deleted = deleted;
     }
 }

@@ -14,12 +14,14 @@ public class MallSessionManager extends DefaultWebSessionManager {
         HttpServletRequest servletRequest = (HttpServletRequest)request;
         String header ;
         header = servletRequest.getHeader("X-cskaoyanmall-Admin-Token");
-        if (header ==null && "".equals(header)){
+        if (header == null || "".equals(header)){
             header = servletRequest.getHeader("X-Litemall-Token");
+
         }
         if(header != null && !"".equals(header)){
             return header;
         }
+        //header涉及到跨域 session每一次不一样  如果为空 用不用都一样
         return super.getSessionId(request, response);
     }
 }

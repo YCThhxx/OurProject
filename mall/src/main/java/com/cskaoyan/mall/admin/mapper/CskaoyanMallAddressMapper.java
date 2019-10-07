@@ -27,4 +27,9 @@ public interface CskaoyanMallAddressMapper {
     int updateByPrimaryKeySelective(CskaoyanMallAddress record);
 
     int updateByPrimaryKey(CskaoyanMallAddress record);
+
+    List<CskaoyanMallAddress> selectByUserId(@Param("userId") int userId);
+
+    int saveAddress(CskaoyanMallAddress address);
+
 }

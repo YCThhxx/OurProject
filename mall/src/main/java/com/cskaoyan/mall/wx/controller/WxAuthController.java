@@ -152,23 +152,33 @@ public class WxAuthController {
 	@RequestMapping("auth/register")
 	public BaseRespVo register(@RequestBody Map map){
 		Session session = SecurityUtils.getSubject().getSession();
-//		System.out.println(session.getId());
 		String codeFromSession = (String) session.getAttribute("code");
 		String code = (String) map.get("code");
+		String mobile = (String) map.get("mobile");
+		String password = (String) map.get("password");
+		String username = (String) map.get("username");
+		//wxCode为设置，不知道什么作用
+		boolean flag = userService.registerUser(mobile,username,password);
 		BaseRespVo baseRespVo = new BaseRespVo();
-		if (!code.equals(codeFromSession)){
-			baseRespVo.setErrmsg("验证码错误！");
-			baseRespVo.setErrno(701);
-        }
-		AvatorData avatorData = new AvatorData();
-		LoginVo loginVo = new LoginVo();
-		//携带userInfo才可以转跳至首页
-		avatorData.setAvatar("");
-		avatorData.setNickname("wx");
-		loginVo.setUserInfo(avatorData);
-		baseRespVo.setData(loginVo);
+//假设验证码成功
+   /* if (!code.equals(codeFromSession)){
+         baseRespVo.setErrmsg("验证码错误！");
+         baseRespVo.setErrno(701);
+        }else */
+		if(!flag){
+			baseRespVo.setErrmsg("注册失败");
+			baseRespVo.setErrno(101);
+		}else{
+			AvatorData avatorData = new AvatorData();
+			LoginVo loginVo = new LoginVo();
+			//携带userInfo才可以转跳至首页
+			avatorData.setAvatar("");
+			avatorData.setNickname(username);
+			loginVo.setUserInfo(avatorData);
+			baseRespVo.setData(loginVo);
 			baseRespVo.setErrmsg("注册成功");
 			baseRespVo.setErrno(0);
+		}
 		return baseRespVo;
 	}
 }

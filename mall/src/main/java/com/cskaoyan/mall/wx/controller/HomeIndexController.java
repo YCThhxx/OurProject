@@ -23,10 +23,6 @@ public class HomeIndexController {
 
     @RequestMapping("home/index")
     public BaseResponseVo home(){
-
-        subject = SecurityUtils.getSubject();
-        String principal = (String) subject.getPrincipal();
-        System.out.println(principal);
         HomeInfo homeInfo = homeService.selectHomeIndexMsg();
         BaseResponseVo ok = BaseResponseVo.ok(homeInfo);
         return ok;

@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.admin.service.Impl;
+package com.cskaoyan.mall.admin.service.impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallLog;

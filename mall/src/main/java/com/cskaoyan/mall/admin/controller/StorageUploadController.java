@@ -44,6 +44,7 @@ public class StorageUploadController {
 
         String originalFilename1 = path + originalFilename;
 
+
         file1 = new File(ResourceUtils.getURL(originalFilename1).getPath());
         file.transferTo(file1);
         String type = "image/" + FileNameUtils.getSuffix(originalFilename1).replace(".","");

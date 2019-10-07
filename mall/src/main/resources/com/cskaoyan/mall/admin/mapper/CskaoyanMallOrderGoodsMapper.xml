@@ -357,4 +357,11 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryGrouponGoods" resultMap="BaseResultMap">
+    select goods_name,goods_id,number,pic_url from cskaoyan_mall_order_goods where goods_id = #{goodsId}
+  </select>
+  <select id="queryOrderGoodsByOrderId" resultMap="BaseResultMap">
+    select goods_name,goods_id,specifications,id,number,pic_url,order_id from cskaoyan_mall_order_goods where order_id = #{orderId}
+  </select>
+
 </mapper>

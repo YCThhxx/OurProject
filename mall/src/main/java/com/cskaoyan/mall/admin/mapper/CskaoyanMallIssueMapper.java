@@ -34,4 +34,6 @@ public interface CskaoyanMallIssueMapper {
     List<CskaoyanMallIssue> showIssueByPage(String question);
 
     int addIssue(CskaoyanMallIssue record);
+
+    List<CskaoyanMallIssue> selectAllIssue();
 }

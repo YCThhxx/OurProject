@@ -78,4 +78,8 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <insert id="receiveCoupon" >
+    insert into cskaoyan_mall_coupon_user (user_id,coupon_id,start_time,end_time,add_time,update_time)
+    values (#{userId},#{couponId},#{startTime},#{endTime},#{addTime},#{updateTime})
+  </insert>
 </mapper>

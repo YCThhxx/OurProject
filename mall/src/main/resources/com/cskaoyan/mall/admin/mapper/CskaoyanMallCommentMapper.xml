@@ -312,4 +312,11 @@
   <select id="selectCommentCount"  resultType="int">
     select count(*) from cskaoyan_mall_comment where value_id = #{valueId}
   </select>
+
+  <select id="selectByValueId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_comment
+    where value_id = #{id} and deleted = 0
+  </select>
 </mapper>

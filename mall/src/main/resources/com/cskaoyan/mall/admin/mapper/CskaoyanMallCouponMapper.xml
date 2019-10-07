@@ -174,4 +174,22 @@
       #{c.startTime,jdbcType=TIMESTAMP}, #{c.endTime,jdbcType=TIMESTAMP}, #{c.addTime,jdbcType=TIMESTAMP}, 
       #{c.updateTime,jdbcType=TIMESTAMP}, #{c.deleted,jdbcType=BIT})
   </insert>
+  <select id="queryCoupons" resultMap="BaseResultMap">
+    select days,`desc`,discount,id,min,name,tag
+    from cskaoyan_mall_coupon
+  </select>
+    <select id="queryMyCoupons" resultMap="BaseResultMap">
+    SELECT c.`desc`,c.discount,c.end_time,c.id,c.min,c.name,c.start_time,c.tag
+    from cskaoyan_mall_coupon c LEFT JOIN cskaoyan_mall_coupon_user cu on c.id = cu.coupon_id
+    WHERE cu.user_id = #{userId} AND cu.`status` = #{status}
+  </select>
+
+  <select id="selectCouponByCode" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_coupon
+    WHERE code = #{code}
+  </select>
+
+
 </mapper>

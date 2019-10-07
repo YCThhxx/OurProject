@@ -4,6 +4,8 @@ package com.cskaoyan.mall.wx.service;
 import com.cskaoyan.mall.admin.bean.PageBean3;
 import com.cskaoyan.mall.admin.bean.SearchIndexResp;
 
+import java.util.List;
+
 
 /**
  * @author Tyj
@@ -11,5 +13,6 @@ import com.cskaoyan.mall.admin.bean.SearchIndexResp;
  */
 public interface WxSearchIndexService {
     SearchIndexResp getSearchIndex();
-    void clearSearchHistory();
+    void clearSearchHistory(Integer userId);
+    List<String> getKeyWordHelper(String keyword);
 }

@@ -3,6 +3,7 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallUserExample;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -31,4 +32,12 @@ public interface CskaoyanMallUserMapper {
 
     int selectUserTotal();
 
+    @Select("select id from cskaoyan_mall_user where username=#{username} and password=#{password}")
+    Integer selectIdByUsernameAndPassword(@Param("username") String username,@Param("password") String password);
+
+    @Select("select password from cskaoyan_mall_user where username=#{username}")
+    String queryPasswordByUsername(@Param("username") String principal);
+
+    @Select("select id from cskaoyan_mall_user where username=#{username}")
+    Integer selectIdByUsername(@Param("username") String principal);
 }

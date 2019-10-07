@@ -15,6 +15,54 @@ public class HandleOption {
 
     boolean refund;
 
+    public HandleOption() {
+    }
+
+    public HandleOption(int status){
+        if (status == 101){
+            this.cancel = true;
+            this.delete = false;
+            this.pay = true;
+            this.comment = false;
+            this.confirm = false;
+            this.refund = false;
+            this.rebuy = false;
+        }
+        else if (status == 201){
+            this.cancel = true;
+            this.delete = false;
+            this.pay = false;
+            this.comment = false;
+            this.confirm = false;
+            this.refund = false;
+            this.rebuy = false;
+        }else if (status == 301){
+            this.cancel = false;
+            this.delete = false;
+            this.pay = false;
+            this.comment = false;
+            this.confirm = true;
+            this.refund = false;
+            this.rebuy = false;
+        }else if (status == 401){
+            this.cancel = false;
+            this.delete = false;
+            this.pay = false;
+            this.comment = true;
+            this.confirm = false;
+            this.refund = false;
+            this.rebuy = false;
+        }else {
+            this.cancel = false;
+            this.delete = false;
+            this.pay = false;
+            this.comment = false;
+            this.confirm = false;
+            this.refund = false;
+            this.rebuy = false;
+        }
+    }
+
     public boolean isCancel() {
         return cancel;
     }

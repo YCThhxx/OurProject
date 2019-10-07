@@ -12,7 +12,7 @@ public class CskaoyanMallCouponUser {
     private Integer couponId;
 
     private Short status;
-
+    
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date usedTime;
 

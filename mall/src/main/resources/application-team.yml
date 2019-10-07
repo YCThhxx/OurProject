@@ -3,8 +3,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
-    password: root
-
+    password: 123456
 
 server:
   port: 80
@@ -14,14 +13,14 @@ upload:
   path: target/classes/static/image/
   hostAddress: null
 
-mall:
-  aliyun:
-    access-key-id: LTAI4Fr5gfYhcVjLMqeRGbuT
-    access-secret: IrkcHu6dZyrjPZRushgO76P5392HJ1
-    oss:
-      bucket: cskaoyan
-      end-point: oss-sn-beijing.aliyuncs.com
-    sms:
-      region-id: cn-hangzhou
-      template-code: SMS_173765187
-      sign-name: 王道训练营
+#mall:
+#  aliyun:
+#    access-key-id: LTAI4Fr5gfYhcVjLMqeRGbuT
+#    access-secret: IrkcHu6dZyrjPZRushgO76P5392HJ1
+#    oss:
+#      bucket: cskaoyan
+#      end-point: oss-sn-beijing.aliyuncs.com
+#    sms:
+#      region-id: cn-hangzhou
+#      template-code: SMS_173765187
+#      sign-name: 王道训练营

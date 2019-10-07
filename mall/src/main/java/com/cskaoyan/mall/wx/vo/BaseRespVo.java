@@ -49,6 +49,12 @@ public class BaseRespVo {
 		baseRespVo.setErrmsg("错误");
 		return baseRespVo;
 	}
+	public static BaseRespVo orderFail(){
+        BaseRespVo baseRespVo = new BaseRespVo();
+        baseRespVo.setErrno(724);
+        baseRespVo.setErrmsg("订单不能支付");
+        return baseRespVo;
+    }
 	public static BaseRespVo fail(Integer errorNo, String errorMsg) {
 		BaseRespVo baseRespVo = new BaseRespVo();
 		baseRespVo.setErrno(errorNo);

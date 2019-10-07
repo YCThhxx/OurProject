@@ -2,6 +2,8 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCart;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCartExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,7 +12,7 @@ public interface CskaoyanMallCartMapper {
 
     int deleteByExample(CskaoyanMallCartExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(@Param("id") Integer id);
 
     int insert(CskaoyanMallCart record);
 
@@ -27,4 +29,17 @@ public interface CskaoyanMallCartMapper {
     int updateByPrimaryKeySelective(CskaoyanMallCart record);
 
     int updateByPrimaryKey(CskaoyanMallCart record);
+
+    int queryUserIdByUsername(String principal);
+
+    List<CskaoyanMallCart> quertCartByUserId(@Param("id") int userId);
+
+
+    void update(@Param("id") int productId,@Param("number") int number,@Param("userid") int userId);
+
+    void updateCheck(@Param("isChecked") int i,@Param("userId") int userId,@Param("productId") int productId);
+
+    int queryGoodsSum(int userId);
+
+    int queryCartIdByDateAndUserId(@Param("userId") int userId,@Param("date") Date date);
 }

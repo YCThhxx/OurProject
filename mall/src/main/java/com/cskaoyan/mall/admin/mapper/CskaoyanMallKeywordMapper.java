@@ -31,4 +31,5 @@ public interface CskaoyanMallKeywordMapper {
     List<CskaoyanMallKeyword> showKeyByPage(String keyword,String url);
 
     int addKeyWord(CskaoyanMallKeyword record);
+    List<String> selectKeyword(@Param("keyword") String keyword);
 }

@@ -170,8 +170,7 @@ public class WxAuthController {
    		 if (!code.equals(codeFromSession)){
          baseRespVo.setErrmsg("验证码错误！");
          baseRespVo.setErrno(701);
-        }else
-        	if(!flag){
+        }else if(!flag){
 			baseRespVo.setErrmsg("注册失败");
 			baseRespVo.setErrno(101);
 		}else{

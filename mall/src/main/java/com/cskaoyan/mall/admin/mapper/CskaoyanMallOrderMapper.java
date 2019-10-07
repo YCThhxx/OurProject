@@ -2,6 +2,7 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrder;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderExample;
+import com.cskaoyan.mall.wx.vo.orderVo.OrderListVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -34,4 +35,8 @@ public interface CskaoyanMallOrderMapper {
 
     int selectOrdersTotal();
 
+    List<OrderListVo> queryOrderByUserId(@Param("userId") int userId,
+                                         @Param("status") int status);
+
+    int queryOrderAmountByUserId(int userId);
 }

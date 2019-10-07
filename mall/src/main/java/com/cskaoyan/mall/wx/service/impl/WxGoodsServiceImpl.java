@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.wx.service.Impl;
+package com.cskaoyan.mall.wx.service.impl;
 
 import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.mapper.*;
@@ -84,7 +84,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         List<CskaoyanMallGoodsSpecification> valueList = mallGoodsSpecificationMapper.selectByGoodsId(id);
         List<GoodsSpecificationVo> specificationVoList = new ArrayList<>();
         GoodsSpecificationVo specificationVo = new GoodsSpecificationVo();
-        specificationVo.setName("规格");
+        specificationVo.setName(" 规格 ");
         specificationVo.setValueList(valueList);
         specificationVoList.add(specificationVo);
         String shareImage = info.getShareUrl();

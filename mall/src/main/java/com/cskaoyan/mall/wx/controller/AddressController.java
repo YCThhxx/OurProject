@@ -2,13 +2,10 @@ package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAddress;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRegion;
-import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.service.UserManageService;
 import com.cskaoyan.mall.wx.service.AddressService;
-import com.cskaoyan.mall.wx.service.CskaoyanMallUserService;
 import com.cskaoyan.mall.wx.util.BaseRespVo;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

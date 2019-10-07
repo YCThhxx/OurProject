@@ -1,18 +1,19 @@
 package com.cskaoyan.mall.wx.controller;
 
+import com.cskaoyan.mall.admin.config.CustomToken;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
-import com.cskaoyan.mall.wx.config.UserTokenManager;
-import com.cskaoyan.mall.wx.service.CskaoyanMallUserService;
+import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.service.SmsService;
+import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.util.UserInfo;
-import com.cskaoyan.mall.wx.util.UserToken;
 import com.cskaoyan.mall.wx.vo.AvatorData;
 import com.cskaoyan.mall.wx.vo.BaseRespVo;
 import com.cskaoyan.mall.wx.vo.LoginVo;
-import com.cskaoyan.mall.wx.vo.homeIndex.UserOrderVo;
+import com.cskaoyan.mall.wx.vo.WxReqVo;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,14 +29,17 @@ import java.util.Map;
 @RequestMapping("/wx")
 public class WxAuthController {
 
-	@Autowired
-	CskaoyanMallUserMapper userMapper;
+    @Autowired
+    CskaoyanMallUserMapper userMapper;
 
 	@Autowired
-	CskaoyanMallUserService userService;
+	WxUserService userService;
+
+	Subject subject ;
 
 	@Autowired
 	SmsService smsService;
+
 
 	@PostMapping("auth/regCaptcha")
 	public BaseRespVo sendValidateCode(@RequestBody Map map){
@@ -66,61 +70,84 @@ public class WxAuthController {
 	public Object login(@RequestBody LoginVo loginVo, HttpServletRequest request) {
 		String username = loginVo.getUsername();
 		String password = loginVo.getPassword();
-		CskaoyanMallUser user = userMapper.selectByUsernameAndPassword(username,password);
+
+		CskaoyanMallUser user = userService.selectByUsernameAndPassword(username,password);
 		//此处不实现过期时间设置，
-		Date tokenExpire = user.getUpdateTime();
 		if (user==null){
 			BaseRespVo fail = BaseRespVo.fail(500, "账号或密码错误！");
 			return fail;
 		}
+		//设置携带了用户信息的token
+		CustomToken token = new CustomToken(username, password, "wx");
+		try {
+			//进入到reaml域中进行认证
+			subject.login(token);
+		} catch (AuthenticationException e) {
+			return BaseResponseVo.fail("登录失败",500);
+		}
+		Serializable id = subject.getSession().getId();
+		// userInfo
 		UserInfo userInfo = new UserInfo();
 		userInfo.setNickName(user.getNickname());
 		userInfo.setAvatarUrl(user.getAvatar());
-		// token
-		Serializable sessionId = SecurityUtils.getSubject().getSession().getId();
-		System.out.println(sessionId);
+		LocalDateTime update = LocalDateTime.now();
+		LocalDateTime expire = update.plusDays(7);
+
 		Map<Object, Object> result = new HashMap<Object, Object>();
-		result.put("token", sessionId);
-		result.put("tokenExpire", tokenExpire);
+		result.put("token", id);
+		result.put("tokenExpire", expire.toString());
 		result.put("userInfo", userInfo);
 		return BaseRespVo.ok(result);
 	}
 
-	@GetMapping("user/index")
-	public Object list(HttpServletRequest request) {
 
-		Subject subject = SecurityUtils.getSubject();
-		String principal = (String) subject.getPrincipal();
+	@GetMapping("user/index")
+	public BaseRespVo list(HttpServletRequest request) {
 		Serializable id = subject.getSession().getId();
 		System.out.println(id);
-//		if (username == null) {
-//			return BaseRespVo.fail();
-//		}
+		String principal = (String) subject.getPrincipal();
+		Integer userId = userService.queryUserIdByUserName(principal);
+		if (userId == null) {
+			return BaseRespVo.fail();
+		}
 		Map<Object, Object> data = new HashMap<Object, Object>();
-		//***********************************
-		//根据userId查询订单信息
-//		UserOrderVo orderVo = userService.selectOrderMsg(userna);
-//		data.put("order", orderVo);
-		//***********************************
-
 		return BaseRespVo.ok(data);
 	}
 
 	@RequestMapping("auth/logout")
 	public BaseRespVo logout(HttpServletRequest request){
-		String tokenKey = request.getHeader("X-cskaoyanmall-Admin-Token");
-		Integer userId = UserTokenManager.getUserId(tokenKey);
-		UserTokenManager.removeToken(userId);
+		subject.logout();
 		BaseRespVo baseRespVo = new BaseRespVo();
 		baseRespVo.setErrmsg("成功");
 		baseRespVo.setErrno(0);
 		return baseRespVo;
 	}
 
+	@RequestMapping("auth/login_by_weixin")
+	public BaseRespVo loginByWx(@RequestBody WxReqVo wxReqVo){
+		String code1 = wxReqVo.getCode();
+		UserInfo userInfo = wxReqVo.getUserInfo();
+		System.out.println(userInfo);
+		//***********还没做***************
+		return BaseRespVo.fail();
+	}
+
+
+
+	@RequestMapping("auth/reset")
+	public BaseRespVo reset(){
+		return BaseRespVo.fail();
+	}
+
+
+	@RequestMapping("auth/bindPhone")
+	public BaseRespVo bindPhone() {
+		return BaseRespVo.fail();
+	}
+
 	@RequestMapping("auth/register")
 	public BaseRespVo register(@RequestBody Map map){
 		Session session = SecurityUtils.getSubject().getSession();
-//		System.out.println(session.getId());
 		String codeFromSession = (String) session.getAttribute("code");
 		String code = (String) map.get("code");
 		String mobile = (String) map.get("mobile");

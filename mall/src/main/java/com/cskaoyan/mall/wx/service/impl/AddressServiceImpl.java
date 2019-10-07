@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.wx.service.Impl;
+package com.cskaoyan.mall.wx.service.impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAddress;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallRegion;

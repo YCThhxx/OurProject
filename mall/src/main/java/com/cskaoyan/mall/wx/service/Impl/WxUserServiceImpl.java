@@ -1,11 +1,11 @@
-package com.cskaoyan.mall.wx.service.Impl;
+package com.cskaoyan.mall.wx.service.impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrder;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallOrderExample;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallOrderMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
-import com.cskaoyan.mall.wx.service.CskaoyanMallUserService;
+import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.vo.homeIndex.UserOrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CskaoyanMallUserServiceImpl implements CskaoyanMallUserService {
+public class WxUserServiceImpl implements WxUserService {
+
+    @Autowired
+    CskaoyanMallUserMapper userMapper;
 
     @Autowired
     CskaoyanMallOrderMapper orderMapper;
 
-    @Autowired
-    CskaoyanMallUserMapper userMapper;
 
     @Override
     public UserOrderVo selectOrderMsg(Integer userId) {
@@ -50,12 +51,22 @@ public class CskaoyanMallUserServiceImpl implements CskaoyanMallUserService {
         return orderVo;
     }
 
-    @Override
     public boolean registerUser(String mobile, String username, String password) {
        int i = userMapper.registerUser(username,password,mobile);
        if(i != 0){
            return true;
        }
        return false;
+    }
+
+    @Override
+    public CskaoyanMallUser selectByUsernameAndPassword(String username, String password) {
+        CskaoyanMallUser cskaoyanMallUser = userMapper.selectByUsernameAndPassword(username, password);
+        return cskaoyanMallUser;
+    }
+
+    public Integer queryUserIdByUserName(String principal) {
+        Integer id = userMapper.selectIdByUsername(principal);
+        return id;
     }
 }

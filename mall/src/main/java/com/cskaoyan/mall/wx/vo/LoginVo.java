@@ -1,15 +1,17 @@
 package com.cskaoyan.mall.wx.vo;
 
+
 public class LoginVo {
+
+    String username;
+
+    String password;
+
     String token;
 
     String tokenExpire;
 
     AvatorData userInfo;
-
-    String username;
-
-    String password;
 
     public String getUsername() {
         return username;

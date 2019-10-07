@@ -395,6 +395,6 @@
   </select>
   <select id="selectByUsernameAndPassword" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallUser">
     select avatar,nickname from cskaoyan_mall_user
-    where username = #{username} and password = #{password};
+    where username = #{username} and password = #{password}
   </select>
 </mapper>

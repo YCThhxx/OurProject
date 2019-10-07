@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.admin.controller;
 
+import com.cskaoyan.mall.admin.config.CustomToken;
 import com.cskaoyan.mall.admin.service.AdminService;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.admin.vo.LoginVo;
@@ -28,7 +29,8 @@ public class  AuthController {
     public BaseResponseVo login(@RequestBody  LoginVo loginVo){
         String username = loginVo.getUsername();
         String password = loginVo.getPassword();
-        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+//        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+        CustomToken token = new CustomToken(username, password, "admin");
         //设置携带了用户信息的token
          subject = SecurityUtils.getSubject();
         try {

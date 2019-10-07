@@ -1,13 +1,17 @@
 package com.cskaoyan.mall.admin.config;
 
+import com.cskaoyan.mall.wx.config.WxRealm;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 @Configuration
@@ -24,9 +28,16 @@ public class  CustomShiroConfig {
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager(ShiroCustomRealm realm,DefaultWebSessionManager sessionManager){
+    public DefaultWebSecurityManager securityManager(@Qualifier("adminRealm") AdminRealm adminRealm,
+                                                     @Qualifier("wxRealm") WxRealm wxRealm,
+                                                     CustomRealmAuthenticator customRealmAuthenticator,
+                                                     DefaultWebSessionManager sessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(realm);
+        ArrayList<Realm> realms = new ArrayList<>();
+        realms.add(adminRealm);
+        realms.add(wxRealm);
+        securityManager.setRealms(realms);
+        securityManager.setAuthenticator(customRealmAuthenticator);
         securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
@@ -54,5 +65,16 @@ public class  CustomShiroConfig {
         map.put("wx/auth/logout","logout");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
+    }
+
+    @Bean
+    public CustomRealmAuthenticator customRealmAuthenticator(@Qualifier("adminRealm") AdminRealm adminRealm,
+                                                             @Qualifier("wxRealm") WxRealm wxRealm){
+        CustomRealmAuthenticator customRealmAuthenticator = new CustomRealmAuthenticator();
+        ArrayList<Realm> realms = new ArrayList<>();
+        realms.add(adminRealm);
+        realms.add(wxRealm);
+        customRealmAuthenticator.setRealms(realms);
+        return customRealmAuthenticator;
     }
 }

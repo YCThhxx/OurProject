@@ -15,6 +15,9 @@ import java.util.List;
 public class CskaoyanMallUserServiceImpl implements CskaoyanMallUserService {
 
     @Autowired
+    CskaoyanMallUserMapper userMapper;
+
+    @Autowired
     CskaoyanMallOrderMapper orderMapper;
     @Override
     public UserOrderVo selectOrderMsg(Integer userId) {
@@ -43,5 +46,11 @@ public class CskaoyanMallUserServiceImpl implements CskaoyanMallUserService {
         orderVo.setUnrecv(unrecv);
         orderVo.setUncomment(uncomment);
         return orderVo;
+    }
+
+    @Override
+    public Integer queryUserIdByUserName(String principal) {
+        Integer id = userMapper.selectIdByUsername(principal);
+        return id;
     }
 }

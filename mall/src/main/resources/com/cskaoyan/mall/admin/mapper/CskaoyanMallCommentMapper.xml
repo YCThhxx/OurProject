@@ -108,11 +108,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallComment">
-    insert into cskaoyan_mall_comment (id, value_id, type,
+    <selectKey resultType="int" keyProperty="id" keyColumn="idz" order="AFTER">
+      select last_insert_id() as idz
+    </selectKey>
+    insert into cskaoyan_mall_comment (id,value_id, `type`,
       content, user_id, has_picture,
       pic_urls, star, add_time,
       update_time, deleted)
-    values (#{id,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
+    values (#{id,jdbcType=INTEGER},#{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
       #{content,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{hasPicture,jdbcType=BIT},
       #{picUrls,jdbcType=VARCHAR}, #{star,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
@@ -304,6 +307,15 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--查找有图片的评论总数-->
+  <select id="selectHasPicCount" resultType="int">
+    select count(*) from cskaoyan_mall_comment where value_id = #{valueId} and has_picture = 1
+  </select>
+  <!--查找该商品的评论总数-->
+  <select id="selectCommentCount"  resultType="int">
+    select count(*) from cskaoyan_mall_comment where value_id = #{valueId}
+  </select>
+
   <select id="selectByValueId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>

@@ -40,6 +40,16 @@ public class CskaoyanMallGoods {
 
     private BigDecimal retailPrice;
 
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 

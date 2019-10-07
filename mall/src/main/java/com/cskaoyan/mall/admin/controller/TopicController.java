@@ -4,7 +4,7 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallAd;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallTopic;
 import com.cskaoyan.mall.admin.bean.PageBean;
 import com.cskaoyan.mall.admin.service.TopicService;
-import com.cskaoyan.mall.admin.utils.PagingUtil;
+import com.cskaoyan.mall.admin.util.PagingUtil;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

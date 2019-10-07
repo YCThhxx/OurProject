@@ -4,18 +4,20 @@ package com.cskaoyan.mall.wx.controller;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
 import com.cskaoyan.mall.wx.config.UserTokenManager;
 import com.cskaoyan.mall.wx.service.CskaoyanMallUserService;
+import com.cskaoyan.mall.wx.service.SmsService;
 import com.cskaoyan.mall.wx.util.UserInfo;
 import com.cskaoyan.mall.wx.util.UserToken;
+import com.cskaoyan.mall.wx.vo.AvatorData;
 import com.cskaoyan.mall.wx.vo.BaseRespVo;
 import com.cskaoyan.mall.wx.vo.LoginVo;
 import com.cskaoyan.mall.wx.vo.homeIndex.UserOrderVo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,34 @@ public class WxAuthController {
 
 	@Autowired
 	CskaoyanMallUserService userService;
+
+	@Autowired
+	SmsService smsService;
+
+	@PostMapping("auth/regCaptcha")
+	public BaseRespVo sendValidateCode(@RequestBody Map map){
+		BaseRespVo baseRespVo = new BaseRespVo();
+		String code = (int)((Math.random()*9+1)*100000)+"";
+		String mobile = (String) map.get("mobile");
+		//验证码功能暂不开启，需要的可以将注释取消
+//		boolean flag = smsService.sendMessage(mobile,code);
+		boolean flag = true;
+		if(flag){
+			//发送成功或失败
+			Session session = SecurityUtils.getSubject().getSession();
+			//将验证码放入session中注册时一起传入
+			session.setAttribute("code",code);
+			Serializable sessionId = session.getId();
+			System.out.println(sessionId);
+			baseRespVo.setData(sessionId);
+			baseRespVo.setErrmsg("获取验证码成功");
+			baseRespVo.setErrno(0);
+		}else{
+			baseRespVo.setErrmsg("获取验证码失败,请重新获取");
+			baseRespVo.setErrno(701);
+		}
+		return baseRespVo;
+	}
 
 	@RequestMapping("/auth/login")
 	public Object login(@RequestBody LoginVo loginVo, HttpServletRequest request) {
@@ -88,6 +118,29 @@ public class WxAuthController {
 		BaseRespVo baseRespVo = new BaseRespVo();
 		baseRespVo.setErrmsg("成功");
 		baseRespVo.setErrno(0);
+		return baseRespVo;
+	}
+
+	@RequestMapping("auth/register")
+	public BaseRespVo register(@RequestBody Map map){
+		Session session = SecurityUtils.getSubject().getSession();
+//		System.out.println(session.getId());
+		String codeFromSession = (String) session.getAttribute("code");
+		String code = (String) map.get("code");
+		BaseRespVo baseRespVo = new BaseRespVo();
+		if (!code.equals(codeFromSession)){
+			baseRespVo.setErrmsg("验证码错误！");
+			baseRespVo.setErrno(701);
+        }
+		AvatorData avatorData = new AvatorData();
+		LoginVo loginVo = new LoginVo();
+		//携带userInfo才可以转跳至首页
+		avatorData.setAvatar("");
+		avatorData.setNickname("wx");
+		loginVo.setUserInfo(avatorData);
+		baseRespVo.setData(loginVo);
+			baseRespVo.setErrmsg("注册成功");
+			baseRespVo.setErrno(0);
 		return baseRespVo;
 	}
 }

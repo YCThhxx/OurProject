@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.admin.service.impl;
+package com.cskaoyan.mall.admin.service.Impl;
 
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallStatMapper;
 import com.cskaoyan.mall.admin.service.StService;

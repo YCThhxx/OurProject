@@ -13,3 +13,15 @@ server:
 upload:
   path: target/classes/static/image/
   hostAddress: null
+
+mall:
+  aliyun:
+    access-key-id: LTAI4Fr5gfYhcVjLMqeRGbuT
+    access-secret: IrkcHu6dZyrjPZRushgO76P5392HJ1
+    oss:
+      bucket: cskaoyan
+      end-point: oss-sn-beijing.aliyuncs.com
+    sms:
+      region-id: cn-hangzhou
+      template-code: SMS_173765187
+      sign-name: 王道训练营

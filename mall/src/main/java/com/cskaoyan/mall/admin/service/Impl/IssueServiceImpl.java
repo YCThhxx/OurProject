@@ -1,10 +1,8 @@
-package com.cskaoyan.mall.admin.service.impl;
+package com.cskaoyan.mall.admin.service.Impl;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallIssue;
-import com.cskaoyan.mall.admin.bean.CskaoyanMallKeyword;
 import com.cskaoyan.mall.admin.bean.PageBean;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallIssueMapper;
-import com.cskaoyan.mall.admin.mapper.CskaoyanMallKeywordMapper;
 import com.cskaoyan.mall.admin.service.IssueService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

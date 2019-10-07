@@ -1,6 +1,5 @@
-package com.cskaoyan.mall.admin.service.impl;
+package com.cskaoyan.mall.admin.service.Impl;
 
-import com.cskaoyan.mall.admin.bean.CskaoyanMallAd;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallTopic;
 import com.cskaoyan.mall.admin.bean.PageBean;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallTopicMapper;

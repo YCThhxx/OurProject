@@ -12,8 +12,12 @@ public class MallSessionManager extends DefaultWebSessionManager {
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
         HttpServletRequest servletRequest = (HttpServletRequest)request;
-        String header = servletRequest.getHeader("X-cskaoyanmall-Admin-Token");
-        if(header != null && "".equals(header)){
+        String header ;
+        header = servletRequest.getHeader("X-cskaoyanmall-Admin-Token");
+        if (header ==null && "".equals(header)){
+            header = servletRequest.getHeader("X-Litemall-Token");
+        }
+        if(header != null && !"".equals(header)){
             return header;
         }
         return super.getSessionId(request, response);

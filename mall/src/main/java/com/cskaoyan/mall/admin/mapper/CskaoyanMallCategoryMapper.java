@@ -44,6 +44,8 @@ public interface CskaoyanMallCategoryMapper {
 
     int deleteCategory(CskaoyanMallCategory categoryData);
 
+    List<CskaoyanMallCategory> selectByPidOrderId(int id);
+
     @Select("select id,name from cskaoyan_mall_category where pid=0 limit 4")
     List<FloorGoodsInfo> selectFirstCategories4();
 

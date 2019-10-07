@@ -97,9 +97,10 @@ public class WxAuthController {
 
 	@GetMapping("user/index")
 	public Object list() {
-		Serializable id = subject.getSession().getId();
+
+		Serializable id = this.subject.getSession().getId();
 		System.out.println(id);
-		String principal = (String) subject.getPrincipal();
+		String principal = (String) this.subject.getPrincipal();
 		Integer userId = userService.queryUserIdByUserName(principal);
 //		//通过请求头获得userId，进而可以获得一切关于user的信息
 		//**************************

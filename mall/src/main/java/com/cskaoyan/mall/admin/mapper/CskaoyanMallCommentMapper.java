@@ -27,4 +27,8 @@ public interface CskaoyanMallCommentMapper {
     int updateByPrimaryKeySelective(CskaoyanMallComment record);
 
     int updateByPrimaryKey(CskaoyanMallComment record);
+
+    int selectHasPicCount(@Param("valueId") int valueId);
+
+    int selectCommentCount(@Param("valueId") int valueId);
 }

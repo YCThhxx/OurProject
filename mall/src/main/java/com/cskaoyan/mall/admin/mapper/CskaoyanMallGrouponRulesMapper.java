@@ -3,6 +3,8 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRules;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGrouponRulesExample;
 import java.util.List;
+
+import com.cskaoyan.mall.wx.vo.homeIndex.GrouponRulesInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -41,4 +43,5 @@ public interface CskaoyanMallGrouponRulesMapper {
 
     void createRule(@Param("rule") CskaoyanMallGrouponRules cskaoyanMallGrouponRules);
 
+    List<GrouponRulesInfo> selectGrouponRulesInfo();
 }

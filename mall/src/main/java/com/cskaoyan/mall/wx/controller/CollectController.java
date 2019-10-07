@@ -1,6 +1,5 @@
-package com.cskaoyan.mall.admin.controller;
+package com.cskaoyan.mall.wx.controller;
 
-import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
 import com.cskaoyan.mall.admin.bean.PageBean2;
 import com.cskaoyan.mall.admin.service.CollectService;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**

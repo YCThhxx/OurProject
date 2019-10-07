@@ -42,6 +42,7 @@ public class CustomShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        //安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         LinkedHashMap<String , String> map = new LinkedHashMap<>();
         map.put("admin/auth/login","anon");

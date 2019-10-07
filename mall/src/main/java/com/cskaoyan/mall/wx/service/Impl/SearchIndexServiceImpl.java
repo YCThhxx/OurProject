@@ -1,13 +1,12 @@
-package com.cskaoyan.mall.admin.service.impl;
+package com.cskaoyan.mall.wx.service.Impl;
 
 import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallKeywordMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallSearchHistoryMapper;
-import com.cskaoyan.mall.admin.service.SearchIndexService;
+import com.cskaoyan.mall.wx.service.WxSearchIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ import java.util.List;
  * @date 2019/10/5 15:30
  */
 @Service
-public class SearchIndexServiceImpl implements SearchIndexService {
+public class SearchIndexServiceImpl implements WxSearchIndexService {
 
     @Autowired
     CskaoyanMallKeywordMapper cskaoyanMallKeywordMapper;
@@ -54,4 +53,9 @@ public class SearchIndexServiceImpl implements SearchIndexService {
 
     //搜索帮助
 
+    //清楚搜索历史
+    @Override
+    public void clearSearchHistory() {
+
+    }
 }

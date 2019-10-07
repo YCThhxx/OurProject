@@ -10,7 +10,5 @@ spring:
 server:
   port: 80
 
-
 upload:
-  path: /Users/user/Desktop/project/OurProject/mall/target/classes/static
-
+  path: target/classes/static/image/

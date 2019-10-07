@@ -1,7 +1,7 @@
-package com.cskaoyan.mall.admin.controller;
+package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.SearchIndexResp;
-import com.cskaoyan.mall.admin.service.SearchIndexService;
+import com.cskaoyan.mall.wx.service.WxSearchIndexService;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController {
 
     @Autowired
-    SearchIndexService searchIndexService;
+    WxSearchIndexService searchIndexService;
 
 
     @RequestMapping("index")
@@ -26,9 +26,14 @@ public class SearchController {
         return BaseResponseVo.ok(searchIndex);
     }
 
-    @RequestMapping("helper")
+    /*@RequestMapping("helper")
     public BaseResponseVo helper(){
 
-    }
+    }*/
+
+   /* @RequestMapping("clearhistory")
+    public BaseResponseVo clearSearchHistory(){
+
+    }*/
 
 }

@@ -27,4 +27,6 @@ public interface CskaoyanMallGoodsAttributeMapper {
     int updateByPrimaryKeySelective(CskaoyanMallGoodsAttribute record);
 
     int updateByPrimaryKey(CskaoyanMallGoodsAttribute record);
+
+    List<CskaoyanMallGoodsAttribute> selectByGoodsId(int id);
 }

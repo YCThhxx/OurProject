@@ -3,6 +3,8 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallComment;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCommentExample;
 import java.util.List;
+
+import com.cskaoyan.mall.wx.vo.goodsvo.GoodsCommentVo;
 import org.apache.ibatis.annotations.Param;
 
 public interface CskaoyanMallCommentMapper {
@@ -27,4 +29,6 @@ public interface CskaoyanMallCommentMapper {
     int updateByPrimaryKeySelective(CskaoyanMallComment record);
 
     int updateByPrimaryKey(CskaoyanMallComment record);
+
+    GoodsCommentVo selectByValueId(int id);
 }

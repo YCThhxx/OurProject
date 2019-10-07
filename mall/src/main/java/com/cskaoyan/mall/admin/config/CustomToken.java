@@ -6,8 +6,8 @@ public class CustomToken extends UsernamePasswordToken {
 
     String type;
 
-    public CustomToken(String username,String password,String type){
-        super(username,password);
+    public CustomToken(String username, String password,String type) {
+        super(username, password);
         this.type = type;
     }
 

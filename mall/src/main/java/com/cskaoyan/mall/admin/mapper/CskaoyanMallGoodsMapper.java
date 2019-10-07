@@ -2,7 +2,6 @@ package com.cskaoyan.mall.admin.mapper;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoodsExample;
-import com.cskaoyan.mall.wx.vo.homeIndex.FloorGoodsInfo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -44,4 +43,6 @@ public interface CskaoyanMallGoodsMapper {
 
     @Select("select id,name,brief,pic_url as picUrl,is_new as isNew,is_hot as isHot,counter_price as counterPrice,retail_price as retailPrice from cskaoyan_mall_goods where category_id=#{cid} limit 2")
     List<CskaoyanMallGoods> selectGoodsByCategory2(@Param("cid") Integer id);
+    List<CskaoyanMallGoods> getGoodInfo();
+
 }

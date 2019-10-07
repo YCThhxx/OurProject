@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.admin.controller;
 
-import com.cskaoyan.mall.admin.bean.*;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallLog;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallRole;
+import com.cskaoyan.mall.admin.bean.CskaoyanMallStorage;
 import com.cskaoyan.mall.admin.service.SystemManageService;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.admin.vo.ItemsVo;

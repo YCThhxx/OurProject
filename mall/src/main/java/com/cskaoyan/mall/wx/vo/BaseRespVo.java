@@ -1,8 +1,5 @@
 package com.cskaoyan.mall.wx.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by little Stone
  * Date 2019/4/19 Time 10:16

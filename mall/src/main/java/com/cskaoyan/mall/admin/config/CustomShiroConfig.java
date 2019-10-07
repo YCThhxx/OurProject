@@ -51,13 +51,15 @@ public class  CustomShiroConfig {
     }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager){
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         LinkedHashMap<String , String> map = new LinkedHashMap<>();
         map.put("admin/auth/login","anon");
         map.put("admin/**","authc");
         map.put("admin/auth/logout","logout");
+        map.put("/wx/auth/regCaptcha","anon");
+        map.put("/wx/auth/register","anon");
         map.put("wx/auth/login","anon");
         map.put("wx/**","authc");
         map.put("wx/auth/logout","logout");

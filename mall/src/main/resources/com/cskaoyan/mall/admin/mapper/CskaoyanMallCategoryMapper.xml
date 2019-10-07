@@ -394,4 +394,11 @@
     from cskaoyan_mall_category
     where level = 'L1' and deleted = 0
   </select>
+  <select id="selectByPidOrderId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_category
+    order by id
+    where pid = #{pid}
+  </select>
 </mapper>

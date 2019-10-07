@@ -1,6 +1,5 @@
 package com.cskaoyan.mall.admin.mapper;
 
-import com.cskaoyan.mall.admin.bean.CskaoyanMallAd;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCoupon;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCouponUser;
 import org.apache.ibatis.annotations.Param;
@@ -22,6 +21,12 @@ public interface CskaoyanMallCouponMapper {
     List<CskaoyanMallCouponUser> listuser(@Param("userId") String userId, @Param("status") String status,@Param("couponId") String couponId);
 
     void insert(@Param("c") CskaoyanMallCoupon cskaoyanMallCoupon);
+
+    List<CskaoyanMallCoupon> queryCoupons();
+
+    List<CskaoyanMallCoupon> queryMyCoupons(Integer userId, int status);
+
+    CskaoyanMallCoupon selectCouponByCode(String code);
 
     @Select("select id,name,`desc`,tag,discount,min,days from cskaoyan_mall_coupon")
     List<CskaoyanMallCoupon> selectCouponList();

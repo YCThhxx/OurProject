@@ -63,7 +63,6 @@ public class WxAuthController {
 
 	@RequestMapping("/auth/login")
 	public Object login(@RequestBody LoginVo loginVo, HttpServletRequest request) {
-
 		String username = loginVo.getUsername();
 		String password = loginVo.getPassword();
 		CustomToken token = new CustomToken(username, password, "wx");

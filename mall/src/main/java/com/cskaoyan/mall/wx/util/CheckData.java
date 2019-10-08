@@ -1,23 +1,25 @@
 package com.cskaoyan.mall.wx.util;
 
+import com.cskaoyan.mall.admin.bean.CskaoyanMallAddress;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 public class CheckData {
-        List checkedGoodsList;
-        String checkedAddress;
-        int availableCouponLength;
-        BigDecimal goodsTotalPrice;
-        BigDecimal freightPrice;
-        BigDecimal couponPrice;
+    List checkedGoodsList;
+    CskaoyanMallAddress checkedAddress;
+    int availableCouponLength;
+    BigDecimal goodsTotalPrice;
+    BigDecimal freightPrice;
+    BigDecimal couponPrice;
     BigDecimal grouponPrice;
     BigDecimal orderTotalPrice;
     BigDecimal actualPrice;
-   int cartId;
-   int addressId;
-   int message;
-   int grouponLinkId;
-   int grouponRulesId;
+    int cartId;
+    int addressId;
+    int message;
+    int grouponLinkId;
+    int grouponRulesId;
 
     public List getCheckedGoodsList() {
         return checkedGoodsList;
@@ -27,11 +29,12 @@ public class CheckData {
         this.checkedGoodsList = checkedGoodsList;
     }
 
-    public String getCheckedAddress() {
+
+    public CskaoyanMallAddress getCheckedAddress() {
         return checkedAddress;
     }
 
-    public void setCheckedAddress(String checkedAddress) {
+    public void setCheckedAddress(CskaoyanMallAddress checkedAddress) {
         this.checkedAddress = checkedAddress;
     }
 

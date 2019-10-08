@@ -59,8 +59,11 @@ public class WxOrderController {
 
     @PostMapping("submit")
     public BaseRespVo submit(@RequestBody SubmitRequest submitRequest){
+        subject = SecurityUtils.getSubject();
+        String principal = (String) subject.getPrincipal();
+        Integer userId = userService.queryUserIdByUserName(principal);
         Map<String, Integer> resultMap = new HashMap<>();
-        int orderId = orderService.submit(submitRequest);
+        int orderId = orderService.submit(userId, submitRequest);
         resultMap.put("orderId", orderId);
         return BaseRespVo.ok(resultMap);
     }
@@ -70,6 +73,22 @@ public class WxOrderController {
         int orderId = map.get("orderId");
         System.out.println(orderId);
         orderService.cancelOrder(orderId);
+        return BaseRespVo.ok(0);
+    }
+
+    @PostMapping("delete")
+    public BaseRespVo delete(@RequestBody Map<String, Integer> map){
+        int orderId = map.get("orderId");
+        System.out.println(orderId);
+        orderService.cancelOrder(orderId);
+        return BaseRespVo.ok(0);
+    }
+
+    @PostMapping("confirm")
+    public BaseRespVo confirm(@RequestBody Map<String, Integer> map){
+        int orderId = map.get("orderId");
+        System.out.println(orderId);
+        orderService.confirmOrder(orderId);
         return BaseRespVo.ok(0);
     }
 }

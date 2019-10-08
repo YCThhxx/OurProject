@@ -46,12 +46,12 @@ public class HandleOption {
             this.rebuy = false;
         }else if (status == 401){
             this.cancel = false;
-            this.delete = false;
+            this.delete = true;
             this.pay = false;
             this.comment = true;
             this.confirm = false;
             this.refund = false;
-            this.rebuy = false;
+            this.rebuy = true;
         }else {
             this.cancel = false;
             this.delete = false;

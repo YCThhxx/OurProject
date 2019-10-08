@@ -16,8 +16,7 @@ import java.util.List;
 public class TopicServiceImpl implements TopicService {
     @Autowired
     CskaoyanMallTopicMapper cskaoyanMallTopicMapper;
-
-
+    
     @Override
     public PageBean getListOfTopic(int returnPage, int returnPageSize, String title, String subtitle, String sort, String order) {
         String orderBy = sort +" " + order;

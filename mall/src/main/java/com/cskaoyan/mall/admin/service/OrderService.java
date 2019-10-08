@@ -8,4 +8,6 @@ public interface OrderService {
     PageBean showOrderByPage(int page, int limit, String sort, String order, Integer orderStatusArray, String orderSn, Integer userId);
 
     OrderDetail getOrderDetail(int id);
+
+    boolean insertShip(int orderId, String shipChannel, String shipSn);
 }

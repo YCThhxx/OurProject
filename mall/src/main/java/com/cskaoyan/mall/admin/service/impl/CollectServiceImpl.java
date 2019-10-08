@@ -35,7 +35,7 @@ public class CollectServiceImpl implements CollectService {
         List<CskaoyanMallGoods> cskaoyanMallGoods = new ArrayList<>();
         for (CskaoyanMallCollect cskaoyanMallCollect : cskaoyanMallCollects) {
             Integer valueId = cskaoyanMallCollect.getValueId();
-            CskaoyanMallGoods cskaoyanMallGood = cskaoyanMallGoodsMapper.selectByPrimaryKey(valueId);
+            CskaoyanMallGoods cskaoyanMallGood = cskaoyanMallGoodsMapper.queryGoodsByValueId(valueId);
             cskaoyanMallGood.setType(0);
             cskaoyanMallGoods.add(cskaoyanMallGood);
         }

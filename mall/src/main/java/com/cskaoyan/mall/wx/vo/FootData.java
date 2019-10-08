@@ -1,10 +1,12 @@
 package com.cskaoyan.mall.wx.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class FootData {
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:ss:mm")
     Date addTime;
 
     String brief;

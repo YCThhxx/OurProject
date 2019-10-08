@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -36,6 +38,9 @@ public class CartServiceImpl implements CartService {
 
         @Autowired
         CskaoyanMallGrouponRulesMapper grouponRulesMapper;
+
+        @Autowired
+        CskaoyanMallRegionMapper regionMapper;
     @Override
     public void add(AddRequest addRequest, String principal) {
         int goodsId = addRequest.getGoodsId();
@@ -101,8 +106,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int fastAdd(String username, AddRequest addRequest) {
-        Date date;
+    public int fastAdd(String username, AddRequest addRequest) throws ParseException {
         int goodsId = addRequest.getGoodsId();
         int number = addRequest.getNumber();
         int productId = addRequest.getProductId();
@@ -119,26 +123,33 @@ public class CartServiceImpl implements CartService {
         cskaoyanMallCart.setNumber((short) number);
         cskaoyanMallCart.setSpecifications(product.getSpecifications());
         cskaoyanMallCart.setPicUrl(goods.getPicUrl());
-        date = new Date();
-        cskaoyanMallCart.setAddTime(date);
-        cskaoyanMallCart.setUpdateTime(date);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(date);
+        Date parse = sdf.parse(format);
+        cskaoyanMallCart.setAddTime(parse);
+        cskaoyanMallCart.setUpdateTime(parse);
         cartMapper.insert(cskaoyanMallCart);
-        int cartId = cartMapper.queryCartIdByDateAndUserId(userId,date);
+        int cartId = cartMapper.queryCartIdByDateAndUserId(userId,parse);
         return  cartId ;
     }
 
     @Override
     public CheckData checkout(int cartId, int addressId, int couponId, int grouponRulesId) {
+        cartId = 1;
+        addressId =1;
+        couponId = 1;
+        grouponRulesId = 1;
         CskaoyanMallCart cart = cartMapper.selectByPrimaryKey(cartId);
         CheckData checkData = new CheckData();
         Integer userId = cart.getUserId();
         CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(userId);
         Integer provinceId = address.getProvinceId();
-        String name = addressMapper.selectNameById(provinceId);
+        String name = regionMapper.selectNameById(provinceId);
         Integer cityId = address.getCityId();
-        String name1 = addressMapper.selectNameById(cityId);
+        String name1 = regionMapper.selectNameById(cityId);
         Integer areaId = address.getAreaId();
-        String name2 = addressMapper.selectNameById(areaId);
+        String name2 = regionMapper.selectNameById(areaId);
         String address1 = address.getAddress();
         String checkedAddress = name + name1 +name2 + address1;
         int length = couponUserMapper.selectLength(couponId,userId);
@@ -160,6 +171,10 @@ public class CartServiceImpl implements CartService {
        checkData.setGoodsTotalPrice(price);
        checkData.setFreightPrice(freightPrice);
        checkData.setCouponPrice(discount);
+       checkData.setCheckedAddress(checkedAddress);
+       checkData.setAddressId(addressId);
+       checkData.setCartId(cartId);
+       checkData.setGrouponRulesId(grouponRulesId);
        return checkData;
     }
 

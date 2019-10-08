@@ -172,7 +172,7 @@
       #{c.status,jdbcType=SMALLINT}, #{c.goodsType,jdbcType=SMALLINT}, #{c.goodsValue}, 
       #{c.code,jdbcType=VARCHAR}, #{c.timeType,jdbcType=SMALLINT}, #{c.days,jdbcType=SMALLINT}, 
       #{c.startTime,jdbcType=TIMESTAMP}, #{c.endTime,jdbcType=TIMESTAMP}, #{c.addTime,jdbcType=TIMESTAMP}, 
-      #{c.updateTime,jdbcType=TIMESTAMP}, #{c.deleted,jdbcType=BIT})
+      #{c.updateTime,jdbcType=TIMESTAMP}, 0)
   </insert>
   <select id="queryCoupons" resultMap="BaseResultMap">
     select days,`desc`,discount,id,min,name,tag

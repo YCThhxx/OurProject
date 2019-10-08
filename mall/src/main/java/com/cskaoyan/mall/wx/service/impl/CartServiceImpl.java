@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,10 @@ public class CartServiceImpl implements CartService {
 
         @Autowired
         CskaoyanMallRegionMapper regionMapper;
+
+        @Autowired
+        CskaoyanMallSystemMapper systemMapper;
+
     @Override
     public void add(AddRequest addRequest, String principal) {
         int goodsId = addRequest.getGoodsId();
@@ -142,17 +147,9 @@ public class CartServiceImpl implements CartService {
         BigDecimal discount = new BigDecimal(0);
         BigDecimal discount1 = new BigDecimal(0);
         CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(userId);
-        Integer provinceId = address.getProvinceId();
-        String name = regionMapper.selectNameById(provinceId);
-        Integer cityId = address.getCityId();
-        String name1 = regionMapper.selectNameById(cityId);
-        Integer areaId = address.getAreaId();
-        String name2 = regionMapper.selectNameById(areaId);
-        String address1 = address.getAddress();
-        String checkedAddress = name + name1 +name2 + address1;
         int length = couponUserMapper.selectLength(couponId,userId);
         //商品总价
-        BigDecimal price = cart.getPrice();
+        BigDecimal price = BigDecimal.valueOf((cart.getPrice().doubleValue()*cart.getNumber()));
         CskaoyanMallCoupon coupon = couponMapper.selectByPrimaryKey(couponId);
         CskaoyanMallGrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(grouponRulesId);
         if(coupon != null){
@@ -160,22 +157,41 @@ public class CartServiceImpl implements CartService {
              discount = coupon.getDiscount();
         }
         if (grouponRules != null){
-            discount1 = grouponRules.getDiscount();
+            checkData.setGrouponPrice(grouponRules.getDiscount());
+            price = price.subtract(grouponRules.getDiscount());
         }
         //团购优惠价格
         //快递费用
-        BigDecimal freightPrice = new BigDecimal(8);
+       BigDecimal freightPrice = new BigDecimal(0);
        BigDecimal orderTotalPtice = price.add(freightPrice);
        BigDecimal actualPrice = orderTotalPtice.subtract(discount);
        checkData.setActualPrice(actualPrice);
        checkData.setAvailableCouponLength(length);
        checkData.setGoodsTotalPrice(price);
+       List<CskaoyanMallSystem> systems = systemMapper.selectAll();
+        double min = 0;
+        double freight = 0;
+        for (CskaoyanMallSystem system : systems) {
+            if (system.getKeyName().equals("cskaoyan_mall_express_freight_min")){
+                min = Double.parseDouble(system.getKeyValue());
+            }
+            if (system.getKeyName().equals("cskaoyan_mall_express_freight_value")){
+                freight = Double.parseDouble(system.getKeyValue());
+            }
+        }
+        if (price.doubleValue() <= min) {
+            freightPrice = BigDecimal.valueOf(freight);
+        }
        checkData.setFreightPrice(freightPrice);
        checkData.setCouponPrice(discount);
-       checkData.setCheckedAddress(checkedAddress);
+       checkData.setCheckedAddress(address);
        checkData.setAddressId(addressId);
        checkData.setCartId(cartId);
        checkData.setGrouponRulesId(grouponRulesId);
+       List goodsList = new ArrayList<>();
+       goodsList.add(cart);
+       checkData.setCheckedGoodsList(goodsList);
+       checkData.setOrderTotalPrice(orderTotalPtice);
        return checkData;
     }
 

@@ -591,9 +591,14 @@
         select count(id) from cskaoyan_mall_order
         where user_id = #{id}
     </select>
-  <insert id="insertShin">
-    insert into cskaoyan_mall_order(ship_sn,ship_channel)
-    values (#{shipSn},#{shipChannel})
-    where id = #{orderId}
-  </insert>
+
+    <select id="queryMaxOrderIdValue" resultType="java.lang.Integer">
+        select Max(id) from cskaoyan_mall_order
+    </select>
+
+    <update id="updateStatusByOrderId">
+        update cskaoyan_mall_order
+        set order_status = 401
+        where order_status = 301
+    </update>
 </mapper>

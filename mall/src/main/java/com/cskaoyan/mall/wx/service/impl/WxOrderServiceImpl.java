@@ -8,7 +8,10 @@ import com.cskaoyan.mall.wx.vo.orderVo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,6 +31,14 @@ public class WxOrderServiceImpl implements WxOrderService {
     CskaoyanMallGoodsProductMapper goodsProductMapper;
     @Autowired
     CskaoyanMallCartMapper cartMapper;
+    @Autowired
+    CskaoyanMallCouponMapper couponMapper;
+    @Autowired
+    CskaoyanMallGrouponMapper grouponMapper;
+    @Autowired
+    CskaoyanMallGrouponRulesMapper grouponRulesMapper;
+    @Autowired
+    CskaoyanMallSystemMapper systemMapper;
 
     @Override
     public List<OrderListVo> getOrderListByUserId(int userId, int showType, int page, int size) {
@@ -147,17 +158,118 @@ public class WxOrderServiceImpl implements WxOrderService {
     }
 
     @Override
-    public int submit(SubmitRequest submitRequest) {
-        int cartId = submitRequest.getCartId();
-        CskaoyanMallCart cart = cartMapper.selectByPrimaryKey(cartId);
+    public int submit(int userId, SubmitRequest submitRequest) {
+        Date add_time = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+        String orderSn = format.format(add_time);
+        List<CskaoyanMallCart> carts = new ArrayList<>();
+        if (submitRequest.getCartId()!=0) {
+            CskaoyanMallCart cart = cartMapper.selectByPrimaryKey(submitRequest.getCartId());
+            carts.add(cart);
+        }else {
+            carts = cartMapper.selectByUserIdAndChecked(userId);
+        }
+        CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(submitRequest.getAddressId());
+        CskaoyanMallCoupon coupon = couponMapper.selectByPrimaryKey(submitRequest.getCouponId());
+        //CskaoyanMallGroupon groupon = grouponMapper.selectByGrouponId(submitRequest.getGrouponLinkId());
+        CskaoyanMallGrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(submitRequest.getGrouponRulesId());
 
-        return 0;
+        List<CskaoyanMallGoods> goods = new ArrayList<>();
+        for (CskaoyanMallCart cart : carts) {
+            CskaoyanMallGoods good = goodsMapper.selectByPrimaryKey(cart.getGoodsId());
+            goods.add(good);
+        }
+
+        CskaoyanMallOrder order = new CskaoyanMallOrder();
+        order.setUserId(userId);
+        order.setOrderSn(orderSn);
+        order.setOrderStatus((short) 101);
+        order.setConsignee(address.getName());
+        order.setMobile(address.getMobile());
+        order.setAddress(address.getAddress());
+        order.setMessage(submitRequest.getMessage());
+        float sumPrice = 0;
+        for (CskaoyanMallCart cart : carts) {
+            System.out.println(cart.getPrice() + " " + cart.getNumber());
+            sumPrice += cart.getPrice().floatValue()*cart.getNumber();
+        }
+        order.setGoodsPrice(new BigDecimal((double) sumPrice));
+        List<CskaoyanMallSystem> systems = systemMapper.selectAll();
+        double min = 0;
+        double freight = 0;
+        for (CskaoyanMallSystem system : systems) {
+            if (system.getKeyName().equals("cskaoyan_mall_express_freight_min")){
+                min = Double.parseDouble(system.getKeyValue());
+            }
+            if (system.getKeyName().equals("cskaoyan_mall_express_freight_value")){
+                freight = Double.parseDouble(system.getKeyValue());
+            }
+        }
+        if (sumPrice <= min) {
+            order.setFreightPrice(new BigDecimal(freight));
+        }else{
+            order.setFreightPrice(new BigDecimal(0));
+        }
+
+        if (grouponRules!=null){
+            order.setGrouponPrice(grouponRules.getDiscount());
+        }else {
+            order.setGrouponPrice(new BigDecimal(0));
+        }
+
+        if (coupon!=null){
+            order.setCouponPrice(coupon.getDiscount());
+        }else {
+            order.setCouponPrice(new BigDecimal(0));
+        }
+        order.setIntegralPrice(new BigDecimal(0));
+        order.setOrderPrice(new BigDecimal(order.getGoodsPrice().doubleValue()
+                            +order.getFreightPrice().doubleValue()
+                            -order.getCouponPrice().doubleValue()));
+        order.setActualPrice(order.getOrderPrice());
+        order.setAddTime(add_time);
+        order.setUpdateTime(add_time);
+        order.setDeleted(false);
+        orderMapper.insertSelective(order);
+
+        for (CskaoyanMallGoods good : goods) {
+            CskaoyanMallOrderGoods orderGoods = new CskaoyanMallOrderGoods();
+            orderGoods.setOrderId(order.getId());
+            orderGoods.setGoodsId(good.getId());
+            orderGoods.setGoodsName(good.getName());
+            orderGoods.setGoodsSn(good.getGoodsSn());
+            for (CskaoyanMallCart cart : carts) {
+                if (cart.getGoodsId() == good.getId()){
+                    orderGoods.setProductId(cart.getProductId());
+                    CskaoyanMallGoodsProduct product = goodsProductMapper.selectByPrimaryKey(orderGoods.getProductId());
+                    orderGoods.setNumber(cart.getNumber());
+                    orderGoods.setPrice(cart.getPrice());
+                    orderGoods.setSpecifications(product.getSpecifications());
+                    break;
+                }
+            }
+            orderGoods.setPicUrl(good.getPicUrl());
+            orderGoods.setComment(0);
+            orderGoods.setAddTime(add_time);
+            orderGoods.setUpdateTime(add_time);
+            orderGoods.setDeleted(false);
+            orderGoodsMapper.insert(orderGoods);
+        }
+
+        cartMapper.deleteByUserIdAndChecked(userId);
+        int orderId = orderMapper.queryMaxOrderIdValue();
+        return orderId;
     }
 
     @Override
     public void cancelOrder(int id) {
         int i = orderMapper.deleteByPrimaryKey(id);
         int j = orderGoodsMapper.deleteByOrderId(id);
+    }
+
+    @Override
+    public void confirmOrder(int orderId) {
+        orderMapper.updateStatusByOrderId(301, 401);
     }
 
     private String getOrderStatusT(CskaoyanMallOrder order){

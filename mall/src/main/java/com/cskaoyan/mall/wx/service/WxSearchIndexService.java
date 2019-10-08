@@ -15,4 +15,5 @@ public interface WxSearchIndexService {
     SearchIndexResp getSearchIndex();
     void clearSearchHistory(Integer userId);
     List<String> getKeyWordHelper(String keyword);
+    void addSearchHistory(String keyword);
 }

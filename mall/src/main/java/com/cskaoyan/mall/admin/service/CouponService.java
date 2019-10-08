@@ -26,7 +26,7 @@ public interface CouponService {
 
     boolean receiveCoupon(int couponId, Integer userId);
 
-    List<CskaoyanMallCoupon> selectCouponList(int cartId, int grouponRulesId);
+    List<CskaoyanMallCoupon> selectCouponList(int cartId, int grouponRulesId,int userId);
 
     boolean exchangeCoupon(String code,int userId);
 }

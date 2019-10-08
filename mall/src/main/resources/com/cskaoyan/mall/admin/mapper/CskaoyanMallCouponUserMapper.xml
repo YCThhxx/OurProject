@@ -85,4 +85,10 @@
   <select id="selectLength" resultType="int">
     select count(coupon_id) from cskaoyan_mall_coupon_user where user_id = #{userId} and status = 0
   </select>
+  <select id="selectCouponListId" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallCoupon">
+    SELECT c.* from cskaoyan_mall_coupon_user u
+  LEFT JOIN cskaoyan_mall_coupon c
+  on u.coupon_id = c.id
+  WHERE u.user_id = #{couponListId};
+  </select>
 </mapper>

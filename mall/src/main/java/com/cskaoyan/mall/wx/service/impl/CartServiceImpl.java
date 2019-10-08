@@ -136,13 +136,11 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CheckData checkout(int cartId, int addressId, int couponId, int grouponRulesId) {
-        cartId = 1;
-        addressId =1;
-        couponId = 1;
-        grouponRulesId = 1;
         CskaoyanMallCart cart = cartMapper.selectByPrimaryKey(cartId);
         CheckData checkData = new CheckData();
         Integer userId = cart.getUserId();
+        BigDecimal discount = new BigDecimal(0);
+        BigDecimal discount1 = new BigDecimal(0);
         CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(userId);
         Integer provinceId = address.getProvinceId();
         String name = regionMapper.selectNameById(provinceId);
@@ -156,14 +154,17 @@ public class CartServiceImpl implements CartService {
         //商品总价
         BigDecimal price = cart.getPrice();
         CskaoyanMallCoupon coupon = couponMapper.selectByPrimaryKey(couponId);
-        //优惠券的价格
-        BigDecimal discount = coupon.getDiscount();
         CskaoyanMallGrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(grouponRulesId);
+        if(coupon != null){
+            //优惠券的价格
+             discount = coupon.getDiscount();
+        }
+        if (grouponRules != null){
+            discount1 = grouponRules.getDiscount();
+        }
         //团购优惠价格
-        BigDecimal discount1 = grouponRules.getDiscount();
         //快递费用
         BigDecimal freightPrice = new BigDecimal(8);
-
        BigDecimal orderTotalPtice = price.add(freightPrice);
        BigDecimal actualPrice = orderTotalPtice.subtract(discount);
        checkData.setActualPrice(actualPrice);

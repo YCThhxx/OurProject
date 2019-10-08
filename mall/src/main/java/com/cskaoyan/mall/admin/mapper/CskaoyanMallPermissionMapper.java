@@ -45,4 +45,6 @@ public interface CskaoyanMallPermissionMapper {
                           @Param("update_time") Date update_time);
 
     void deleteByRoleId(int id);
+
+    String queryPermissionsApi(String permission);
 }

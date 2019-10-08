@@ -5,19 +5,32 @@ import java.util.List;
 
 public class CheckData {
         List checkedGoodsList;
+
         String checkedAddress;
+
         int availableCouponLength;
+
         BigDecimal goodsTotalPrice;
+
         BigDecimal freightPrice;
+
         BigDecimal couponPrice;
-    BigDecimal grouponPrice;
-    BigDecimal orderTotalPrice;
-    BigDecimal actualPrice;
-   int cartId;
-   int addressId;
-   int message;
-   int grouponLinkId;
-   int grouponRulesId;
+
+         BigDecimal grouponPrice;
+
+        BigDecimal orderTotalPrice;
+
+         BigDecimal actualPrice;
+
+        int cartId;
+
+        int addressId;
+
+        int message;
+
+        int grouponLinkId;
+
+        int grouponRulesId;
 
     public List getCheckedGoodsList() {
         return checkedGoodsList;

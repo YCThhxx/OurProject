@@ -58,4 +58,6 @@ public interface CskaoyanMallGoodsMapper {
     List<CskaoyanMallGoods> otherList(@Param("brandId") Integer brandId,
                                       @Param("keyword") String keyword,
                                       @Param("categoryId") Integer categoryId);
+
+    CskaoyanMallGoods queryGoodsByValueId(@Param("valueId") Integer valueId);
 }

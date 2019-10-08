@@ -111,8 +111,9 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public List<CskaoyanMallCoupon> selectCouponList(int cartId, int grouponRulesId) {
-        return null;
+    public List<CskaoyanMallCoupon> selectCouponList(int cartId, int grouponRulesId,int userId) {
+        List<CskaoyanMallCoupon> coupons = cskaoyanMallCouponUserMapper.selectCouponListId(userId);
+         return coupons;
     }
 
     @Override

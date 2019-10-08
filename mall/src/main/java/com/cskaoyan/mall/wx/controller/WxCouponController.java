@@ -64,7 +64,9 @@ public class WxCouponController {
     @GetMapping("/selectlist")
     public BaseRespVo selectCouponList(@RequestParam("cartId") int cartId,
                                        @RequestParam("grouponRulesId") int grouponRulesId){
-        List<CskaoyanMallCoupon> coupons =  couponService.selectCouponList(cartId,grouponRulesId);
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);
+        List<CskaoyanMallCoupon> coupons =  couponService.selectCouponList(cartId,grouponRulesId,userId);
         BaseRespVo baseRespVo = new BaseRespVo();
         baseRespVo.setErrmsg("成功");
         baseRespVo.setErrno(0);

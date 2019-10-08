@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.admin.config;
 
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallAdminMapper;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallPermissionMapper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -20,6 +21,8 @@ public class AdminRealm extends AuthorizingRealm {
     @Autowired
     CskaoyanMallAdminMapper cskaoyanMallAdminMapper;
 
+    @Autowired
+    CskaoyanMallPermissionMapper permissionMapper;
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String  principal = (String) authenticationToken.getPrincipal();
@@ -33,7 +36,11 @@ public class AdminRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         String primaryPrincipal = (String) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        List<String> permissions = cskaoyanMallAdminMapper.queryPermissionsByusername(primaryPrincipal);
+//        List<String> permissions = cskaoyanMallAdminMapper.queryPermissionsByusername(primaryPrincipal);
+        String[] id = cskaoyanMallAdminMapper.queryRoleIdByName(primaryPrincipal);
+        String s = id[0];
+        int roleId = Integer.parseInt(s);
+        List<String> permissions = permissionMapper.queryPermissions(roleId);
         authorizationInfo.addStringPermissions(permissions);
         return authorizationInfo;
     }

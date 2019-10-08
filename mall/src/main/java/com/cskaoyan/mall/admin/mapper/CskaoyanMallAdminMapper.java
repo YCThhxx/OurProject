@@ -4,6 +4,7 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallAdmin;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallAdminExample;
 import com.cskaoyan.mall.admin.vo.UserInfo;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -52,4 +53,7 @@ public interface CskaoyanMallAdminMapper {
     UserInfo queryAdminInfo(String username);
 
     CskaoyanMallAdmin queryAdminByUsername(String username);
+
+    @Select("select role_ids from cskaoyan_mall_admin where username=#{username}")
+    String[] queryRoleIdByName(@Param("username") String primaryPrincipal);
 }

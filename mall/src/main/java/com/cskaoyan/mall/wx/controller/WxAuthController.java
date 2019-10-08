@@ -44,15 +44,15 @@ public class WxAuthController {
 		String code = (int)((Math.random()*9+1)*100000)+"";
 		String mobile = (String) map.get("mobile");
 		//验证码功能暂不开启，需要的可以将注释取消
-//		boolean flag = smsService.sendMessage(mobile,code);
-		boolean flag = true;
+		boolean flag = smsService.sendMessage(mobile,code);
+//		boolean flag = true;
 		if(flag){
 			//发送成功或失败
 			Session session = SecurityUtils.getSubject().getSession();
 			//将验证码放入session中注册时一起传入
 			session.setAttribute("code",code);
 			Serializable sessionId = session.getId();
-			System.out.println(sessionId);
+//			System.out.println(sessionId);
 			baseRespVo.setData(sessionId);
 			baseRespVo.setErrmsg("获取验证码成功");
 			baseRespVo.setErrno(0);
@@ -141,12 +141,12 @@ public class WxAuthController {
 		String mobile = resetpwVo.getMobile();
 		String password = resetpwVo.getPassword();
 //		假设验证码成功
-//   		 if (!code.equals(codeFromSession)){
-//			 return BaseRespVo.fail(703,"验证码错误！");
-//        }else {
+   		 if (!code.equals(codeFromSession)){
+			 return BaseRespVo.fail(703,"验证码错误！");
+        }else {
    		 	 userService.updatePwByMobile(mobile,password);
 			 return BaseRespVo.ok(null);
-//		}
+		}
 	}
 
 

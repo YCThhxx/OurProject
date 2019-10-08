@@ -52,6 +52,8 @@ public interface CskaoyanMallCategoryMapper {
     @Select("select id from cskaoyan_mall_category where pid=#{pid} limit 1")
     Integer selectIdByPid(@Param("pid") Integer pid);
 
+    CskaoyanMallCategory selectGroupByCategoryId(Integer categoryId);
+
 
 //    FloorGoodsInfo selectFloorGoodsInfo(@Param("pid") Integer pid);
 

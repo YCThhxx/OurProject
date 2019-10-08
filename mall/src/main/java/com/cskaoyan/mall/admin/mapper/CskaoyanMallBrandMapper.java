@@ -39,4 +39,6 @@ public interface CskaoyanMallBrandMapper {
 
     @Select("select id,name,`desc`,pic_url as picUrl,floor_price as floorPrice from cskaoyan_mall_brand limit 4")
     List<CskaoyanMallBrand> selectBrandListLimit4();
+
+    List<CskaoyanMallBrand> findAllBrand();
 }

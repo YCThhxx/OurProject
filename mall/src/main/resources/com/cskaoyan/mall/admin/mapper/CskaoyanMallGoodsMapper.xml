@@ -557,4 +557,39 @@
   <select id="getGoodInfo" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallGoods">
     select brief,counterPrice,id,name,picUrl,retailPrice from cskaoyan_mall_goods where deleted = 0;
   </select>
+  <select id="selectRelated" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_goods
+    where category_id = #{categoryId} and is_on_sale = 1 and deleted = 0
+    order by id
+  </select>
+  <select id="newList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_goods
+    where is_new = 1 and is_on_sale = 1 and deleted = 0
+  </select>
+  <select id="hotList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_goods
+    where is_hot = 1 and is_on_sale = 1 and deleted = 0
+  </select>
+  <select id="otherList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_goods
+    where
+    is_on_sale = 1 and deleted = 0
+    <if test="brandId!=null">
+      and brand_id = #{brandId}
+    </if>
+    <if test="keyword!=null">
+      and name like #{keyword}
+    </if>
+    <if test="categoryId!=0 and categoryId!=null">
+      and category_id = #{categoryId}
+    </if>
+  </select>
 </mapper>

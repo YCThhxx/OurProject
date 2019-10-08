@@ -24,4 +24,7 @@ public interface CskaoyanMallTopicMapper {
     @Select("select id,title,subtitle,price,read_count as readCount,pic_url as picUrl from cskaoyan_mall_topic limit 3")
     List<CskaoyanMallTopic> selectTopic3();
 
+    List<CskaoyanMallTopic> selectAll();
+
+    List<CskaoyanMallTopic> selectRelated(int id);
 }

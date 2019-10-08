@@ -42,4 +42,8 @@ public interface CskaoyanMallCartMapper {
     int queryGoodsSum(int userId);
 
     int queryCartIdByDateAndUserId(@Param("userId") int userId,@Param("date") Date date);
+
+    List<CskaoyanMallCart> selectByUserIdAndChecked(int userId);
+
+    void deleteByUserIdAndChecked(int userId);
 }

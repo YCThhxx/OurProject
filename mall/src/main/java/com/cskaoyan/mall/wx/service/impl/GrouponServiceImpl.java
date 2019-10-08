@@ -176,7 +176,7 @@ public class GrouponServiceImpl implements GrouponService {
         detailData.setLinkGrouponId(grouponId);
         List<CskaoyanMallOrderGoods> orderGoods = orderGoodsMapper.queryOrderGoodsByOrderId(orderId);
         for (CskaoyanMallOrderGoods orderGood : orderGoods) {
-            String specifications = orderGood.getSpecifications();
+            String[] specifications = orderGood.getSpecifications();
             //此处存疑，一个订单商品应该只有一个规格
             ArrayList<Object> list = new ArrayList<>();
             list.add(specifications);

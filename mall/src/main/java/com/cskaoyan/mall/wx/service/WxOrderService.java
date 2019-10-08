@@ -13,7 +13,9 @@ public interface WxOrderService {
 
     OrderDetailVo getOrderDetailByOrderId(int orderId);
 
-    int submit(SubmitRequest submitRequest);
+    int submit(int userId, SubmitRequest submitRequest);
 
     void cancelOrder(int id);
+
+    void confirmOrder(int orderId);
 }

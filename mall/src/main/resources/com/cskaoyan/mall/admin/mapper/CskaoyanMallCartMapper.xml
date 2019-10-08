@@ -76,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, goods_id, goods_sn, goods_name, product_id, price, number, specifications, 
+    id, user_id, goods_id, goods_sn, goods_name, product_id, price, number, specifications,
     checked, pic_url, add_time, update_time, deleted
   </sql>
   <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCartExample" resultMap="BaseResultMap">
@@ -95,7 +95,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_cart
     where id = #{id,jdbcType=INTEGER}
@@ -110,15 +110,15 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCart">
-    insert into cskaoyan_mall_cart (id, user_id, goods_id, 
-      goods_sn, goods_name, product_id, 
-      price, number, specifications, 
-      checked, pic_url, add_time, 
+    insert into cskaoyan_mall_cart (id, user_id, goods_id,
+      goods_sn, goods_name, product_id,
+      price, number, specifications,
+      checked, pic_url, add_time,
       update_time, deleted)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
-      #{goodsSn,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
-      #{price,jdbcType=DECIMAL}, #{number,jdbcType=SMALLINT}, #{specifications,jdbcType=VARCHAR}, 
-      1, #{picUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER},
+      #{goodsSn,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER},
+      #{price,jdbcType=DECIMAL}, #{number,jdbcType=SMALLINT}, #{specifications,jdbcType=VARCHAR},
+      1, #{picUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, 0)
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallCart">
@@ -350,28 +350,41 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
+
   <select id="queryUserIdByUsername" resultType="java.lang.Integer">
     select id from cskaoyan_mall_user where username = #{usernamee}
   </select>
-  
+
   <select id="quertCartByUserId" resultMap="BaseResultMap">
-    select  
+    select
     id,user_id,goods_id,goods_sn,goods_name,product_id,price,`number`,specifications,checked,pic_url,add_time,update_time
      from  cskaoyan_mall_cart where  user_id = #{id} and deleted = 0
   </select>
-  
+
   <update id="update">
     update   cskaoyan_mall_cart set `number` = #{number} where product_id = #{id} and user_id = #{userid}
   </update>
   <update id="updateCheck">
     update   cskaoyan_mall_cart set checked = #{isChecked} where product_id = #{productId} and user_id = #{userId}
   </update>
-  
+
   <select id="queryGoodsSum"  resultType="java.lang.Integer">
     select SUM(number) from  cskaoyan_mall_cart where  user_id = #{userid}
   </select>
   <select id="queryCartIdByDateAndUserId" resultType="java.lang.Integer">
     select id from  cskaoyan_mall_cart where  user_id = #{userId} and add_time = #{date}
   </select>
+
+    <select id="selectByUserIdAndChecked" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_cart
+        where user_id = #{userId} and deleted = 0 and checked = 1
+    </select>
+
+    <update id="deleteByUserIdAndChecked">
+        update cskaoyan_mall_cart
+        set deleted = 1
+        where user_id = #{userId} and deleted = 0 and checked = 1
+    </update>
 </mapper>

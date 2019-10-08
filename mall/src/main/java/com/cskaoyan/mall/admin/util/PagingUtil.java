@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.admin.utils;
+package com.cskaoyan.mall.admin.util;
 
 public class PagingUtil {
     private PagingUtil(){

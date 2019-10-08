@@ -2,14 +2,13 @@ package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.config.CustomToken;
 
+import com.cskaoyan.mall.admin.bean.CskaoyanMallUser;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallUserMapper;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.service.SmsService;
 import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.util.UserInfo;
-import com.cskaoyan.mall.wx.vo.AvatorData;
-import com.cskaoyan.mall.wx.vo.BaseRespVo;
-import com.cskaoyan.mall.wx.vo.LoginVo;
-import com.cskaoyan.mall.wx.vo.WxReqVo;
+import com.cskaoyan.mall.wx.vo.*;
 import com.cskaoyan.mall.wx.vo.homeIndex.UserOrderVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -28,13 +27,15 @@ import java.util.Map;
 @RequestMapping("/wx")
 public class WxAuthController {
 
+    @Autowired
+    CskaoyanMallUserMapper userMapper;
+
 	@Autowired
 	WxUserService userService;
 
-	Subject subject;
-
 	@Autowired
 	SmsService smsService;
+
 
 	@PostMapping("auth/regCaptcha")
 	public BaseRespVo sendValidateCode(@RequestBody Map map){
@@ -42,8 +43,8 @@ public class WxAuthController {
 		String code = (int)((Math.random()*9+1)*100000)+"";
 		String mobile = (String) map.get("mobile");
 		//验证码功能暂不开启，需要的可以将注释取消
-//		boolean flag = smsService.sendMessage(mobile,code);
-		boolean flag = true;
+		boolean flag = smsService.sendMessage(mobile,code);
+//		boolean flag = true;
 		if(flag){
 			//发送成功或失败
 			Session session = SecurityUtils.getSubject().getSession();
@@ -63,12 +64,18 @@ public class WxAuthController {
 
 	@RequestMapping("/auth/login")
 	public Object login(@RequestBody LoginVo loginVo, HttpServletRequest request) {
-
 		String username = loginVo.getUsername();
 		String password = loginVo.getPassword();
-		CustomToken token = new CustomToken(username, password, "wx");
+
+		CskaoyanMallUser user = userService.selectByUsernameAndPassword(username,password);
+		//此处不实现过期时间设置，
+		if (user==null){
+			BaseRespVo fail = BaseRespVo.fail(500, "账号或密码错误！");
+			return fail;
+		}
 		//设置携带了用户信息的token
-		subject = SecurityUtils.getSubject();
+		CustomToken token = new CustomToken(username, password, "wx");
+		Subject subject = SecurityUtils.getSubject();
 		try {
 			//进入到reaml域中进行认证
 			subject.login(token);
@@ -76,17 +83,12 @@ public class WxAuthController {
 			return BaseResponseVo.fail("登录失败",500);
 		}
 		Serializable id = subject.getSession().getId();
-		System.out.println(id);
-		//*******************************
 		// userInfo
 		UserInfo userInfo = new UserInfo();
-		userInfo.setNickName(username);
-		//userInfo.setAvatarUrl(user.getAvatar());
-
-		// token
-//		UserToken userToken = UserTokenManager.generateToken(userId);
+		userInfo.setNickName(user.getNickname());
+		userInfo.setAvatarUrl(user.getAvatar());
 		LocalDateTime update = LocalDateTime.now();
-		LocalDateTime expire = update.plusDays(1);
+		LocalDateTime expire = update.plusDays(7);
 
 		Map<Object, Object> result = new HashMap<Object, Object>();
 		result.put("token", id);
@@ -95,30 +97,24 @@ public class WxAuthController {
 		return BaseRespVo.ok(result);
 	}
 
+
 	@GetMapping("user/index")
-	public Object list() {
-		Serializable id = subject.getSession().getId();
-		System.out.println(id);
+	public BaseRespVo list(HttpServletRequest request) {
+		Subject subject = SecurityUtils.getSubject();
 		String principal = (String) subject.getPrincipal();
 		Integer userId = userService.queryUserIdByUserName(principal);
-//		//通过请求头获得userId，进而可以获得一切关于user的信息
-		//**************************
 		if (userId == null) {
 			return BaseRespVo.fail();
 		}
-
 		Map<Object, Object> data = new HashMap<Object, Object>();
-		//***********************************
-		//根据userId查询订单信息
 		UserOrderVo orderVo = userService.selectOrderMsg(userId);
 		data.put("order", orderVo);
-		//***********************************
-
 		return BaseRespVo.ok(data);
 	}
 
 	@RequestMapping("auth/logout")
 	public BaseRespVo logout(HttpServletRequest request){
+		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
 		BaseRespVo baseRespVo = new BaseRespVo();
 		baseRespVo.setErrmsg("成功");
@@ -138,8 +134,19 @@ public class WxAuthController {
 
 
 	@RequestMapping("auth/reset")
-	public BaseRespVo reset(){
-		return BaseRespVo.fail();
+	public BaseRespVo reset(@RequestBody ResetpwVo resetpwVo){
+		Session session = SecurityUtils.getSubject().getSession();
+		String codeFromSession = (String) session.getAttribute("code");
+		String code = resetpwVo.getCode();
+		String mobile = resetpwVo.getMobile();
+		String password = resetpwVo.getPassword();
+//		假设验证码成功
+   		 if (!code.equals(codeFromSession)){
+			 return BaseRespVo.fail(703,"验证码错误！");
+        }else {
+   		 	 userService.updatePwByMobile(mobile,password);
+			 return BaseRespVo.ok(null);
+		}
 	}
 
 
@@ -151,23 +158,32 @@ public class WxAuthController {
 	@RequestMapping("auth/register")
 	public BaseRespVo register(@RequestBody Map map){
 		Session session = SecurityUtils.getSubject().getSession();
-//		System.out.println(session.getId());
 		String codeFromSession = (String) session.getAttribute("code");
 		String code = (String) map.get("code");
+		String mobile = (String) map.get("mobile");
+		String password = (String) map.get("password");
+		String username = (String) map.get("username");
+		//wxCode为设置，不知道什么作用
+		boolean flag = userService.registerUser(mobile,username,password);
 		BaseRespVo baseRespVo = new BaseRespVo();
-		if (!code.equals(codeFromSession)){
-			baseRespVo.setErrmsg("验证码错误！");
-			baseRespVo.setErrno(701);
-        }
-		AvatorData avatorData = new AvatorData();
-		LoginVo loginVo = new LoginVo();
-		//携带userInfo才可以转跳至首页
-		avatorData.setAvatar("");
-		avatorData.setNickname("wx");
-		loginVo.setUserInfo(avatorData);
-		baseRespVo.setData(loginVo);
+		//假设验证码成功
+   		 if (!code.equals(codeFromSession)){
+         baseRespVo.setErrmsg("验证码错误！");
+         baseRespVo.setErrno(701);
+        }else if(!flag){
+			baseRespVo.setErrmsg("注册失败");
+			baseRespVo.setErrno(101);
+		}else{
+			AvatorData avatorData = new AvatorData();
+			LoginVo loginVo = new LoginVo();
+			//携带userInfo才可以转跳至首页
+			avatorData.setAvatar("");
+			avatorData.setNickname(username);
+			loginVo.setUserInfo(avatorData);
+			baseRespVo.setData(loginVo);
 			baseRespVo.setErrmsg("注册成功");
 			baseRespVo.setErrno(0);
+		}
 		return baseRespVo;
 	}
 }

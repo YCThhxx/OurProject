@@ -75,7 +75,11 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         GoodsDetailVo goodsDetailVo = new GoodsDetailVo();
         List<CskaoyanMallGoodsAttribute> attribute = mallGoodsAttributeMapper.selectByGoodsId(id);
         CskaoyanMallBrand brand = mallBrandMapper.selectByPrimaryKey(info.getBrandId());
-        GoodsCommentVo comment = mallCommentMapper.selectByValueId(id);
+        GoodsCommentVo comment = new GoodsCommentVo();
+        List<CskaoyanMallComment> comments = mallCommentMapper.selectByValueId(id);
+        PageInfo pageInfo = new PageInfo(comments);
+        comment.setCount(pageInfo.getTotal());
+        comment.setData(comments);
         List<CskaoyanMallGrouponRules> groupon = mallGrouponRulesMapper.selectAllGrouponRulesByGoodsId(id,new Date());
         List<CskaoyanMallIssue> issue = mallIssueMapper.selectAllIssue();
         List<CskaoyanMallGoodsProduct> productList = mallGoodsProductMapper.selectByGoodsId(id);
@@ -163,3 +167,5 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     }
 
 }
+
+

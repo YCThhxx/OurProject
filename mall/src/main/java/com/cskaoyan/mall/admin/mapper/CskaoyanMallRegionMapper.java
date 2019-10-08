@@ -34,4 +34,5 @@ public interface CskaoyanMallRegionMapper {
 
     List<RegionData> getRegions();
 
+    List<CskaoyanMallRegion> selectByPid(int pid);
 }

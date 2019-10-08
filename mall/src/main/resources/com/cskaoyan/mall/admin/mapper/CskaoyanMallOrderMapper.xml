@@ -88,9 +88,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, order_sn, order_status, consignee, mobile, address, message, goods_price, 
-    freight_price, coupon_price, integral_price, groupon_price, order_price, actual_price, 
-    pay_id, pay_time, ship_sn, ship_channel, ship_time, confirm_time, comments, end_time, 
+    id, user_id, order_sn, order_status, consignee, mobile, address, message, goods_price,
+    freight_price, coupon_price, integral_price, groupon_price, order_price, actual_price,
+    pay_id, pay_time, ship_sn, ship_channel, ship_time, confirm_time, comments, end_time,
     add_time, update_time, deleted
   </sql>
   <select id="selectByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallOrderExample" resultMap="BaseResultMap">
@@ -109,15 +109,16 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_order
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cskaoyan_mall_order
+  <update id="deleteByPrimaryKey">
+    update cskaoyan_mall_order
+    set deleted = 1
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
   <delete id="deleteByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallOrderExample">
     delete from cskaoyan_mall_order
     <if test="_parameter != null">
@@ -125,23 +126,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallOrder">
-    insert into cskaoyan_mall_order (id, user_id, order_sn, 
-      order_status, consignee, mobile, 
-      address, message, goods_price, 
-      freight_price, coupon_price, integral_price, 
-      groupon_price, order_price, actual_price, 
-      pay_id, pay_time, ship_sn, 
-      ship_channel, ship_time, confirm_time, 
-      comments, end_time, add_time, 
+    insert into cskaoyan_mall_order (id, user_id, order_sn,
+      order_status, consignee, mobile,
+      address, message, goods_price,
+      freight_price, coupon_price, integral_price,
+      groupon_price, order_price, actual_price,
+      pay_id, pay_time, ship_sn,
+      ship_channel, ship_time, confirm_time,
+      comments, end_time, add_time,
       update_time, deleted)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, 
-      #{orderStatus,jdbcType=SMALLINT}, #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
-      #{freightPrice,jdbcType=DECIMAL}, #{couponPrice,jdbcType=DECIMAL}, #{integralPrice,jdbcType=DECIMAL}, 
-      #{grouponPrice,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL}, #{actualPrice,jdbcType=DECIMAL}, 
-      #{payId,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{shipSn,jdbcType=VARCHAR}, 
-      #{shipChannel,jdbcType=VARCHAR}, #{shipTime,jdbcType=TIMESTAMP}, #{confirmTime,jdbcType=TIMESTAMP}, 
-      #{comments,jdbcType=SMALLINT}, #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR},
+      #{orderStatus,jdbcType=SMALLINT}, #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL},
+      #{freightPrice,jdbcType=DECIMAL}, #{couponPrice,jdbcType=DECIMAL}, #{integralPrice,jdbcType=DECIMAL},
+      #{grouponPrice,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL}, #{actualPrice,jdbcType=DECIMAL},
+      #{payId,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{shipSn,jdbcType=VARCHAR},
+      #{shipChannel,jdbcType=VARCHAR}, #{shipTime,jdbcType=TIMESTAMP}, #{confirmTime,jdbcType=TIMESTAMP},
+      #{comments,jdbcType=SMALLINT}, #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallOrder">
@@ -561,4 +562,33 @@
   <select id="selectOrdersTotal" resultType="int">
     select count(id) from cskaoyan_mall_order
   </select>
+
+
+    <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.wx.vo.orderVo.OrderListVo">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
+        <result column="actual_price" jdbcType="DECIMAL" property="actualPrice" />
+        <result column="order_status" property="orderStatus" />
+        <collection property="goodsList" ofType="com.cskaoyan.mall.wx.vo.orderVo.GoodsListVo">
+            <result column="number" property="number" />
+            <result column="pic_url" property="picUrl" />
+            <result column="g_id" property="id" />
+            <result column="goods_name" property="goodsName" />
+        </collection>
+    </resultMap>
+    <select id="queryOrderByUserId" resultMap="BaseResultMap1">
+      select ogg.id, ogg.order_sn, ogg.actual_price, ogg.`number`, ogg.order_status, g.pic_url, ogg.g_id, ogg.goods_name from(
+			select o.id, o.order_sn, o.actual_price, o.order_status, og.number, og.goods_name, og.goods_id as g_id
+            from cskaoyan_mall_order o left join cskaoyan_mall_order_goods og
+            on o.id = og.order_id where o.user_id = #{userId} and o.deleted = 0) ogg
+			left join cskaoyan_mall_goods g on ogg.g_id = g.id
+			<if test="status != 1">
+                where order_status = #{status}
+            </if>
+    </select>
+
+    <select id="queryOrderAmountByUserId" resultType="java.lang.Integer">
+        select count(id) from cskaoyan_mall_order
+        where user_id = #{id}
+    </select>
 </mapper>

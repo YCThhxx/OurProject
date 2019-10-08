@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 public class SystemManageController {
+    //注意把数据表的 key 的容量增大 不然会报错
 
     @Autowired
     SystemManageService systemManageService;

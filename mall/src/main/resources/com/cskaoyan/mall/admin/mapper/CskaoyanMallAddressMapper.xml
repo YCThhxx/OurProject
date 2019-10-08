@@ -321,4 +321,24 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByUserId" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallAddress">
+    select    <include refid="Base_Column_List" />
+    from cskaoyan_mall_address
+    where user_id = #{userId}
+  </select>
+  <insert id="saveAddress" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallAddress">
+    <selectKey resultType="int" keyProperty="id" order="AFTER">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into cskaoyan_mall_address (name, user_id,
+      province_id, city_id, area_id,
+      address, mobile, is_default,
+      add_time, update_time, deleted
+      )
+    values (#{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
+      #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER},
+      #{address,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT},
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
 </mapper>

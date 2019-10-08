@@ -1,8 +1,10 @@
 package com.cskaoyan.mall.wx.service.impl;
 
+import com.cskaoyan.mall.admin.bean.CskaoyanMallAddress;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCart;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoodsProduct;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallAddressMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallCartMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallGoodsMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallGoodsProductMapper;
@@ -13,8 +15,11 @@ import com.cskaoyan.mall.wx.vo.homeIndex.CartCheckRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.ResponseCache;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -24,6 +29,8 @@ public class CartServiceImpl implements CartService {
         CskaoyanMallGoodsMapper goodsmapper;
         @Autowired
     CskaoyanMallGoodsProductMapper productMapper;
+        @Autowired
+    CskaoyanMallAddressMapper cskaoyanMallAddressMapper;
     @Override
     public void add(AddRequest addRequest, String principal) {
         int goodsId = addRequest.getGoodsId();
@@ -89,8 +96,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public int fastAdd(String username, AddRequest addRequest) {
-        Date date;
+    public int fastAdd(String username, AddRequest addRequest) throws ParseException {
         int goodsId = addRequest.getGoodsId();
         int number = addRequest.getNumber();
         int productId = addRequest.getProductId();
@@ -107,13 +113,27 @@ public class CartServiceImpl implements CartService {
         cskaoyanMallCart.setNumber((short) number);
         cskaoyanMallCart.setSpecifications(product.getSpecifications());
         cskaoyanMallCart.setPicUrl(goods.getPicUrl());
-        date = new Date();
-        cskaoyanMallCart.setAddTime(date);
-        cskaoyanMallCart.setUpdateTime(date);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(date);
+        Date parse = sdf.parse(format);
+        cskaoyanMallCart.setAddTime(parse);
+        cskaoyanMallCart.setUpdateTime(parse);
         cartMapper.insert(cskaoyanMallCart);
-        int cartId = cartMapper.queryCartIdByDateAndUserId(userId,date);
+        int cartId = cartMapper.queryCartIdByDateAndUserId(userId,parse);
         return  cartId ;
     }
+
+//    @Override
+//    public CartCheckoutResp checkOut(String username, int cartId, int addressId, int couponId, int grouponRulesId) {
+//        CartCheckoutResp cartCheckoutResp = new CartCheckoutResp();
+//        CartResp cartResp = CartUtil.queryCartListByName(username, cartMapper);
+//        List<CskaoyanMallCart> cartList = cartResp.getCartList();
+//        cartCheckoutResp.setCheckedGoodsList(cartList);
+//        CskaoyanMallAddress cskaoyanMallAddress = cskaoyanMallAddressMapper.selectByPrimaryKey(addressId);
+//        cartCheckoutResp.setCheckedAddress(cskaoyanMallAddress);
+//        
+//    }
 
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.jws.soap.SOAPBinding;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/wx/cart")
@@ -72,8 +73,21 @@ public class CartController {
     public BaseResponseVo fastAdd(@RequestBody AddRequest addRequest){
         Subject subject = SecurityUtils.getSubject();
         String username = (String)subject.getPrincipal();
-        int cartId =cartService.fastAdd(username,addRequest);
+        int cartId = 0;
+        try {
+            cartId = cartService.fastAdd(username,addRequest);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         BaseResponseVo ok = BaseResponseVo.ok(cartId);
         return ok;
     }
+//    @RequestMapping("checkout")
+//    public BaseResponseVo checkout(int cartId,int addressId,int couponId,int grouponRulesId){
+//        Subject subject = SecurityUtils.getSubject();
+//        String username = (String)subject.getPrincipal();
+//        CartCheckoutResp  cartCheckoutResp = cartService.checkOut(username,cartId,addressId,couponId,grouponRulesId);
+//        BaseResponseVo ok = BaseResponseVo.ok(cartCheckoutResp);
+//        return ok;
+//    } 
 }

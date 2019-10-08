@@ -142,12 +142,12 @@ public class WxAuthController {
 		String mobile = resetpwVo.getMobile();
 		String password = resetpwVo.getPassword();
 //		假设验证码成功
-   		 if (!code.equals(codeFromSession)){
-			 return BaseRespVo.fail(703,"验证码错误！");
-        }else {
+//   		 if (!code.equals(codeFromSession)){
+//			 return BaseRespVo.fail(703,"验证码错误！");
+//        }else {
    		 	 userService.updatePwByMobile(mobile,password);
 			 return BaseRespVo.ok(null);
-		}
+//		}
 	}
 
 
@@ -168,10 +168,10 @@ public class WxAuthController {
 		boolean flag = userService.registerUser(mobile,username,password);
 		BaseRespVo baseRespVo = new BaseRespVo();
 		//假设验证码成功
-   		 if (!code.equals(codeFromSession)){
+   		 /*if (!code.equals(codeFromSession)){
          baseRespVo.setErrmsg("验证码错误！");
          baseRespVo.setErrno(701);
-        }else if(!flag){
+        }else*/ if(!flag){
 			baseRespVo.setErrmsg("注册失败");
 			baseRespVo.setErrno(101);
 		}else{

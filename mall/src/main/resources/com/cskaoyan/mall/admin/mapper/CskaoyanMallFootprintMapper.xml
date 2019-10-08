@@ -226,4 +226,10 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectFootprint" resultType="com.cskaoyan.mall.wx.vo.FootData">
+    SELECT f.id,f.goods_id,f.add_time,g.brief,g.name,g.pic_url,g.retail_price
+FROM cskaoyan_mall_footprint f
+LEFT JOIN cskaoyan_mall_goods g
+ON f.goods_id = g.id
+  </select>
 </mapper>

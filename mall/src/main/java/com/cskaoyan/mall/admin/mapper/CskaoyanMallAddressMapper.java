@@ -10,7 +10,7 @@ public interface CskaoyanMallAddressMapper {
 
     int deleteByExample(CskaoyanMallAddressExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(int id);
 
     int insert(CskaoyanMallAddress record);
 
@@ -31,5 +31,6 @@ public interface CskaoyanMallAddressMapper {
     List<CskaoyanMallAddress> selectByUserId(@Param("userId") int userId);
 
     int saveAddress(CskaoyanMallAddress address);
+
 
 }

@@ -1,7 +1,10 @@
 package com.cskaoyan.mall.wx.service;
 
+import com.cskaoyan.mall.wx.util.CheckData;
 import com.cskaoyan.mall.wx.vo.*;
 import com.cskaoyan.mall.wx.vo.homeIndex.CartCheckRequest;
+
+import java.text.ParseException;
 
 public interface CartService {
     void add(AddRequest addRequest, String principal);
@@ -16,5 +19,8 @@ public interface CartService {
 
     int goodscount(String username);
 
-    int fastAdd(String username, AddRequest addRequest);
+    int fastAdd(String username, AddRequest addRequest) throws ParseException;
+
+    CheckData checkout(int cartId, int addressId, int couponId, int grouponRules);
+
 }

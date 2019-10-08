@@ -3,16 +3,14 @@ package com.cskaoyan.mall.wx.service.impl;
 import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.mapper.*;
 import com.cskaoyan.mall.wx.service.WxGoodsService;
-import com.cskaoyan.mall.wx.vo.goodsvo.CategoryVo;
-import com.cskaoyan.mall.wx.vo.goodsvo.GoodsCommentVo;
-import com.cskaoyan.mall.wx.vo.goodsvo.GoodsDetailVo;
-import com.cskaoyan.mall.wx.vo.goodsvo.GoodsSpecificationVo;
+import com.cskaoyan.mall.wx.vo.goodsvo.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class WxGoodsServiceImpl implements WxGoodsService {
 
@@ -77,16 +75,31 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         GoodsDetailVo goodsDetailVo = new GoodsDetailVo();
         List<CskaoyanMallGoodsAttribute> attribute = mallGoodsAttributeMapper.selectByGoodsId(id);
         CskaoyanMallBrand brand = mallBrandMapper.selectByPrimaryKey(info.getBrandId());
-        GoodsCommentVo comment = mallCommentMapper.selectByValueId(id);
+        GoodsCommentVo comment = new GoodsCommentVo();
+        List<CskaoyanMallComment> comments = mallCommentMapper.selectByValueId(id);
+        PageInfo pageInfo = new PageInfo(comments);
+        comment.setCount(pageInfo.getTotal());
+        comment.setData(comments);
         List<CskaoyanMallGrouponRules> groupon = mallGrouponRulesMapper.selectAllGrouponRulesByGoodsId(id,new Date());
         List<CskaoyanMallIssue> issue = mallIssueMapper.selectAllIssue();
         List<CskaoyanMallGoodsProduct> productList = mallGoodsProductMapper.selectByGoodsId(id);
         List<CskaoyanMallGoodsSpecification> valueList = mallGoodsSpecificationMapper.selectByGoodsId(id);
         List<GoodsSpecificationVo> specificationVoList = new ArrayList<>();
-        GoodsSpecificationVo specificationVo = new GoodsSpecificationVo();
-        specificationVo.setName(" 规格 ");
-        specificationVo.setValueList(valueList);
-        specificationVoList.add(specificationVo);
+        while(valueList.size()>0){
+            List<CskaoyanMallGoodsSpecification> specifications = new ArrayList<>();
+            CskaoyanMallGoodsSpecification specification = valueList.remove(0);
+            specifications.add(specification);
+            for (CskaoyanMallGoodsSpecification cskaoyanMallGoodsSpecification : valueList) {
+                if(cskaoyanMallGoodsSpecification.getSpecification().equals(specification.getSpecification())){
+                    specifications.add(cskaoyanMallGoodsSpecification);
+                    valueList.remove(cskaoyanMallGoodsSpecification);
+                }
+            }
+            GoodsSpecificationVo specificationVo = new GoodsSpecificationVo();
+            specificationVo.setName(specification.getSpecification());
+            specificationVo.setValueList(specifications);
+            specificationVoList.add(specificationVo);
+        }
         String shareImage = info.getShareUrl();
         List<GoodsSpecificationVo> specificationList;
         if(userid!=null){
@@ -104,4 +117,55 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         goodsDetailVo.setSpecificationList(specificationVoList);
         return goodsDetailVo;
     }
+
+    @Override
+    public List<CskaoyanMallGoods> selectRelated(int id) {
+        CskaoyanMallGoods goods = mallGoodsMapper.selectByPrimaryKey(id);
+        PageHelper.startPage(1,6);
+        List<CskaoyanMallGoods> goodsList = mallGoodsMapper.selectRelated(goods.getCategoryId().intValue());
+        return goodsList;
+    }
+
+    @Override
+    public GoodsListVo getList(String name , int page, int size, String sort, String order, Integer brandId, String keyword, Integer categoryId) {
+        GoodsListVo goodsListVo = new GoodsListVo();
+        List<CskaoyanMallGoods> goodsList;
+        if(name.equals("new")){
+            goodsList = mallGoodsMapper.newList();
+        }else if(name.equals("hot")){
+            goodsList = mallGoodsMapper.hotList();
+        }else {
+            goodsList = mallGoodsMapper.otherList(brandId,keyword,categoryId);
+        }
+        List<CskaoyanMallCategory> categories = new ArrayList<>();
+        Set<Integer> set = new HashSet();
+        for (CskaoyanMallGoods goods : goodsList) {
+            set.add(goods.getCategoryId());
+        }
+        for (Integer i : set) {
+            CskaoyanMallCategory category = mallCategoryMapper.selectGroupByCategoryId(i);
+            categories.add(category);
+        }
+        if(sort==null&&order==null){
+            PageHelper.startPage(page, size);
+        }else{
+            String orderBy = sort +" " +order;
+            PageHelper.startPage(page, size, orderBy);
+        }
+        if(name.equals("new")){
+            goodsList = mallGoodsMapper.newList();
+        }else if(name.equals("hot")){
+            goodsList = mallGoodsMapper.hotList();
+        }else {
+            goodsList = mallGoodsMapper.otherList(brandId,keyword,categoryId);
+        }
+        PageInfo pageInfo = new PageInfo(goodsList);
+        goodsListVo.setCount((int) pageInfo.getTotal());
+        goodsListVo.setFilterCategoryList(categories);
+        goodsListVo.setGoodsList(goodsList);
+        return goodsListVo;
+    }
+
 }
+
+

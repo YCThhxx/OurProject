@@ -2,16 +2,21 @@ package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.service.CartService;
+import com.cskaoyan.mall.wx.util.CheckData;
 import com.cskaoyan.mall.wx.vo.*;
 import com.cskaoyan.mall.wx.vo.homeIndex.CartCheckRequest;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.jws.soap.SOAPBinding;
+import java.util.Map;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/wx/cart")
@@ -72,8 +77,22 @@ public class CartController {
     public BaseResponseVo fastAdd(@RequestBody AddRequest addRequest){
         Subject subject = SecurityUtils.getSubject();
         String username = (String)subject.getPrincipal();
-        int cartId =cartService.fastAdd(username,addRequest);
+        int cartId = 0;
+        try {
+            cartId = cartService.fastAdd(username,addRequest);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         BaseResponseVo ok = BaseResponseVo.ok(cartId);
         return ok;
+    }
+
+    @GetMapping("checkout")
+    public BaseResponseVo checkout(@Param("cartId") int cartId,
+                                   @Param("addressId") int addressId,
+                                   @Param("couponId") int couponId,
+                                   @Param("grouponRulesId") int grouponRulesId){
+        CheckData data = cartService.checkout(cartId,addressId,couponId,grouponRulesId);
+        return BaseResponseVo.ok(data);
     }
 }

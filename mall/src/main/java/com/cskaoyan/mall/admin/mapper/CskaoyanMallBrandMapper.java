@@ -37,6 +37,12 @@ public interface CskaoyanMallBrandMapper {
 
     int deleteBrand(CskaoyanMallBrand categoryData);
 
+    @Select("select id,name,`desc`,pic_url as picUrl,floor_price as floorPrice from cskaoyan_mall_brand limit 4")
+    List<CskaoyanMallBrand> selectBrandListLimit4();
+
+    List<CskaoyanMallBrand> findAllBrand();
+
     @Select("select id,name,`desc`,pic_url as picUrl,floor_price as floorPrice from cskaoyan_mall_brand limit #{limit}")
     List<CskaoyanMallBrand> selectBrandListLimit(@Param("limit") int limit);
+
 }

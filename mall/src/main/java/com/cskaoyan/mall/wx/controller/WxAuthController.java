@@ -33,6 +33,7 @@ public class WxAuthController {
 	@Autowired
 	WxUserService userService;
 
+    Subject subject ;
 	@Autowired
 	SmsService smsService;
 
@@ -66,7 +67,6 @@ public class WxAuthController {
 	public Object login(@RequestBody LoginVo loginVo, HttpServletRequest request) {
 		String username = loginVo.getUsername();
 		String password = loginVo.getPassword();
-
 		CskaoyanMallUser user = userService.selectByUsernameAndPassword(username,password);
 		//此处不实现过期时间设置，
 		if (user==null){
@@ -74,7 +74,9 @@ public class WxAuthController {
 			return fail;
 		}
 		//设置携带了用户信息的token
-		CustomToken token = new CustomToken(username, password, "wx");
+        //此处重新获取一个subject
+        subject = SecurityUtils.getSubject();
+        CustomToken token = new CustomToken(username, password, "wx");
 		Subject subject = SecurityUtils.getSubject();
 		try {
 			//进入到reaml域中进行认证
@@ -89,7 +91,6 @@ public class WxAuthController {
 		userInfo.setAvatarUrl(user.getAvatar());
 		LocalDateTime update = LocalDateTime.now();
 		LocalDateTime expire = update.plusDays(7);
-
 		Map<Object, Object> result = new HashMap<Object, Object>();
 		result.put("token", id);
 		result.put("tokenExpire", expire.toString());
@@ -100,7 +101,7 @@ public class WxAuthController {
 
 	@GetMapping("user/index")
 	public BaseRespVo list(HttpServletRequest request) {
-		Subject subject = SecurityUtils.getSubject();
+		Serializable id = subject.getSession().getId();
 		String principal = (String) subject.getPrincipal();
 		Integer userId = userService.queryUserIdByUserName(principal);
 		if (userId == null) {
@@ -114,7 +115,6 @@ public class WxAuthController {
 
 	@RequestMapping("auth/logout")
 	public BaseRespVo logout(HttpServletRequest request){
-		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
 		BaseRespVo baseRespVo = new BaseRespVo();
 		baseRespVo.setErrmsg("成功");

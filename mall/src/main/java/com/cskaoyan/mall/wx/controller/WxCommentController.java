@@ -53,7 +53,7 @@ public class WxCommentController {
         Subject subject = SecurityUtils.getSubject();
         String username = (String) subject.getPrincipal();
         Integer userId = wxUserService.queryUserIdByUserName(username);
-        cskaoyanMallComment.setUserId(1);
+        cskaoyanMallComment.setUserId(userId);
         CskaoyanMallComment cskaoyanMallComment1 = commentService.postComment(cskaoyanMallComment);
         return BaseResponseVo.ok(cskaoyanMallComment1);
     }

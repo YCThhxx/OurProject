@@ -250,4 +250,8 @@
   <select id="hasGoods" resultType="int">
     select count(*) from cskaoyan_mall_collect where value_id = #{valueId}
   </select>
+  <select id="selectHasCollect" resultType="int">
+    select
+    count(id) from cskaoyan_mall_collect where value_id = #{id} and user_id = #{userid}
+  </select>
 </mapper>

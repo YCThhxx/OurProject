@@ -28,7 +28,7 @@ public interface CskaoyanMallCollectMapper {
 
     int updateByPrimaryKey(CskaoyanMallCollect record);
 
-    long selectHasCollect(@Param("userid") int userid,
+    int selectHasCollect(@Param("userid") int userid,
                           @Param("id") int id);
 
     int hasGoods(@Param("valueId") Integer valueId);

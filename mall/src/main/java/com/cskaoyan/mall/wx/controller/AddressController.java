@@ -5,7 +5,6 @@ import com.cskaoyan.mall.admin.service.UserManageService;
 import com.cskaoyan.mall.wx.service.AddressService;
 import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.util.BaseRespVo;
-import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

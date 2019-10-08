@@ -341,4 +341,10 @@
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
+  <select id="selectNameById" parameterType="java.lang.Integer" resultType="string">
+    select
+    `name`
+    from cskaoyan_mall_address
+    where id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

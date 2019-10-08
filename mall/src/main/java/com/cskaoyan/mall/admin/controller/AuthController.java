@@ -37,6 +37,7 @@ public class  AuthController {
             //进入到reaml域中进行认证
             subject.login(token);
         } catch (AuthenticationException e) {
+            e.printStackTrace();
             return BaseResponseVo.fail("登录失败",500);
         }
         Serializable id = subject.getSession().getId();

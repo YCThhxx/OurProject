@@ -17,4 +17,6 @@ public interface CskaoyanMallCouponUserMapper {
     int receiveCoupon(Date startTime, Date endTime, Date addTime, Date updateTime,
                       @Param("couponId") int couponId,
                       @Param("userId") int userId);
+
+    int selectLength(int couponId,int userId);
 }

@@ -32,4 +32,6 @@ public interface CskaoyanMallAddressMapper {
 
     int saveAddress(CskaoyanMallAddress address);
 
+    String selectNameById(Integer provinceId);
+
 }

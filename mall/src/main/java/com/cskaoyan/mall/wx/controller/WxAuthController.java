@@ -8,10 +8,8 @@ import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.service.SmsService;
 import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.util.UserInfo;
-import com.cskaoyan.mall.wx.vo.AvatorData;
-import com.cskaoyan.mall.wx.vo.BaseRespVo;
-import com.cskaoyan.mall.wx.vo.LoginVo;
-import com.cskaoyan.mall.wx.vo.WxReqVo;
+import com.cskaoyan.mall.wx.vo.*;
+import com.cskaoyan.mall.wx.vo.homeIndex.UserOrderVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.session.Session;
@@ -35,8 +33,7 @@ public class WxAuthController {
 	@Autowired
 	WxUserService userService;
 
-	Subject subject ;
-
+    Subject subject ;
 	@Autowired
 	SmsService smsService;
 
@@ -47,8 +44,8 @@ public class WxAuthController {
 		String code = (int)((Math.random()*9+1)*100000)+"";
 		String mobile = (String) map.get("mobile");
 		//验证码功能暂不开启，需要的可以将注释取消
-//		boolean flag = smsService.sendMessage(mobile,code);
-		boolean flag = true;
+		boolean flag = smsService.sendMessage(mobile,code);
+//		boolean flag = true;
 		if(flag){
 			//发送成功或失败
 			Session session = SecurityUtils.getSubject().getSession();
@@ -80,6 +77,7 @@ public class WxAuthController {
         //此处重新获取一个subject
         subject = SecurityUtils.getSubject();
         CustomToken token = new CustomToken(username, password, "wx");
+		Subject subject = SecurityUtils.getSubject();
 		try {
 			//进入到reaml域中进行认证
 			subject.login(token);
@@ -110,6 +108,8 @@ public class WxAuthController {
 			return BaseRespVo.fail();
 		}
 		Map<Object, Object> data = new HashMap<Object, Object>();
+		UserOrderVo orderVo = userService.selectOrderMsg(userId);
+		data.put("order", orderVo);
 		return BaseRespVo.ok(data);
 	}
 
@@ -134,8 +134,19 @@ public class WxAuthController {
 
 
 	@RequestMapping("auth/reset")
-	public BaseRespVo reset(){
-		return BaseRespVo.fail();
+	public BaseRespVo reset(@RequestBody ResetpwVo resetpwVo){
+		Session session = SecurityUtils.getSubject().getSession();
+		String codeFromSession = (String) session.getAttribute("code");
+		String code = resetpwVo.getCode();
+		String mobile = resetpwVo.getMobile();
+		String password = resetpwVo.getPassword();
+//		假设验证码成功
+   		 if (!code.equals(codeFromSession)){
+			 return BaseRespVo.fail(703,"验证码错误！");
+        }else {
+   		 	 userService.updatePwByMobile(mobile,password);
+			 return BaseRespVo.ok(null);
+		}
 	}
 
 
@@ -155,12 +166,11 @@ public class WxAuthController {
 		//wxCode为设置，不知道什么作用
 		boolean flag = userService.registerUser(mobile,username,password);
 		BaseRespVo baseRespVo = new BaseRespVo();
-//假设验证码成功
-	/*	if (!code.equals(codeFromSession)){
-			baseRespVo.setErrmsg("验证码错误！");
-			baseRespVo.setErrno(701);
-        }else */
-        	if(!flag){
+		//假设验证码成功
+   		 if (!code.equals(codeFromSession)){
+         baseRespVo.setErrmsg("验证码错误！");
+         baseRespVo.setErrno(701);
+        }else if(!flag){
 			baseRespVo.setErrmsg("注册失败");
 			baseRespVo.setErrno(101);
 		}else{

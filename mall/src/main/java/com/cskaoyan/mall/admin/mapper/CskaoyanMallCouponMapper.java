@@ -18,7 +18,7 @@ public interface CskaoyanMallCouponMapper {
 
     List<CskaoyanMallCoupon> selectByPageAndPageSize(@Param("name") String name,@Param("type") String type, @Param("status") String status);
 
-    List<CskaoyanMallCouponUser> listuser(@Param("userId") String userId, @Param("status") String status,@Param("couponId") String couponId);
+    List<CskaoyanMallCouponUser> listuser(@Param("userId") String userId, @Param("status") String status, @Param("couponId") String couponId);
 
     void insert(@Param("c") CskaoyanMallCoupon cskaoyanMallCoupon);
 

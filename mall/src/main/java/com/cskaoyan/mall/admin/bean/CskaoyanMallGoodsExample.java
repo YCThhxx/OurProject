@@ -12,6 +12,16 @@ public class CskaoyanMallGoodsExample {
 
     protected List<Criteria> oredCriteria;
 
+    protected int limit;
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     public CskaoyanMallGoodsExample() {
         oredCriteria = new ArrayList<Criteria>();
     }

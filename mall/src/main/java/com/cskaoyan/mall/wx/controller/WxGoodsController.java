@@ -3,6 +3,7 @@ package com.cskaoyan.mall.wx.controller;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
 import com.cskaoyan.mall.wx.service.WxGoodsService;
+import com.cskaoyan.mall.wx.service.WxSearchIndexService;
 import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.vo.goodsvo.CategoryVo;
 import com.cskaoyan.mall.wx.vo.goodsvo.GoodsDetailVo;
@@ -31,6 +32,8 @@ public class WxGoodsController {
 
     @Autowired
     WxUserService wxUserService;
+    @Autowired
+    WxSearchIndexService wxSearchIndexService;
 
     @RequestMapping("count")
     public BaseResponseVo goodsCount(){
@@ -46,8 +49,12 @@ public class WxGoodsController {
         if(isNew){ name = "new"; }
         else if(isHot){ name = "hot"; }
         else{ name = "other"; }
-        if(keyword!=null){ keyword = "%"+keyword+"%"; }
+        if(keyword!=null){
+            wxSearchIndexService.addSearchHistory(keyword);
+            keyword = "%"+keyword+"%";
+        }
         GoodsListVo goodsListVo = goodsService.getList(name,page,size,sort,order,brandId,keyword,categoryId);
+
         return BaseResponseVo.ok(goodsListVo);
     }
 

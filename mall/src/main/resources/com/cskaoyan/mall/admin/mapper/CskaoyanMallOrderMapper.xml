@@ -596,9 +596,9 @@
         select Max(id) from cskaoyan_mall_order
     </select>
 
-    <update id="updateStatusByOrderId">
-        update cskaoyan_mall_order
-        set order_status = 401
-        where order_status = 301
-    </update>
+  <update id="updateStatusByOrderId">
+    update cskaoyan_mall_order
+    set order_status = #{newStatus}
+    where order_status = #{oldStatus} and id = #{orderId} and deleted = 0
+  </update>
 </mapper>

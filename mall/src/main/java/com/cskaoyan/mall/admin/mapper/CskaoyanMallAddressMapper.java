@@ -33,4 +33,5 @@ public interface CskaoyanMallAddressMapper {
     int saveAddress(CskaoyanMallAddress address);
 
 
+    CskaoyanMallAddress selectByName(String consignee);
 }

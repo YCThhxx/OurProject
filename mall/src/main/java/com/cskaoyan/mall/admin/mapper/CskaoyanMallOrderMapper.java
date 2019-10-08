@@ -42,6 +42,7 @@ public interface CskaoyanMallOrderMapper {
 
     int queryMaxOrderIdValue();
 
-    void updateStatusByOrderId(@Param("oldStatus") int oldStatus,
+    void updateStatusByOrderId(@Param("orderId") int orderId,
+                               @Param("oldStatus") int oldStatus,
                                @Param("newStatus") int newStatus);
 }

@@ -380,7 +380,7 @@
   <select id="selectByUserId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from cskaoyan_mall_cart where user_id = #{userId} and checked = 1
+    from cskaoyan_mall_cart where user_id = #{userId} and checked = 1 and deleted = 0
   </select>
 
 

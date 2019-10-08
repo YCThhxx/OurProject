@@ -110,8 +110,8 @@ public class WxOrderServiceImpl implements WxOrderService {
         OrderDetailVo orderDetail = new OrderDetailVo();
 
         CskaoyanMallOrder order = orderMapper.selectByPrimaryKey(orderId);
-        int consigneeId = Integer.parseInt(order.getConsignee());
-        CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(consigneeId);
+        String consignee = order.getConsignee();
+        CskaoyanMallAddress address = addressMapper.selectByName(consignee);
         OrderInfoVo orderInfo = new OrderInfoVo();
         orderInfo.setConsignee(address.getName());
         String province = regionMapper.selectAddressByCode(address.getProvinceId());
@@ -231,15 +231,15 @@ public class WxOrderServiceImpl implements WxOrderService {
         order.setUpdateTime(add_time);
         order.setDeleted(false);
         orderMapper.insertSelective(order);
-
+        int orderId = orderMapper.queryMaxOrderIdValue();
         for (CskaoyanMallGoods good : goods) {
             CskaoyanMallOrderGoods orderGoods = new CskaoyanMallOrderGoods();
-            orderGoods.setOrderId(order.getId());
+            orderGoods.setOrderId(orderId);
             orderGoods.setGoodsId(good.getId());
             orderGoods.setGoodsName(good.getName());
             orderGoods.setGoodsSn(good.getGoodsSn());
             for (CskaoyanMallCart cart : carts) {
-                if (cart.getGoodsId() == good.getId()){
+                if (cart.getGoodsId().intValue() == good.getId().intValue()){
                     orderGoods.setProductId(cart.getProductId());
                     CskaoyanMallGoodsProduct product = goodsProductMapper.selectByPrimaryKey(orderGoods.getProductId());
                     orderGoods.setNumber(cart.getNumber());
@@ -257,7 +257,7 @@ public class WxOrderServiceImpl implements WxOrderService {
         }
 
         cartMapper.deleteByUserIdAndChecked(userId);
-        int orderId = orderMapper.queryMaxOrderIdValue();
+
         return orderId;
     }
 
@@ -269,7 +269,12 @@ public class WxOrderServiceImpl implements WxOrderService {
 
     @Override
     public void confirmOrder(int orderId) {
-        orderMapper.updateStatusByOrderId(301, 401);
+        orderMapper.updateStatusByOrderId(orderId,301, 401);
+    }
+
+    @Override
+    public void prepayOrder(int orderId) {
+        orderMapper.updateStatusByOrderId(orderId,101, 201);
     }
 
     private String getOrderStatusT(CskaoyanMallOrder order){

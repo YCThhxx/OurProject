@@ -18,4 +18,6 @@ public interface WxOrderService {
     void cancelOrder(int id);
 
     void confirmOrder(int orderId);
+
+    void prepayOrder(int orderId);
 }

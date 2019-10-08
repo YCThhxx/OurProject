@@ -51,11 +51,7 @@ public class WxOrderController {
         return baseRespVo;
     }
 
-    @PostMapping("prepay")
-    public BaseRespVo prepay(@RequestBody String id){
-        int orderId = Integer.parseInt(id);
-        return BaseRespVo.orderFail();
-    }
+
 
     @PostMapping("submit")
     public BaseRespVo submit(@RequestBody SubmitRequest submitRequest){
@@ -90,5 +86,12 @@ public class WxOrderController {
         System.out.println(orderId);
         orderService.confirmOrder(orderId);
         return BaseRespVo.ok(0);
+    }
+
+    @PostMapping("prepay")
+    public BaseRespVo prepay(@RequestBody Map<String, Integer> map){
+        int orderId = map.get("orderId");
+        orderService.prepayOrder(orderId);
+        return BaseRespVo.orderFail();
     }
 }

@@ -156,7 +156,7 @@ public class CartServiceImpl implements CartService {
             CheckData checkData = new CheckData();
             BigDecimal discount = new BigDecimal(0);
             BigDecimal discount1 = new BigDecimal(0);
-            CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(userId);
+            CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(addressId);
             int length = couponUserMapper.selectLength(couponId, userId);
             //商品总价
             BigDecimal price = new BigDecimal(0);
@@ -216,7 +216,7 @@ public class CartServiceImpl implements CartService {
             Integer userId = cart.getUserId();
             BigDecimal discount = new BigDecimal(0);
             BigDecimal discount1 = new BigDecimal(0);
-            CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(userId);
+            CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(addressId);
             int length = couponUserMapper.selectLength(couponId, userId);
             //商品总价
             BigDecimal price = BigDecimal.valueOf((cart.getPrice().doubleValue() * cart.getNumber()));

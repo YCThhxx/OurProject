@@ -40,12 +40,13 @@ public class WxAuthController {
 
 	@PostMapping("auth/regCaptcha")
 	public BaseRespVo sendValidateCode(@RequestBody Map map){
+
 		BaseRespVo baseRespVo = new BaseRespVo();
 		String code = (int)((Math.random()*9+1)*100000)+"";
 		String mobile = (String) map.get("mobile");
 		//验证码功能暂不开启，需要的可以将注释取消
-//		boolean flag = smsService.sendMessage(mobile,code);
-		boolean flag = true;
+		boolean flag = smsService.sendMessage(mobile,code);
+//		boolean flag = true;
 		if(flag){
 			//发送成功或失败
 			Session session = SecurityUtils.getSubject().getSession();

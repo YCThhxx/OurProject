@@ -3,6 +3,8 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallFootprint;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallFootprintExample;
 import java.util.List;
+
+import com.cskaoyan.mall.wx.vo.FootData;
 import org.apache.ibatis.annotations.Param;
 
 public interface CskaoyanMallFootprintMapper {
@@ -27,4 +29,7 @@ public interface CskaoyanMallFootprintMapper {
     int updateByPrimaryKeySelective(CskaoyanMallFootprint record);
 
     int updateByPrimaryKey(CskaoyanMallFootprint record);
+
+    List<Integer> selectGoodsId(@Param("userId") int userId);
+
 }

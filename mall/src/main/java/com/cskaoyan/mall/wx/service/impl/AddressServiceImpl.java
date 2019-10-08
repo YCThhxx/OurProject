@@ -39,10 +39,11 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public int saveAddress(CskaoyanMallAddress address) {
+    public int saveAddress(CskaoyanMallAddress address,int userId) {
         Date date = new Date();
         address.setAddTime(date);
         address.setUpdateTime(date);
+        address.setUserId(userId);
         int id = addressMapper.saveAddress(address);
         return id;
     }
@@ -50,7 +51,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public boolean deleteAddress(int id) {
         int i = addressMapper.deleteByPrimaryKey(id);
-        if (i!=0){
+        if (i !=0 ){
             return true;
         }
         return false;

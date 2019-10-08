@@ -1,9 +1,11 @@
 package com.cskaoyan.mall.admin.mapper;
 
+import com.cskaoyan.mall.admin.bean.CskaoyanMallCoupon;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCouponUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
 
 public interface CskaoyanMallCouponUserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -17,4 +19,8 @@ public interface CskaoyanMallCouponUserMapper {
     int receiveCoupon(Date startTime, Date endTime, Date addTime, Date updateTime,
                       @Param("couponId") int couponId,
                       @Param("userId") int userId);
+
+    int selectLength(int couponId,int userId);
+
+    List<CskaoyanMallCoupon> selectCouponListId(int couponListId);
 }

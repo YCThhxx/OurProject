@@ -98,9 +98,9 @@
     from cskaoyan_mall_address
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" >
     delete from cskaoyan_mall_address
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </delete>
   <delete id="deleteByExample" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallAddressExample">
     delete from cskaoyan_mall_address
@@ -327,10 +327,10 @@
     where user_id = #{userId}
   </select>
   <insert id="saveAddress" parameterType="com.cskaoyan.mall.admin.bean.CskaoyanMallAddress">
-    <selectKey resultType="int" keyProperty="id" order="AFTER">
-      select LAST_INSERT_ID()
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID() AS id
     </selectKey>
-    insert into cskaoyan_mall_address (name, user_id,
+    insert into cskaoyan_mall_address (`name`, user_id,
       province_id, city_id, area_id,
       address, mobile, is_default,
       add_time, update_time, deleted

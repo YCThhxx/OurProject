@@ -35,3 +35,5 @@ mall/mvnw
 mall/mvnw.cmd
 mall/pom.xml
 mall/src/main/resources/application-team.yml
+.idea
+.idea/

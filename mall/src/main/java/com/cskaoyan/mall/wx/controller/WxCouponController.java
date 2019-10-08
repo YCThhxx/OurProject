@@ -2,9 +2,12 @@ package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCoupon;
 import com.cskaoyan.mall.admin.service.CouponService;
+import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.util.BaseRespVo;
 import com.cskaoyan.mall.wx.util.DataUtil;
 import com.cskaoyan.mall.wx.util.UserTokenManager;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,9 @@ public class WxCouponController {
 
     @Autowired
     CouponService couponService;
+
+    @Autowired
+    WxUserService wxUserService;
 
     @GetMapping("/list")
     public BaseRespVo couponList(@RequestParam("page") int page,
@@ -33,12 +39,8 @@ public class WxCouponController {
     public BaseRespVo couponList(HttpServletRequest request, @RequestParam("page") int page,
                                  @RequestParam("size") int size,
                                  @RequestParam("status") int status){
-        String tokenKey = request.getHeader("X-cskaoyanmall-Admin-Token");
-        Integer userId = UserTokenManager.getUserId(tokenKey);
-//        if (userId == null) {
-//            return BaseRespVo.fail();
-//        }
-        userId = 5;
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);
         DataUtil dataUtil =  couponService.getMyCouponsByStatus(page,size,status,userId);
         BaseRespVo baseRespVo = new BaseRespVo();
         baseRespVo.setData(dataUtil);
@@ -48,14 +50,9 @@ public class WxCouponController {
     }
 
     @PostMapping("/receive")
-    public BaseRespVo receiveCoupon(HttpServletRequest request,
-                                    @RequestBody Map map){
-       /* String tokenKey = request.getHeader("X-cskaoyanmall-Admin-Token");
-        Integer userId = UserTokenManager.getUserId(tokenKey);
-        if (userId == null) {
-            return BaseRespVo.fail();
-        }*/
-       int userId = 5;
+    public BaseRespVo receiveCoupon(@RequestBody Map map){
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);
         int couponId = (int) map.get("couponId");
         boolean flag =  couponService.receiveCoupon(couponId,userId);
         BaseRespVo baseRespVo = new BaseRespVo();
@@ -65,15 +62,11 @@ public class WxCouponController {
     }
 
     @GetMapping("/selectlist")
-    public BaseRespVo selectCouponList(HttpServletRequest request,
-                                    @RequestParam("cartId") int cartId,
+    public BaseRespVo selectCouponList(@RequestParam("cartId") int cartId,
                                        @RequestParam("grouponRulesId") int grouponRulesId){
-//        String tokenKey = request.getHeader("X-Litemall-Token");
-//        Integer userId = UserTokenManager.getUserId(tokenKey);
-//        if (userId == null) {
-//            return BaseRespVo.fail();
-//        }
-        List<CskaoyanMallCoupon> coupons =  couponService.selectCouponList(cartId,grouponRulesId);
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);
+        List<CskaoyanMallCoupon> coupons =  couponService.selectCouponList(cartId,grouponRulesId,userId);
         BaseRespVo baseRespVo = new BaseRespVo();
         baseRespVo.setErrmsg("成功");
         baseRespVo.setErrno(0);
@@ -83,8 +76,8 @@ public class WxCouponController {
 
     @PostMapping("/exchange")
     public BaseRespVo exchangeCoupon(@RequestBody Map map){
-        //此处userId需要后面修改
-        int userId = 5;
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);
         String code = (String)map.get("code");
         boolean flag =  couponService.exchangeCoupon(code,userId);
         BaseRespVo baseRespVo = new BaseRespVo();

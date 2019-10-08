@@ -250,4 +250,10 @@
     from cskaoyan_mall_region
     where pid = #{pid}
   </select>
+  <select id="selectNameById"  resultType="string">
+    select
+    `name`
+    from cskaoyan_mall_region
+    where code = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

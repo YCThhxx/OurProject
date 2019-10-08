@@ -2,13 +2,13 @@ package com.cskaoyan.mall.wx.controller;
 
 import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
 import com.cskaoyan.mall.admin.vo.BaseResponseVo;
-import com.cskaoyan.mall.wx.config.UserTokenManager;
 import com.cskaoyan.mall.wx.service.WxGoodsService;
+import com.cskaoyan.mall.wx.service.WxSearchIndexService;
 import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.vo.goodsvo.CategoryVo;
 import com.cskaoyan.mall.wx.vo.goodsvo.GoodsDetailVo;
-import com.cskaoyan.mall.wx.vo.goodsvo.GoodsListVo;
 import org.apache.shiro.SecurityUtils;
+import com.cskaoyan.mall.wx.vo.goodsvo.GoodsListVo;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +30,11 @@ public class WxGoodsController {
 
     Subject subject;
 
+    @Autowired
+    WxUserService wxUserService;
+    @Autowired
+    WxSearchIndexService wxSearchIndexService;
+
     @RequestMapping("count")
     public BaseResponseVo goodsCount(){
         int goodsCount = goodsService.goodsCount();
@@ -44,8 +49,12 @@ public class WxGoodsController {
         if(isNew){ name = "new"; }
         else if(isHot){ name = "hot"; }
         else{ name = "other"; }
-        if(keyword!=null){ keyword = "%"+keyword+"%"; }
+        if(keyword!=null){
+            wxSearchIndexService.addSearchHistory(keyword);
+            keyword = "%"+keyword+"%";
+        }
         GoodsListVo goodsListVo = goodsService.getList(name,page,size,sort,order,brandId,keyword,categoryId);
+
         return BaseResponseVo.ok(goodsListVo);
     }
 
@@ -60,9 +69,8 @@ public class WxGoodsController {
 
     @RequestMapping("detail")
     public BaseResponseVo goodsDetail(HttpServletRequest request, int id){
-        subject = SecurityUtils.getSubject();
-        String principal = (String) subject.getPrincipal();
-        Integer userId = userService.queryUserIdByUserName(principal);
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);
         GoodsDetailVo goodsDetailVo = goodsService.goodsDetail(userId,id);
         if(goodsDetailVo==null){
             return BaseResponseVo.fail("没有该类别",400);

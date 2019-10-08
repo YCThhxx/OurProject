@@ -226,4 +226,7 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectGoodsId" resultType="int">
+   SELECT goods_id from cskaoyan_mall_footprint WHERE user_id = #{userId}
+  </select>
 </mapper>

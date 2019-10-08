@@ -46,4 +46,6 @@ public interface CskaoyanMallPermissionMapper {
 
     void deleteByRoleId(int id);
 
+    String queryPermissionsApi(String permission);
+
 }

@@ -231,9 +231,14 @@ public class SystemManageServiceImpl implements SystemManageService {
     }
 
     @Override
-    public void updatePermissions(int id, String[] permissions) {
-        permissionMapper.deleteByRoleId(id);
+    public void updatePermissions(int id, List<String> permissions) {
+        List<String> permissionApis = new ArrayList<>();
         for (String permission : permissions) {
+            String permissionsApi = permissionMapper.queryPermissionsApi(permission);
+            permissionApis.add(permissionsApi);
+        }
+        permissionMapper.deleteByRoleId(id);
+        for (String permission : permissionApis) {
             Date time = new Date();
             permissionMapper.updatePermission(id, permission, time, time);
         }

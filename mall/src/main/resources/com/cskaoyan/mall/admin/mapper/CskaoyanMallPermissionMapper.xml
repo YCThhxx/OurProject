@@ -277,4 +277,8 @@
         on pdc.parent_id = pda.pid
         where pda.parent_id = #{id}
     </select>
+
+  <select id="queryPermissionsApi" resultType="java.lang.String">
+    select api from cskaoyan_mall_permission_details where id = #{permission}
+  </select>
 </mapper>

@@ -54,5 +54,5 @@ public interface SystemManageService {
 
     List<String> queryPermissionsByRoleId(int roleId);
 
-    void updatePermissions(int roleId, String[] permissions);
+    void updatePermissions(int roleId, List<String> permissions);
 }

@@ -1,16 +1,10 @@
 package com.cskaoyan.mall.admin.vo.permissionvo;
 
+import java.util.List;
+
 public class Permission {
     int roleId;
-    String[] permissions;
-
-    public String[] getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(String[] permissions) {
-        this.permissions = permissions;
-    }
+    List<String> permissions;
 
     public int getRoleId() {
         return roleId;
@@ -18,5 +12,13 @@ public class Permission {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public List<String> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<String> permissions) {
+        this.permissions = permissions;
     }
 }

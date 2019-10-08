@@ -46,18 +46,23 @@ public class CartController {
             ok = BaseResponseVo.fail("请先登入",1);
 
         }else {
+//            cartService.add(addRequest,username);
+//            ok = BaseResponseVo.ok(addRequest.getNumber());
             cartService.add(addRequest,username);
-            ok = BaseResponseVo.ok(addRequest.getNumber());
+            CartResp cartResp = cartService.queryCartByUsername(username);
+            CartTotal cartTotal = cartResp.getCartTotal();
+            int goodsCount = cartTotal.getGoodsCount();
+            ok = BaseResponseVo.ok(addRequest.getNumber() + goodsCount - 1);
         }
         return ok;
-        
+
     }
     @RequestMapping("delete")
     public BaseResponseVo delete(@RequestBody CartDeleteRequest cartDeleteRequest){
         Subject subject = SecurityUtils.getSubject();
         String username = (String)subject.getPrincipal();
         cartService.delete(cartDeleteRequest);
-        
+
         CartResp cartResp =cartService.queryCartByUsername(username);
         BaseResponseVo ok = BaseResponseVo.ok(cartResp);
         return ok;

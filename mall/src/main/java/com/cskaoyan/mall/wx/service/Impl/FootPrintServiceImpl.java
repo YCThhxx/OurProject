@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.wx.service.impl;
 
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallFootprintMapper;
+import com.cskaoyan.mall.admin.mapper.CskaoyanMallGoodsMapper;
 import com.cskaoyan.mall.wx.service.FootprintService;
 import com.cskaoyan.mall.wx.vo.FootData;
 import com.cskaoyan.mall.wx.vo.FootprintData;
@@ -16,6 +17,9 @@ public class FootPrintServiceImpl implements FootprintService {
 
     @Autowired
     CskaoyanMallFootprintMapper footprintMapper;
+
+    @Autowired
+    CskaoyanMallGoodsMapper goodsMapper;
 
     @Override
     public FootprintData getFootprint(int page, int size) {

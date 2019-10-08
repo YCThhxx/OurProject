@@ -29,9 +29,11 @@ public interface CskaoyanMallOrderGoodsMapper {
 
     int updateByPrimaryKey(CskaoyanMallOrderGoods record);
 
-    CskaoyanMallOrderGoods selectByOrderId(int id);
+    List<CskaoyanMallOrderGoods> selectByOrderId(int id);
 
     List<CskaoyanMallOrderGoods> queryGrouponGoods(Integer goodsId);
 
     List<CskaoyanMallOrderGoods> queryOrderGoodsByOrderId(Integer orderId);
+
+    int deleteByOrderId(int id);
 }

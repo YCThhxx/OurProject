@@ -14,4 +14,6 @@ public interface WxUserService {
     boolean registerUser(String mobile, String username, String password);
 
     CskaoyanMallUser selectByUsernameAndPassword(String username, String password);
+
+    boolean updatePwByMobile(String mobile, String password);
 }

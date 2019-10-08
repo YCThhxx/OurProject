@@ -65,6 +65,15 @@ public class WxUserServiceImpl implements WxUserService {
         return cskaoyanMallUser;
     }
 
+    @Override
+    public boolean updatePwByMobile(String mobile, String password) {
+        int flag = userMapper.updatePwByMobile(mobile,password);
+        if (flag == 1){
+            return true;
+        }
+        return false;
+    }
+
     public Integer queryUserIdByUserName(String principal) {
         Integer id = userMapper.selectIdByUsername(principal);
         return id;

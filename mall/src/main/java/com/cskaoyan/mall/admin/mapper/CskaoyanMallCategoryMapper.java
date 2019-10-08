@@ -46,11 +46,13 @@ public interface CskaoyanMallCategoryMapper {
 
     List<CskaoyanMallCategory> selectByPidOrderId(int id);
 
-    @Select("select id,name from cskaoyan_mall_category where pid=0 limit 4")
-    List<FloorGoodsInfo> selectFirstCategories4();
+    @Select("select id,name from cskaoyan_mall_category where pid=0 limit #{limit}")
+    List<FloorGoodsInfo> selectFirstCategories(@Param("limit") int limit);
 
     @Select("select id from cskaoyan_mall_category where pid=#{pid} limit 1")
     Integer selectIdByPid(@Param("pid") Integer pid);
+
+    CskaoyanMallCategory selectGroupByCategoryId(Integer categoryId);
 
 
 //    FloorGoodsInfo selectFloorGoodsInfo(@Param("pid") Integer pid);

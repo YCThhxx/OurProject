@@ -5,7 +5,10 @@ import com.cskaoyan.mall.admin.bean.CskaoyanMallSystemExample;
 
 import java.util.Date;
 import java.util.List;
+
+import com.cskaoyan.mall.wx.vo.homeIndex.HomeSystemInfo;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface CskaoyanMallSystemMapper {
     long countByExample(CskaoyanMallSystemExample example);
@@ -35,4 +38,7 @@ public interface CskaoyanMallSystemMapper {
                                  @Param("date") Date date);
 
     public List<CskaoyanMallSystem> selectAll();
+
+    String getSystemValueById(@Param("id") int id);
+
 }

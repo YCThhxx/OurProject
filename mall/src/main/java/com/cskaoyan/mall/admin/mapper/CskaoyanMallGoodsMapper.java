@@ -43,6 +43,19 @@ public interface CskaoyanMallGoodsMapper {
 
     @Select("select id,name,brief,pic_url as picUrl,is_new as isNew,is_hot as isHot,counter_price as counterPrice,retail_price as retailPrice from cskaoyan_mall_goods where category_id=#{cid} limit 2")
     List<CskaoyanMallGoods> selectGoodsByCategory2(@Param("cid") Integer id);
+
+    @Select("select id,name,brief,pic_url as picUrl,is_new as isNew,is_hot as isHot,counter_price as counterPrice,retail_price as retailPrice from cskaoyan_mall_goods where category_id=#{cid} limit #{limit}")
+    List<CskaoyanMallGoods> selectGoodsByCategory(@Param("cid") Integer id,@Param("limit") int limit);
+
     List<CskaoyanMallGoods> getGoodInfo();
 
+    List<CskaoyanMallGoods> selectRelated(@Param("categoryId") int categoryId);
+
+    List<CskaoyanMallGoods> newList();
+
+    List<CskaoyanMallGoods> hotList();
+
+    List<CskaoyanMallGoods> otherList(@Param("brandId") Integer brandId,
+                                      @Param("keyword") String keyword,
+                                      @Param("categoryId") Integer categoryId);
 }

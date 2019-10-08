@@ -9,7 +9,7 @@
     <result column="read_count" jdbcType="VARCHAR" property="readCount" />
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
     <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
-    <result column="goods" jdbcType="VARCHAR" property="goods" />
+    <result column="goods" jdbcType="VARCHAR" property="goods" typeHandler="com.cskaoyan.mall.admin.mybatis.TransferStringArrayHandler" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
@@ -18,19 +18,19 @@
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, subtitle, price, read_count, pic_url, sort_order, goods, add_time, update_time, 
+    id, title, subtitle, price, read_count, pic_url, sort_order, goods, add_time, update_time,
     deleted
   </sql>
   <sql id="Blob_Column_List">
     content
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from cskaoyan_mall_topic
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     update cskaoyan_mall_topic  set deleted = 1
@@ -124,5 +124,15 @@
    insert into cskaoyan_mall_topic (id, title, subtitle, price, read_count, pic_url, sort_order, goods, add_time, update_time, deleted , content)
     values  (null ,#{t.title},#{t.subtitle},#{t.price},#{t.readCount},#{t.picUrl},#{t.sortOrder},#{t.goods},#{t.addTime},#{t.updateTime},#{t.deleted},#{t.content})
   </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_topic where deleted = 0
+  </select>
+  <select id="selectRelated" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_topic where id != #{id} and deleted = 0
+  </select>
 </mapper>
-       
+

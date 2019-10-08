@@ -235,4 +235,7 @@
    select * from cskaoyan_mall_system
   </select>
 
+  <select id="getSystemValueById" resultType="String">
+    select key_value from cskaoyan_mall_system where id=#{id}
+  </select>
 </mapper>

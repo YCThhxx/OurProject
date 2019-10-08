@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "mall.aliyun.oss")
+@ConfigurationProperties(prefix = "mall.oss")
 public class MallOssConfig {
     private String bucket;
     String endPoint;

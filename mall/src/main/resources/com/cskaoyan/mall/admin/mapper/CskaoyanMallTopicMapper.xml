@@ -106,11 +106,10 @@
   </update>
 
 
-  <select id="selectByPageAndPageSize" resultType="com.cskaoyan.mall.admin.bean.CskaoyanMallTopic">
+  <select id="selectByPageAndPageSize" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+    id, title, subtitle, price, read_count, pic_url, sort_order, goods, add_time, update_time,
+    deleted,content
     from cskaoyan_mall_topic
     where deleted = 0
     <if test="title != null and title != ''">
@@ -122,7 +121,7 @@
   </select>
   <insert id="insertTopic">
    insert into cskaoyan_mall_topic (id, title, subtitle, price, read_count, pic_url, sort_order, goods, add_time, update_time, deleted , content)
-    values  (null ,#{t.title},#{t.subtitle},#{t.price},#{t.readCount},#{t.picUrl},#{t.sortOrder},#{t.goods},#{t.addTime},#{t.updateTime},#{t.deleted},#{t.content})
+    values  (null ,#{t.title},#{t.subtitle},#{t.price},#{t.readCount},#{t.picUrl},#{t.sortOrder},#{t.goods},#{t.addTime},#{t.updateTime},0,#{t.content})
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
     select

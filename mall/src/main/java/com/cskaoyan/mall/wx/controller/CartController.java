@@ -21,19 +21,32 @@ public class CartController {
     CartService cartService;
     @RequestMapping("index")
     public BaseResponseVo index(){
+        BaseResponseVo ok ;
         Subject subject = SecurityUtils.getSubject();
         String username = (String)subject.getPrincipal();
-        CartResp cartResp =cartService.queryCartByUsername(username);
-        BaseResponseVo ok = BaseResponseVo.ok(cartResp);
+        if(username == null){
+             ok = BaseResponseVo.fail("请先登入",1);
+
+        }else {
+            CartResp cartResp =cartService.queryCartByUsername(username);
+            ok = BaseResponseVo.ok(cartResp);
+        }
         return ok;
     }
     @RequestMapping("add")
     public  BaseResponseVo add(@RequestBody  AddRequest addRequest){
         Subject subject = SecurityUtils.getSubject();
-        String principal = (String)subject.getPrincipal();
-        cartService.add(addRequest,principal);
-        BaseResponseVo ok = BaseResponseVo.ok(addRequest.getNumber());
+        String username = (String)subject.getPrincipal();
+        BaseResponseVo ok ;
+        if(username == null){
+            ok = BaseResponseVo.fail("请先登入",1);
+
+        }else {
+            cartService.add(addRequest,username);
+            ok = BaseResponseVo.ok(addRequest.getNumber());
+        }
         return ok;
+        
     }
     @RequestMapping("delete")
     public BaseResponseVo delete(@RequestBody CartDeleteRequest cartDeleteRequest){
@@ -74,12 +87,17 @@ public class CartController {
         Subject subject = SecurityUtils.getSubject();
         String username = (String)subject.getPrincipal();
         int cartId = 0;
-        try {
-            cartId = cartService.fastAdd(username,addRequest);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        BaseResponseVo ok ;
+        if(username == null){
+            ok = BaseResponseVo.fail("请先登入",1);
+        }else {
+            try {
+                cartId = cartService.fastAdd(username,addRequest);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            ok = BaseResponseVo.ok(cartId);
         }
-        BaseResponseVo ok = BaseResponseVo.ok(cartId);
         return ok;
     }
 //    @RequestMapping("checkout")

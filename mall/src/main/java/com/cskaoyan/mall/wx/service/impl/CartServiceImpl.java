@@ -3,14 +3,18 @@ package com.cskaoyan.mall.wx.service.impl;
 import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.mapper.*;
 import com.cskaoyan.mall.wx.service.CartService;
+import com.cskaoyan.mall.wx.service.WxUserService;
 import com.cskaoyan.mall.wx.util.CartUtil;
 import com.cskaoyan.mall.wx.util.CheckData;
 import com.cskaoyan.mall.wx.vo.*;
 import com.cskaoyan.mall.wx.vo.homeIndex.CartCheckRequest;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.security.Security;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,32 +23,35 @@ import java.util.List;
 
 @Service
 public class CartServiceImpl implements CartService {
-        @Autowired
-        CskaoyanMallCartMapper  cartMapper;
+    @Autowired
+    CskaoyanMallCartMapper cartMapper;
 
-        @Autowired
-        CskaoyanMallGoodsMapper goodsmapper;
+    @Autowired
+    CskaoyanMallGoodsMapper goodsmapper;
 
-        @Autowired
-        CskaoyanMallGoodsProductMapper productMapper;
+    @Autowired
+    CskaoyanMallGoodsProductMapper productMapper;
 
-        @Autowired
-        CskaoyanMallAddressMapper addressMapper;
+    @Autowired
+    CskaoyanMallAddressMapper addressMapper;
 
-        @Autowired
-        CskaoyanMallCouponUserMapper couponUserMapper;
+    @Autowired
+    CskaoyanMallCouponUserMapper couponUserMapper;
 
-        @Autowired
-        CskaoyanMallCouponMapper couponMapper;
+    @Autowired
+    CskaoyanMallCouponMapper couponMapper;
 
-        @Autowired
-        CskaoyanMallGrouponRulesMapper grouponRulesMapper;
+    @Autowired
+    CskaoyanMallGrouponRulesMapper grouponRulesMapper;
 
-        @Autowired
-        CskaoyanMallRegionMapper regionMapper;
+    @Autowired
+    CskaoyanMallRegionMapper regionMapper;
 
-        @Autowired
-        CskaoyanMallSystemMapper systemMapper;
+    @Autowired
+    CskaoyanMallSystemMapper systemMapper;
+
+    @Autowired
+    WxUserService userService;
 
     @Override
     public void add(AddRequest addRequest, String principal) {
@@ -71,7 +78,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartResp queryCartByUsername(String username) {
-        return CartUtil.queryCartListByName(username,cartMapper);
+        return CartUtil.queryCartListByName(username, cartMapper);
     }
 
     @Override
@@ -86,7 +93,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void update(int productId, int number, String username) {
         int userId = cartMapper.queryUserIdByUsername(username);
-        cartMapper.update(productId,number,userId);
+        cartMapper.update(productId, number, userId);
     }
 
     @Override
@@ -95,19 +102,19 @@ public class CartServiceImpl implements CartService {
         int[] productIds = cartCheckRequest.getProductIds();
         int isChecked = cartCheckRequest.getIsChecked();
         for (int productId : productIds) {
-            if (isChecked == 1){
-                cartMapper.updateCheck(1,userId,productId);
-            }else {
-                cartMapper.updateCheck(0,userId,productId);
+            if (isChecked == 1) {
+                cartMapper.updateCheck(1, userId, productId);
+            } else {
+                cartMapper.updateCheck(0, userId, productId);
             }
         }
-        return CartUtil.queryCartListByName(username,cartMapper);
+        return CartUtil.queryCartListByName(username, cartMapper);
     }
 
     @Override
     public int goodscount(String username) {
         int userId = cartMapper.queryUserIdByUsername(username);
-        return  cartMapper.queryGoodsSum(userId);
+        return cartMapper.queryGoodsSum(userId);
     }
 
     @Override
@@ -135,64 +142,134 @@ public class CartServiceImpl implements CartService {
         cskaoyanMallCart.setAddTime(parse);
         cskaoyanMallCart.setUpdateTime(parse);
         cartMapper.insert(cskaoyanMallCart);
-        int cartId = cartMapper.queryCartIdByDateAndUserId(userId,parse);
-        return  cartId ;
+        int cartId = cartMapper.queryCartIdByDateAndUserId(userId, parse);
+        return cartId;
     }
 
     @Override
     public CheckData checkout(int cartId, int addressId, int couponId, int grouponRulesId) {
-        CskaoyanMallCart cart = cartMapper.selectByPrimaryKey(cartId);
-        CheckData checkData = new CheckData();
-        Integer userId = cart.getUserId();
-        BigDecimal discount = new BigDecimal(0);
-        BigDecimal discount1 = new BigDecimal(0);
-        CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(userId);
-        int length = couponUserMapper.selectLength(couponId,userId);
-        //商品总价
-        BigDecimal price = BigDecimal.valueOf((cart.getPrice().doubleValue()*cart.getNumber()));
-        CskaoyanMallCoupon coupon = couponMapper.selectByPrimaryKey(couponId);
-        CskaoyanMallGrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(grouponRulesId);
-        if(coupon != null){
-            //优惠券的价格
-             discount = coupon.getDiscount();
-        }
-        if (grouponRules != null){
-            checkData.setGrouponPrice(grouponRules.getDiscount());
-            price = price.subtract(grouponRules.getDiscount());
-        }
-        //团购优惠价格
-        //快递费用
-       BigDecimal freightPrice = new BigDecimal(0);
-       BigDecimal orderTotalPtice = price.add(freightPrice);
-       BigDecimal actualPrice = orderTotalPtice.subtract(discount);
-       checkData.setActualPrice(actualPrice);
-       checkData.setAvailableCouponLength(length);
-       checkData.setGoodsTotalPrice(price);
-       List<CskaoyanMallSystem> systems = systemMapper.selectAll();
-        double min = 0;
-        double freight = 0;
-        for (CskaoyanMallSystem system : systems) {
-            if (system.getKeyName().equals("cskaoyan_mall_express_freight_min")){
-                min = Double.parseDouble(system.getKeyValue());
+        if (cartId == 0) {
+            Subject subject = SecurityUtils.getSubject();
+            String principal = (String) subject.getPrincipal();
+            Integer userId = userService.queryUserIdByUserName(principal);
+            List<CskaoyanMallCart> cart = cartMapper.selectByUserId(userId);
+            CheckData checkData = new CheckData();
+            BigDecimal discount = new BigDecimal(0);
+            BigDecimal discount1 = new BigDecimal(0);
+            CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(userId);
+            int length = couponUserMapper.selectLength(couponId, userId);
+            //商品总价
+            BigDecimal price = new BigDecimal(0);
+            for (CskaoyanMallCart c : cart) {
+                price =price.add(BigDecimal.valueOf((c.getPrice().doubleValue() * c.getNumber())));
             }
-            if (system.getKeyName().equals("cskaoyan_mall_express_freight_value")){
-                freight = Double.parseDouble(system.getKeyValue());
+
+            CskaoyanMallCoupon coupon = couponMapper.selectByPrimaryKey(couponId);
+            CskaoyanMallGrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(grouponRulesId);
+            if (coupon != null) {
+                //优惠券的价格
+                if(coupon.getMin().intValue()<price.intValue()){
+                    discount = coupon.getDiscount();
+                    checkData.setCouponId(coupon.getId());
+                }else{
+                    checkData.setCouponId(-1);
+                }
             }
+            if (grouponRules != null) {
+                checkData.setGrouponPrice(grouponRules.getDiscount());
+                price = price.subtract(grouponRules.getDiscount());
+            }
+            //团购优惠价格
+            //快递费用
+            BigDecimal freightPrice = new BigDecimal(0);
+            BigDecimal orderTotalPtice = price.add(freightPrice);
+            BigDecimal actualPrice = orderTotalPtice.subtract(discount);
+            checkData.setActualPrice(actualPrice);
+            checkData.setAvailableCouponLength(length);
+            checkData.setGoodsTotalPrice(price);
+            List<CskaoyanMallSystem> systems = systemMapper.selectAll();
+            double min = 0;
+            double freight = 0;
+            for (CskaoyanMallSystem system : systems) {
+                if (system.getKeyName().equals("cskaoyan_mall_express_freight_min")) {
+                    min = Double.parseDouble(system.getKeyValue());
+                }
+                if (system.getKeyName().equals("cskaoyan_mall_express_freight_value")) {
+                    freight = Double.parseDouble(system.getKeyValue());
+                }
+            }
+            if (price.doubleValue() <= min) {
+                freightPrice = BigDecimal.valueOf(freight);
+            }
+            checkData.setFreightPrice(freightPrice);
+            checkData.setCouponPrice(discount);
+            checkData.setCheckedAddress(address);
+            checkData.setAddressId(addressId);
+            checkData.setCartId(cartId);
+            checkData.setGrouponRulesId(grouponRulesId);
+            checkData.setCheckedGoodsList(cart);
+            checkData.setOrderTotalPrice(orderTotalPtice);
+            return checkData;
+        } else{
+            CskaoyanMallCart cart = cartMapper.selectByPrimaryKey(cartId);
+            CheckData checkData = new CheckData();
+            Integer userId = cart.getUserId();
+            BigDecimal discount = new BigDecimal(0);
+            BigDecimal discount1 = new BigDecimal(0);
+            CskaoyanMallAddress address = addressMapper.selectByPrimaryKey(userId);
+            int length = couponUserMapper.selectLength(couponId, userId);
+            //商品总价
+            BigDecimal price = BigDecimal.valueOf((cart.getPrice().doubleValue() * cart.getNumber()));
+            CskaoyanMallCoupon coupon = couponMapper.selectByPrimaryKey(couponId);
+            CskaoyanMallGrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(grouponRulesId);
+            if (coupon != null) {
+                //优惠券的价格
+                if(coupon.getMin().intValue()<price.intValue()){
+                    discount = coupon.getDiscount();
+                    checkData.setCouponId(coupon.getId());
+                }else{
+                    checkData.setCouponId(-1);
+                }
+            }
+            if (grouponRules != null) {
+                checkData.setGrouponPrice(grouponRules.getDiscount());
+                price = price.subtract(grouponRules.getDiscount());
+            }
+            //团购优惠价格
+            //快递费用
+            BigDecimal freightPrice = new BigDecimal(0);
+            BigDecimal orderTotalPtice = price.add(freightPrice);
+            BigDecimal actualPrice = orderTotalPtice.subtract(discount);
+            checkData.setActualPrice(actualPrice);
+            checkData.setAvailableCouponLength(length);
+            checkData.setGoodsTotalPrice(price);
+            List<CskaoyanMallSystem> systems = systemMapper.selectAll();
+            double min = 0;
+            double freight = 0;
+            for (CskaoyanMallSystem system : systems) {
+                if (system.getKeyName().equals("cskaoyan_mall_express_freight_min")) {
+                    min = Double.parseDouble(system.getKeyValue());
+                }
+                if (system.getKeyName().equals("cskaoyan_mall_express_freight_value")) {
+                    freight = Double.parseDouble(system.getKeyValue());
+                }
+            }
+            if (price.doubleValue() <= min) {
+                freightPrice = BigDecimal.valueOf(freight);
+            }
+            checkData.setFreightPrice(freightPrice);
+            checkData.setCouponPrice(discount);
+            checkData.setCheckedAddress(address);
+            checkData.setAddressId(addressId);
+            checkData.setCartId(cartId);
+            checkData.setGrouponRulesId(grouponRulesId);
+            List goodsList = new ArrayList<>();
+            goodsList.add(cart);
+            checkData.setCheckedGoodsList(goodsList);
+            checkData.setOrderTotalPrice(orderTotalPtice);
+            return checkData;
         }
-        if (price.doubleValue() <= min) {
-            freightPrice = BigDecimal.valueOf(freight);
-        }
-       checkData.setFreightPrice(freightPrice);
-       checkData.setCouponPrice(discount);
-       checkData.setCheckedAddress(address);
-       checkData.setAddressId(addressId);
-       checkData.setCartId(cartId);
-       checkData.setGrouponRulesId(grouponRulesId);
-       List goodsList = new ArrayList<>();
-       goodsList.add(cart);
-       checkData.setCheckedGoodsList(goodsList);
-       checkData.setOrderTotalPrice(orderTotalPtice);
-       return checkData;
+
     }
 
 

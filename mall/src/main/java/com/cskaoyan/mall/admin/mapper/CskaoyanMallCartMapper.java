@@ -43,7 +43,11 @@ public interface CskaoyanMallCartMapper {
 
     int queryCartIdByDateAndUserId(@Param("userId") int userId,@Param("date") Date date);
 
+
+    List<CskaoyanMallCart> selectByUserId(Integer userId);
+
     List<CskaoyanMallCart> selectByUserIdAndChecked(int userId);
 
     void deleteByUserIdAndChecked(int userId);
+
 }

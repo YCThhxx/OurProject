@@ -357,9 +357,10 @@
 
   <select id="quertCartByUserId" resultMap="BaseResultMap">
     select id,user_id,goods_id,goods_sn,goods_name,product_id,price,
-    count(`number`) as 
-    number,specifications,checked,pic_url,add_time,update_time from cskaoyan_mall_cart where user_id = #{id} and deleted = 0 
+    count(`number`) as
+    number,specifications,checked,pic_url,add_time,update_time from cskaoyan_mall_cart where user_id = #{id} and deleted = 0
     group by  goods_id,product_id
+
   </select>
 
   <update id="update">
@@ -376,6 +377,13 @@
     select id from  cskaoyan_mall_cart where  user_id = #{userId} and add_time = #{date}
   </select>
 
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_cart where user_id = #{userId} and checked = 1
+  </select>
+
+
     <select id="selectByUserIdAndChecked" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
@@ -388,4 +396,5 @@
         set deleted = 1
         where user_id = #{userId} and deleted = 0 and checked = 1
     </update>
+
 </mapper>

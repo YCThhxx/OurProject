@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean insertShip(int orderId, String shipChannel, String shipSn) {
-//        int i =  cskaoyanMallOrderMapper.insertShin(orderId,shipChannel,shipSn);
+//        int i =  cskaoyanMallOrderMapper.in(orderId,shipChannel,shipSn);
         return true;
     }
 

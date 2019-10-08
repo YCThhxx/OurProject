@@ -30,6 +30,6 @@ public interface CskaoyanMallFootprintMapper {
 
     int updateByPrimaryKey(CskaoyanMallFootprint record);
 
-    List<FootData> selectFootprint();
+    List<Integer> selectGoodsId(@Param("userId") int userId);
 
 }

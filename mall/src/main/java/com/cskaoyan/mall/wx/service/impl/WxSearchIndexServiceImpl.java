@@ -82,7 +82,6 @@ public class WxSearchIndexServiceImpl implements WxSearchIndexService {
     }
 
     //添加搜索历史
-
     @Override
     public void addSearchHistory(String keyword) {
         Date date = new Date();

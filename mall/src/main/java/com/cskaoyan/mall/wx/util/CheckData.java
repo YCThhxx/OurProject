@@ -15,11 +15,21 @@ public class CheckData {
     BigDecimal grouponPrice;
     BigDecimal orderTotalPrice;
     BigDecimal actualPrice;
+    int couponId;
     int cartId;
     int addressId;
     int message;
     int grouponLinkId;
     int grouponRulesId;
+
+
+    public int getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(int couponId) {
+        this.couponId = couponId;
+    }
 
     public List getCheckedGoodsList() {
         return checkedGoodsList;

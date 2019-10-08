@@ -38,7 +38,7 @@ public class FeedbackController {
         feedback.setUserId(uid);
         feedback.setUsername(principal);
         feedback.setHasPicture(hasPicture);
-        feedback.setPicUrls(picUrls.toString());
+        feedback.setPicUrls(picUrls);
         feedback.setContent(content);
         feedback.setFeedType(feedType);
         feedback.setMobile(mobile);

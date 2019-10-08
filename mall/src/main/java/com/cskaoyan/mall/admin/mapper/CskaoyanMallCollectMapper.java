@@ -3,6 +3,8 @@ package com.cskaoyan.mall.admin.mapper;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCollect;
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCollectExample;
 import java.util.List;
+
+import com.cskaoyan.mall.admin.bean.CskaoyanMallGoods;
 import org.apache.ibatis.annotations.Param;
 
 public interface CskaoyanMallCollectMapper {
@@ -32,4 +34,6 @@ public interface CskaoyanMallCollectMapper {
                           @Param("id") int id);
 
     int hasGoods(@Param("valueId") Integer valueId);
+
+
 }

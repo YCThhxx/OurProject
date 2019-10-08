@@ -8,13 +8,13 @@ import java.util.Date;
 public class CskaoyanMallGoods {
     private Integer id;
 
-    private String goodsSn;
+    private String goods_sn;
 
     private String name;
 
-    private Integer categoryId;
+    private Integer category_id;
 
-    private Integer brandId;
+    private Integer brand_id;
 
     private String[] gallery;
 
@@ -24,21 +24,21 @@ public class CskaoyanMallGoods {
 
     private Boolean isOnSale;
 
-    private Short sortOrder;
+    private Short sort_order;
 
-    private String picUrl;
+    private String pic_url;
 
     private String shareUrl;
 
-    private Boolean isNew;
+    private Boolean is_new;
 
-    private Boolean isHot;
+    private Boolean is_hot;
 
     private String unit;
 
-    private BigDecimal counterPrice;
+    private BigDecimal counter_price;
 
-    private BigDecimal retailPrice;
+    private BigDecimal retail_price;
 
     private int type;
 
@@ -51,10 +51,10 @@ public class CskaoyanMallGoods {
     }
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date addTime;
+    private Date add_time;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+    private Date update_time;
 
     private Boolean deleted;
 
@@ -69,11 +69,11 @@ public class CskaoyanMallGoods {
     }
 
     public String getGoodsSn() {
-        return goodsSn;
+        return goods_sn;
     }
 
     public void setGoodsSn(String goodsSn) {
-        this.goodsSn = goodsSn == null ? null : goodsSn.trim();
+        this.goods_sn = goodsSn == null ? null : goodsSn.trim();
     }
 
     public String getName() {
@@ -85,19 +85,19 @@ public class CskaoyanMallGoods {
     }
 
     public Integer getCategoryId() {
-        return categoryId;
+        return category_id;
     }
 
     public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+        this.category_id = categoryId;
     }
 
     public Integer getBrandId() {
-        return brandId;
+        return brand_id;
     }
 
     public void setBrandId(Integer brandId) {
-        this.brandId = brandId;
+        this.brand_id = brandId;
     }
 
     public String[] getGallery() {
@@ -133,19 +133,19 @@ public class CskaoyanMallGoods {
     }
 
     public Short getSortOrder() {
-        return sortOrder;
+        return sort_order;
     }
 
     public void setSortOrder(Short sortOrder) {
-        this.sortOrder = sortOrder;
+        this.sort_order = sortOrder;
     }
 
     public String getPicUrl() {
-        return picUrl;
+        return pic_url;
     }
 
     public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl == null ? null : picUrl.trim();
+        this.pic_url = picUrl == null ? null : picUrl.trim();
     }
 
     public String getShareUrl() {
@@ -157,19 +157,19 @@ public class CskaoyanMallGoods {
     }
 
     public Boolean getIsNew() {
-        return isNew;
+        return is_new;
     }
 
     public void setIsNew(Boolean isNew) {
-        this.isNew = isNew;
+        this.is_new = isNew;
     }
 
     public Boolean getIsHot() {
-        return isHot;
+        return is_hot;
     }
 
     public void setIsHot(Boolean isHot) {
-        this.isHot = isHot;
+        this.is_hot = isHot;
     }
 
     public String getUnit() {
@@ -181,35 +181,35 @@ public class CskaoyanMallGoods {
     }
 
     public BigDecimal getCounterPrice() {
-        return counterPrice;
+        return counter_price;
     }
 
     public void setCounterPrice(BigDecimal counterPrice) {
-        this.counterPrice = counterPrice;
+        this.counter_price = counterPrice;
     }
 
     public BigDecimal getRetailPrice() {
-        return retailPrice;
+        return retail_price;
     }
 
     public void setRetailPrice(BigDecimal retailPrice) {
-        this.retailPrice = retailPrice;
+        this.retail_price = retailPrice;
     }
 
     public Date getAddTime() {
-        return addTime;
+        return add_time;
     }
 
     public void setAddTime(Date addTime) {
-        this.addTime = addTime;
+        this.add_time = addTime;
     }
 
     public Date getUpdateTime() {
-        return updateTime;
+        return update_time;
     }
 
     public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+        this.update_time = updateTime;
     }
 
     public Boolean getDeleted() {

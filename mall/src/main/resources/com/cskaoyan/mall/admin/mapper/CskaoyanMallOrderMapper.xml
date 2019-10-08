@@ -591,4 +591,9 @@
         select count(id) from cskaoyan_mall_order
         where user_id = #{id}
     </select>
+  <insert id="insertShin">
+    insert into cskaoyan_mall_order(ship_sn,ship_channel)
+    values (#{shipSn},#{shipChannel})
+    where id = #{orderId}
+  </insert>
 </mapper>

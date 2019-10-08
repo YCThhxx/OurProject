@@ -39,4 +39,6 @@ public interface CskaoyanMallOrderMapper {
                                          @Param("status") int status);
 
     int queryOrderAmountByUserId(int userId);
+
+    int insertShin(int orderId, String shipChannel, String shipSn);
 }

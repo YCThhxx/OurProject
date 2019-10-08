@@ -4,10 +4,13 @@ import com.cskaoyan.mall.admin.bean.*;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallKeywordMapper;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallSearchHistoryMapper;
 import com.cskaoyan.mall.wx.service.WxSearchIndexService;
+import com.cskaoyan.mall.wx.service.WxUserService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +24,8 @@ public class WxSearchIndexServiceImpl implements WxSearchIndexService {
     CskaoyanMallKeywordMapper cskaoyanMallKeywordMapper;
     @Autowired
     CskaoyanMallSearchHistoryMapper cskaoyanMallSearchHistoryMapper;
+    @Autowired
+    WxUserService wxUserService;
 
 
     //商品搜索栏详情
@@ -74,5 +79,22 @@ public class WxSearchIndexServiceImpl implements WxSearchIndexService {
         CskaoyanMallSearchHistoryExample.Criteria criteria = searchHistoryExample.createCriteria();
         criteria.andUserIdEqualTo(userId);
         cskaoyanMallSearchHistoryMapper.deleteByExample(searchHistoryExample);
+    }
+
+    //添加搜索历史
+
+    @Override
+    public void addSearchHistory(String keyword) {
+        Date date = new Date();
+        CskaoyanMallKeyword cskaoyanMallKeyword = new CskaoyanMallKeyword();
+        CskaoyanMallSearchHistory searchHistory = new CskaoyanMallSearchHistory();
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = wxUserService.queryUserIdByUserName(username);
+        searchHistory.setUserId(userId);
+        searchHistory.setAddTime(date);
+        searchHistory.setUpdateTime(date);
+        searchHistory.setKeyword(keyword);
+        searchHistory.setFrom("wx");
+        cskaoyanMallSearchHistoryMapper.insert(searchHistory);
     }
 }

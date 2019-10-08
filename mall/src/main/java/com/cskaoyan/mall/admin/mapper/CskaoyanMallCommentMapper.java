@@ -35,6 +35,6 @@ public interface CskaoyanMallCommentMapper {
 
     int selectCommentCount(@Param("valueId") int valueId);
 
-    GoodsCommentVo selectByValueId(int id);
+    List<CskaoyanMallComment> selectByValueId(int id);
 }
 

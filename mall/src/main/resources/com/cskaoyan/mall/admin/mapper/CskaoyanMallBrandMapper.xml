@@ -296,4 +296,10 @@
     set deleted = 1
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <select id="findAllBrand" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_brand where deleted = 0
+  </select>
 </mapper>

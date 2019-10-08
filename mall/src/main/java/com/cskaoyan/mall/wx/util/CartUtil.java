@@ -1,10 +1,8 @@
 package com.cskaoyan.mall.wx.util;
-
 import com.cskaoyan.mall.admin.bean.CskaoyanMallCart;
 import com.cskaoyan.mall.admin.mapper.CskaoyanMallCartMapper;
 import com.cskaoyan.mall.wx.vo.CartResp;
 import com.cskaoyan.mall.wx.vo.CartTotal;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -24,8 +22,8 @@ public class CartUtil {
             goodsCount  = cskaoyanMallCart.getNumber() + goodsCount;
             goodsAmount = (cskaoyanMallCart.getNumber().intValue()) * (cskaoyanMallCart.getPrice().doubleValue()) + goodsAmount;
             if (cskaoyanMallCart.getChecked()){
-                checkGoodsCount  = cskaoyanMallCart.getNumber() + goodsCount;
-                checkedGoodsAmount = (cskaoyanMallCart.getNumber().intValue()) * (cskaoyanMallCart.getPrice().doubleValue()) + goodsAmount;
+                checkGoodsCount  = cskaoyanMallCart.getNumber() + checkGoodsCount;
+                checkedGoodsAmount = (cskaoyanMallCart.getNumber().intValue()) * (cskaoyanMallCart.getPrice().doubleValue()) + checkedGoodsAmount;
             }
         }
         CartTotal cartTotal = new CartTotal();

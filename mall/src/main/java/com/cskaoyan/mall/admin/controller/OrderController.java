@@ -9,10 +9,7 @@ import com.cskaoyan.mall.admin.vo.OrderDetail;
 import com.cskaoyan.mall.admin.vo.statvo.CommentInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("admin/order")
@@ -62,5 +59,14 @@ public class OrderController {
             baseResponseVo.setErrno(5000);
         }
         return baseResponseVo;
+    }
+
+    @PostMapping("ship")
+    public BaseResponseVo ship(@Param("orderId") Integer orderId,
+                               @Param("shipChannel") String shipChannel,
+                               @Param("shipSn") String shipSn){
+//        orderService.insertShip(orderId,shipChannel,shipSn);
+
+      return BaseResponseVo.ok();
     }
 }
